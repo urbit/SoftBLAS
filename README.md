@@ -55,3 +55,94 @@ Per Wikipedia:
 > $$
 > 
 > where $\boldsymbol{T}$ is a triangular matrix, among other functionality.
+
+### Level 1 Functions
+
+#### `s` 32-Bit Single Precision
+
+- `sasum` - sum of absolute values
+- `saxpy` - y = a*x + y
+- `scopy` - copy x into y
+- `sdot` - dot product
+- `sdsdot` - dot product with extended precision accumulation (returns `float64_t`)
+- `srot` - apply Givens rotation
+- `srotg` - set up Givens rotation
+- `srotm` - apply modified Givens rotation
+- `srotmg` - set up modified Givens rotation
+- `sscal` - x = a*x
+- `snrm2` - Euclidean norm
+- `sswap` - swap x and y
+- `isamax` - index of max abs value
+
+#### `d` 64-Bit Double Precision
+
+- `dasum` - sum of absolute values
+- `daxpy` - y = a*x + y
+- `dcopy` - copy x into y
+- `ddot` - dot product
+- `dsdot` - dot product with extended precision accumulation (returns `float64_t`)
+- `drot` - apply Givens rotation
+- `drotg` - set up Givens rotation
+- `drotm` - apply modified Givens rotation
+- `drotmg` - set up modified Givens rotation
+- `dscal` - x = a*x
+- `dnrm2` - Euclidean norm
+- `dswap` - swap x and y
+- `idamax` - index of max abs value
+
+#### `h` 16-Bit Half Precision
+
+- `hasum` - sum of absolute values
+- `haxpy` - y = a*x + y
+- `hcopy` - copy x into y
+- `hdot` - dot product
+- `hsdot` - dot product with extended precision accumulation (returns `float32_t`)
+- `hrot` - apply Givens rotation
+- `hrotg` - set up Givens rotation
+- `hrotm` - apply modified Givens rotation
+- `hrotmg` - set up modified Givens rotation
+- `hscal` - x = a*x
+- `hnrm2` - Euclidean norm
+- `hswap` - swap x and y
+- `ihamax` - index of max abs value
+
+#### Pending
+
+- `?{c|z}nrm` - Euclidean norm, complex
+- `q*` - quadruple-precision functions
+
+### Auxiliary Macros
+
+- `f16_ge` → `!f16_lt`
+- `f16_gt` → `!f16_le`
+- `f16_ne` → `!f16_eq`
+- `f32_ge` → `!f32_lt`
+- `f32_gt` → `!f32_le`
+- `f32_ne` → `!f32_eq`
+- `f64_ge` → `!f64_lt`
+- `f64_gt` → `!f64_le`
+- `f64_ne` → `!f64_eq`
+- `f128_ge` → `!f128_lt`
+- `f128_gt` → `!f128_le`
+- `f128_ne` → `!f128_eq`
+
+- `ABS(x)` → `( (x) >= 0 ? (x) : -(x) )`
+- `f16_abs(x)` → `( (x) & 0x7fff )`
+- `f32_abs(x)` → `( (x) & 0x7fffffff )`
+- `f64_abs(x)` → `( (x) & 0x7fffffffffffffff )`
+
+- `MAX(x, y)` → `( (x) > (y) ? (x) : (y) )`
+- `f16_max(x, y)` → `( f16_gt( (x) , (y) ) ? (x) : (y) )`
+- `f32_max(x, y)` → `( f32_gt( (x) , (y) ) ? (x) : (y) )`
+- `f64_max(x, y)` → `( f64_gt( (x) , (y) ) ? (x) : (y) )`
+
+- `MIN(x, y)` → `( (x) > (y) ? (y) : (x) )`
+- `f16_min(x, y)` → `( f16_gt( (x) , (y) ) ? (y) : (x) )`
+- `f32_min(x, y)` → `( f32_gt( (x) , (y) ) ? (y) : (x) )`
+- `f64_min(x, y)` → `( f64_gt( (x) , (y) ) ? (y) : (x) )`
+
+---
+
+TODO:
+
+- check Level 1 input args against prototypes (`HA`/`SA`/`DA`)

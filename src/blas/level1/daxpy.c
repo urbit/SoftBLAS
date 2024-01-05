@@ -1,20 +1,20 @@
 #include "softblas.h"
 
-void daxpy(uint64_t N, float64_t HA, float64_t *HX, uint64_t incX, float64_t *HY, uint64_t incY) {
+void daxpy(uint64_t N, float64_t DA, float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY) {
       if (incX == 1 && incY == 1) {
             uint64_t m = N % 4;
             if (m != 0) {
                   for (uint64_t i = 0; i < m; i++) {
-                        HY[i] = f64_add(HY[i], f64_mul(HA, HX[i]));
+                        DY[i] = f64_add(DY[i], f64_mul(DA, DX[i]));
                   }
             }
             if (N < 4) return;
             uint64_t mp1 = m + 1;
             for (uint64_t i = mp1; i < N; i += 4) {
-                  HY[i] = f64_add(HY[i], f64_mul(HA, HX[i]));
-                  HY[i+1] = f64_add(HY[i+1], f64_mul(HA, HX[i+1]));
-                  HY[i+2] = f64_add(HY[i+2], f64_mul(HA, HX[i+2]));
-                  HY[i+3] = f64_add(HY[i+3], f64_mul(HA, HX[i+3]));
+                  DY[i] = f64_add(DY[i], f64_mul(DA, DX[i]));
+                  DY[i+1] = f64_add(DY[i+1], f64_mul(DA, DX[i+1]));
+                  DY[i+2] = f64_add(DY[i+2], f64_mul(DA, DX[i+2]));
+                  DY[i+3] = f64_add(DY[i+3], f64_mul(DA, DX[i+3]));
             }
       } else {
             uint64_t iX = 0;
@@ -22,7 +22,7 @@ void daxpy(uint64_t N, float64_t HA, float64_t *HX, uint64_t incX, float64_t *HY
             if (incX < 0) iX = (-N + 1) * incX;
             if (incY < 0) iY = (-N + 1) * incY;
             for (uint64_t i = 0; i < N; i++) {
-                  HY[iY] = f64_add(HY[iY], f64_mul(HA, HX[iX]));
+                  DY[iY] = f64_add(DY[iY], f64_mul(DA, DX[iX]));
                   iX += incX;
                   iY += incY;
             }
