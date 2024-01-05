@@ -1,11 +1,4 @@
-void drot(const uint64_t  N,       // length
-             float64_t      *X,       // vector
-             const uint64_t  incX,    // stride
-             float64_t      *Y,       // vector
-             const uint64_t  incY,    // stride
-             const float64_t c,       // cos(theta)
-             const float64_t s        // sin(theta)
-          ) {
+void drot(const uint64_t N, float64_t *X, const uint64_t  incX, float64_t *Y, const uint64_t incY, const float64_t c, const float64_t s) {
     float64_t tmp;
 
     if (c != SB_REAL64_ONE || s != SB_REAL64_ZERO) {

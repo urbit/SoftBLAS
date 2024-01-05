@@ -1,11 +1,6 @@
-#include "softfloat.h"
+#include "softblas.h"
 
-float16_t hdot( const uint64_t   N,       // length
-                const float16_t *X,       // vector
-                const uint64_t   incX,    // stride
-                const float16_t *Y,       // vector
-                const uint64_t   incY     // stride
-              ) {
+float16_t hdot(const uint16_t N, const float16_t *X, const uint16_t incX, const float16_t *Y, const uint16_t incY) {
     float16_t hdot = SB_REAL16_ZERO;
 
     if (incX == 1 && incY == 1) {

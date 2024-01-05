@@ -1,12 +1,6 @@
 #include "softblas.h"
 
-void srotm(const uint64_t N,
-           float32_t *X,
-           const uint64_t incX,
-           float32_t *Y,
-           const uint64_t incY,
-           const float32_t *P
-          ) {
+void srotm(const uint32_t N, float32_t *X, const uint32_t incX, float32_t *Y, const uint32_t incY, const float32_t *P) {
    uint64_t i;
    const float32_t flag = *P;
    float32_t h11, h21, h12, h22, w, z;

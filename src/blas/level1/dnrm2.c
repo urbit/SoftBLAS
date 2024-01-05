@@ -1,6 +1,6 @@
 #include "softblas.h"
 
-float64_t snrm2(uint64_t N, const float64_t *X, uint64_t incX) {
+float64_t dnrm2(uint64_t N, const float64_t *X, uint64_t incX) {
       float64_t ONE = SB_REAL64_ONE;
       float64_t ZERO = SB_REAL64_ZERO;
       float64_t absXI, norm, scale, ssq;

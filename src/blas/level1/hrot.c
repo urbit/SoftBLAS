@@ -1,11 +1,4 @@
-void hrot(const uint64_t  N,       // length
-             float16_t      *X,       // vector
-             const uint64_t  incX,    // stride
-             float16_t      *Y,       // vector
-             const uint64_t  incY,    // stride
-             const float16_t c,       // cos(theta)
-             const float16_t s        // sin(theta)
-          ) {
+void hrot(const uint16_t N, float16_t *X, const uint16_t  incX, float16_t *Y, const uint16_t incY, const float16_t c, const float16_t s) {
     float16_t tmp;
 
     if (c != SB_REAL32_ONE || s != SB_REAL32_ZERO) {

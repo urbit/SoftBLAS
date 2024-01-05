@@ -1,14 +1,6 @@
 #include "softblas.h"
-#include "softfloat.h"
 
-void srot(const uint64_t  N,       // length
-             float32_t      *X,       // vector
-             const uint64_t  incX,    // stride
-             float32_t      *Y,       // vector
-             const uint64_t  incY,    // stride
-             const float32_t c,       // cos(theta)
-             const float32_t s        // sin(theta)
-          ) {
+void srot(const uint32_t N, float32_t *X, const uint32_t  incX, float32_t *Y, const uint32_t incY, const float32_t c, const float32_t s) {
     float32_t tmp;
 
     if (c != SB_REAL32_ONE || s != SB_REAL32_ZERO) {

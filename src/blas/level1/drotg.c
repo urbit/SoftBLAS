@@ -1,13 +1,6 @@
 #include "softblas.h"
 
-void drotg(
-   float64_t *a,    /* INPUT : first rotational elimination parameter */
-                    /* OUTPUT: r (see below) */
-   float64_t *b,    /* INPUT: second rotational elimination parameter */
-                    /* OUTPUT: z (see below) */
-   float64_t *c,    /* OUTPUT: cosine */
-   float64_t *s     /* OUTPUT: sine */
-) {
+void drotg(float64_t *a, float64_t *b, float64_t *c, float64_t *s) {
    float64_t roe, scal, r, z, aa, ab, t0, t1;
 
    aa = f64_abs(*a);

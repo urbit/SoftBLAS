@@ -1,11 +1,6 @@
-#include "softfloat.h"
+#include "softblas.h"
 
-float64_t ddot( const uint64_t   N,       // length
-                const float64_t *X,       // vector
-                const uint64_t   incX,    // stride
-                const float64_t *Y,       // vector
-                const uint64_t   incY     // stride
-              ) {
+ddot(const uint64_t N, const float64_t *X, const uint64_t incX, const float64_t *Y, const uint64_t incY) {
     float64_t ddot = SB_REAL64_ZERO;
 
     if (incX == 1 && incY == 1) {

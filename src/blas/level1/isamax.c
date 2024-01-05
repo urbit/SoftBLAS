@@ -1,6 +1,6 @@
 #include "softblas.h"
 
-uint64_t isamax(uint64_t N, const float32_t *SX, uint64_t incX) {
+uint64_t isamax(uint32_t N, const float32_t *SX, uint32_t incX) {
       float32_t smax;
       uint64_t i, ix;
 

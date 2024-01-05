@@ -1,10 +1,6 @@
 #include "softblas.h"
 
-void sscal(uint64_t N,
-           float32_t SA,
-           float32_t *SX,
-           uint64_t incX
-          ) {
+void sscal(uint32_t N, float32_t SA, float32_t *SX, uint32_t incX) {
       if (incX == 1) {
             // code for increment equal to 1
 

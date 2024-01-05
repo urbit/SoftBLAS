@@ -54,41 +54,44 @@
 //  SOFTBLAS PROTOTYPES
 
 //  Level 1
-sasum(uint32_t N, const float32_t *SX, uint32_t incX);
-saxpy(uint32_t N, float32_t SA, float32_t *HX, uint32_t incX, float32_t *HY, uint32_t incY);
-scopy(uint32_t N, const float32_t *SX, uint32_t incX, float32_t *SY, uint32_t incY);
-sdot(const uint32_t N, const float32_t *X, const uint32_t incX, const float32_t *Y, const uint32_t incY);
-srot(const uint32_t N, float32_t *X, const uint32_t  incX, float32_t *Y, const uint32_t incY, const float32_t c, const float32_t s);
-srotg(float32_t *a, float32_t *b, float32_t *c, float32_t *s);
-srotm(const uint32_t N, float32_t *X, const uint32_t incX, float32_t *Y, const uint32_t incY, const float32_t *P);
-srotmg(float32_t *D1, float32_t *D2, float32_t *X1, const float32_t y1, float32_t *P)
-sscal(uint32_t N, float32_t SA, float32_t *SX, uint32_t incX);
-ssdot( const uint32_t N, const float32_t alpSA, const float32_t *X, const uint32_t incX, const float32_t *Y, const uint32_t incY);
-sswap(uint32_t N, float32_t *SX, uint32_t incX, float32_t *SY, uint32_t incY)
-isamax(uint32_t N, const float32_t *SX, uint32_t incX);
+float32_t sasum(uint32_t N, const float32_t *SX, uint32_t incX);
+void saxpy(uint32_t N, float32_t SA, float32_t *HX, uint32_t incX, float32_t *HY, uint32_t incY);
+void scopy(uint32_t N, const float32_t *SX, uint32_t incX, float32_t *SY, uint32_t incY);
+float32_t sdot(const uint32_t N, const float32_t *X, const uint32_t incX, const float32_t *Y, const uint32_t incY);
+float32_t sdsdot(const uint32_t N, const float32_t alpha, const float32_t *X, const uint32_t incX, const float32_t *Y, const uint32_t incY);
+float32_t snrm2(uint64_t N, const float32_t *X, uint64_t incX);
+void srot(const uint32_t N, float32_t *X, const uint32_t  incX, float32_t *Y, const uint32_t incY, const float32_t c, const float32_t s);
+void srotg(float32_t *a, float32_t *b, float32_t *c, float32_t *s);
+void srotm(const uint32_t N, float32_t *X, const uint32_t incX, float32_t *Y, const uint32_t incY, const float32_t *P);
+void srotmg(float32_t *D1, float32_t *D2, float32_t *X1, const float32_t y1, float32_t *P);
+void sscal(uint32_t N, float32_t SA, float32_t *SX, uint32_t incX);
+void sswap(uint32_t N, float32_t *SX, uint32_t incX, float32_t *SY, uint32_t incY);
+uint64_t isamax(uint32_t N, const float32_t *SX, uint32_t incX);
 
-dasum(uint64_t N, const float64_t *DX, uint64_t incX);
-daxpy(uint64_t N, float64_t DA, float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY);
-dcopy(uint64_t N, const float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY);
-ddot(const uint64_t N, const float64_t *X, const uint64_t incX, const float64_t *Y, const uint64_t incY);
-drot(const uint64_t N, float64_t *X, const uint64_t  incX, float64_t *Y, const uint64_t incY, const float64_t c, const float64_t s);
-drotg(float64_t *a, float64_t *b, float64_t *c, float64_t *s);
-drotm(const uint64_t N, float64_t *X, const uint64_t incX, float64_t *Y, const uint64_t incY, const float64_t *P);
-drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, float64_t *P)
-dscal(uint64_t N, float64_t DA, float64_t *DX, uint64_t incX);
-dsdot( const uint64_t N, const float64_t alpha, const float64_t *X, const uint64_t incX, const float64_t *Y, const uint64_t incY);
-dswap(uint64_t N, float64_t *DX, uint64_t incX, float64_t *SY, uint64_t incY)
-idamax(uint64_t N, const float64_t *DX, uint64_t incX);
+float64_t dasum(uint64_t N, const float64_t *DX, uint64_t incX);
+void daxpy(uint64_t N, float64_t DA, float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY);
+void dcopy(uint64_t N, const float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY);
+float64_t ddot(const uint64_t N, const float64_t *X, const uint64_t incX, const float64_t *Y, const uint64_t incY);
+float64_t dnrm2(uint64_t N, const float64_t *X, uint64_t incX);
+void drot(const uint64_t N, float64_t *X, const uint64_t  incX, float64_t *Y, const uint64_t incY, const float64_t c, const float64_t s);
+void drotg(float64_t *a, float64_t *b, float64_t *c, float64_t *s);
+void drotm(const uint64_t N, float64_t *X, const uint64_t incX, float64_t *Y, const uint64_t incY, const float64_t *P);
+void drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, float64_t *P);
+void dscal(uint64_t N, float64_t DA, float64_t *DX, uint64_t incX);
+float64_t dsdot(const uint64_t N, const float64_t alpha, const float64_t *X, const uint64_t incX, const float64_t *Y, const uint64_t incY);
+void dswap(uint64_t N, float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY);
+uint64_t idamax(uint64_t N, const float64_t *DX, uint64_t incX);
 
-hasum(uint16_t N, const float16_t *HX, uint16_t incX);
-haxpy(uint16_t N, float16_t HA, float16_t *HX, uint16_t incX, float16_t *HY, uint16_t incY);
-hcopy(uint16_t N, const float16_t *HX, uint16_t incX, float16_t *HY, uint16_t incY);
-hdot(const uint16_t N, const float16_t *X, const uint16_t incX, const float16_t *Y, const uint16_t incY);
-hrot(const uint16_t N, float16_t *X, const uint16_t  incX, float16_t *Y, const uint16_t incY, const float16_t c, const float16_t s);
-hrotg(float16_t *a, float16_t *b, float16_t *c, float16_t *s);
-hrotm(const uint16_t N, float16_t *X, const uint16_t incX, float16_t *Y, const uint16_t incY, const float16_t *P);
-hrotmg(float16_t *D1, float16_t *D2, float16_t *X1, const float16_t y1, float16_t *P)
-hscal(uint16_t N, float16_t HA, float16_t *HX, uint16_t incX);
-hsdot( const uint16_t N, const float16_t alpha, const float16_t *X, const uint16_t incX, const float16_t *Y, const uint16_t incY);
-hswap(uint16_t N, float16_t *SX, uint16_t incX, float16_t *SY, uint16_t incY)
-ihamax(uint16_t N, const float16_t *HX, uint16_t incX);
+float16_t hasum(uint16_t N, const float16_t *HX, uint16_t incX);
+void haxpy(uint16_t N, float16_t HA, float16_t *HX, uint16_t incX, float16_t *HY, uint16_t incY);
+void hcopy(uint16_t N, const float16_t *HX, uint16_t incX, float16_t *HY, uint16_t incY);
+float16_t hdot(const uint16_t N, const float16_t *X, const uint16_t incX, const float16_t *Y, const uint16_t incY);
+float16_t hnrm2(uint64_t N, const float16_t *X, uint64_t incX);
+void hrot(const uint16_t N, float16_t *X, const uint16_t  incX, float16_t *Y, const uint16_t incY, const float16_t c, const float16_t s);
+void hrotg(float16_t *a, float16_t *b, float16_t *c, float16_t *s);
+void hrotm(const uint16_t N, float16_t *X, const uint16_t incX, float16_t *Y, const uint16_t incY, const float16_t *P);
+void hrotmg(float16_t *D1, float16_t *D2, float16_t *X1, const float16_t y1, float16_t *P);
+void hscal(uint16_t N, float16_t HA, float16_t *HX, uint16_t incX);
+float16_t hsdot(const uint16_t N, const float16_t alpha, const float16_t *X, const uint16_t incX, const float16_t *Y, const uint16_t incY);
+void hswap(uint16_t N, float16_t *HX, uint16_t incX, float16_t *HY, uint16_t incY);
+uint64_t ihamax(uint16_t N, const float16_t *HX, uint16_t incX);

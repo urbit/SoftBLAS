@@ -1,11 +1,6 @@
 #include "softblas.h"
 
-void dcopy(uint64_t N,
-         const float64_t *DX,
-         uint64_t incX,
-         float64_t *DY,
-         uint64_t incY
-        ) {
+void dcopy(uint64_t N, const float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY) {
     if (incX == 1 && incY == 1) {
         // code for both increments equal to 1
 

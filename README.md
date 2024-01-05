@@ -65,12 +65,12 @@ Per Wikipedia:
 - `scopy` - copy x into y
 - `sdot` - dot product
 - `sdsdot` - dot product with extended precision accumulation (returns `float64_t`)
+- `snrm2` - Euclidean norm
 - `srot` - apply Givens rotation
 - `srotg` - set up Givens rotation
 - `srotm` - apply modified Givens rotation
 - `srotmg` - set up modified Givens rotation
 - `sscal` - x = a*x
-- `snrm2` - Euclidean norm
 - `sswap` - swap x and y
 - `isamax` - index of max abs value
 
@@ -80,13 +80,13 @@ Per Wikipedia:
 - `daxpy` - y = a*x + y
 - `dcopy` - copy x into y
 - `ddot` - dot product
+- `dnrm2` - Euclidean norm
 - `dsdot` - dot product with extended precision accumulation (returns `float64_t`)
 - `drot` - apply Givens rotation
 - `drotg` - set up Givens rotation
 - `drotm` - apply modified Givens rotation
 - `drotmg` - set up modified Givens rotation
 - `dscal` - x = a*x
-- `dnrm2` - Euclidean norm
 - `dswap` - swap x and y
 - `idamax` - index of max abs value
 
@@ -96,19 +96,19 @@ Per Wikipedia:
 - `haxpy` - y = a*x + y
 - `hcopy` - copy x into y
 - `hdot` - dot product
+- `hnrm2` - Euclidean norm
 - `hsdot` - dot product with extended precision accumulation (returns `float32_t`)
 - `hrot` - apply Givens rotation
 - `hrotg` - set up Givens rotation
 - `hrotm` - apply modified Givens rotation
 - `hrotmg` - set up modified Givens rotation
 - `hscal` - x = a*x
-- `hnrm2` - Euclidean norm
 - `hswap` - swap x and y
 - `ihamax` - index of max abs value
 
 #### Pending
 
-- `?{c|z}nrm` - Euclidean norm, complex
+- `{hi|sc|dz|qv}nrm` - Euclidean norm, complex
 - `q*` - quadruple-precision functions
 
 ### Auxiliary Macros
@@ -140,9 +140,3 @@ Per Wikipedia:
 - `f16_min(x, y)` → `( f16_gt( (x) , (y) ) ? (y) : (x) )`
 - `f32_min(x, y)` → `( f32_gt( (x) , (y) ) ? (y) : (x) )`
 - `f64_min(x, y)` → `( f64_gt( (x) , (y) ) ? (y) : (x) )`
-
----
-
-TODO:
-
-- check Level 1 input args against prototypes (`HA`/`SA`/`DA`)

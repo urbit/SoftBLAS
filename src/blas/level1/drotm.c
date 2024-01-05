@@ -1,12 +1,6 @@
 #include "softblas.h"
 
-void drotm(const uint64_t N,
-           float64_t *X,
-           const uint64_t incX,
-           float64_t *Y,
-           const uint64_t incY,
-           const float64_t *P
-          ) {
+void drotm(const uint64_t N, float64_t *X, const uint64_t incX, float64_t *Y, const uint64_t incY, const float64_t *P) {
    uint64_t i;
    const float64_t flag = *P;
    float64_t h11, h21, h12, h22, w, z;

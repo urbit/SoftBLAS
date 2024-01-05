@@ -1,11 +1,6 @@
 #include "softblas.h"
 
-void scopy(uint64_t N,
-         const float16_t *SX,
-         uint64_t incX,
-         float16_t *SY,
-         uint64_t incY
-        ) {
+void scopy(uint32_t N, const float32_t *SX, uint32_t incX, float32_t *SY, uint32_t incY) {
     if (incX == 1 && incY == 1) {
         // code for both increments equal to 1
 

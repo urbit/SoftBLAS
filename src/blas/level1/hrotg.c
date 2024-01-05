@@ -1,13 +1,6 @@
 #include "softblas.h"
 
-void hrotg(
-   float16_t *a,    /* INPUT : first rotational elimination parameter */
-                    /* OUTPUT: r (see below) */
-   float16_t *b,    /* INPUT: second rotational elimination parameter */
-                    /* OUTPUT: z (see below) */
-   float16_t *c,    /* OUTPUT: cosine */
-   float16_t *s     /* OUTPUT: sine */
-) {
+void hrotg(float16_t *a, float16_t *b, float16_t *c, float16_t *s) {
    float16_t roe, scal, r, z, aa, ab, t0, t1;
 
    aa = f16_abs(*a);

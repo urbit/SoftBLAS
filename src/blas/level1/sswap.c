@@ -1,6 +1,6 @@
 #include "softblas.h"
 
-void sswap(uint64_t N, float32_t *SX, uint64_t incX, float32_t *SY, uint64_t incY) {
+void sswap(uint32_t N, float32_t *SX, uint32_t incX, float32_t *SY, uint32_t incY) {
     float32_t stemp;
     
     if (N <= 0) return;

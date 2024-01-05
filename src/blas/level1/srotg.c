@@ -1,13 +1,6 @@
 #include "softblas.h"
 
-void srotg(
-   float32_t *a,    /* INPUT : first rotational elimination parameter */
-                    /* OUTPUT: r (see below) */
-   float32_t *b,    /* INPUT: second rotational elimination parameter */
-                    /* OUTPUT: z (see below) */
-   float32_t *c,    /* OUTPUT: cosine */
-   float32_t *s     /* OUTPUT: sine */
-) {
+void srotg(float32_t *a, float32_t *b, float32_t *c, float32_t *s) {
    float32_t roe, scal, r, z, aa, ab, t0, t1;
 
    aa = f32_abs(*a);

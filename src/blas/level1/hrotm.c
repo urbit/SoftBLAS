@@ -1,12 +1,6 @@
 #include "softblas.h"
 
-void hrotm(const uint16_t N,
-           float16_t *X,
-           const uint16_t incX,
-           float16_t *Y,
-           const uint16_t incY,
-           const float16_t *P
-          ) {
+void hrotm(const uint16_t N, float16_t *X, const uint16_t incX, float16_t *Y, const uint16_t incY, const float16_t *P) {
    uint16_t i;
    const float16_t flag = *P;
    float16_t h11, h21, h12, h22, w, z;
