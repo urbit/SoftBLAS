@@ -117,4 +117,12 @@ uint64_t ihamax(uint16_t N, const float16_t *HX, uint16_t incX);
 
 // Level 2
 
-void sgemv(float32_t alpha, float32_t *A, float32_t *x, float32_t beta, float32_t *y, int M, int N, int INCX, int INCY, char TRANS);
+void sgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *X, const uint64_t incX, const float32_t beta, float32_t *Y, const uint64_t incY);
+void dgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *X, const uint64_t incX, const float64_t beta, float64_t *Y, const uint64_t incY);
+void hgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *X, const uint64_t incX, const float16_t beta, float16_t *Y, const uint64_t incY);
+
+// Level 3
+
+void sgemm(const SB_LAYOUT Layout, const SB_TRANSPOSE transA, const SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *B, const uint64_t ldb, const float32_t beta, float32_t *C, const uint64_t ldc);
+void dgemm(const SB_LAYOUT Layout, const SB_TRANSPOSE transA, const SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc);
+void hgemm(const SB_LAYOUT Layout, const SB_TRANSPOSE transA, const SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *B, const uint64_t ldb, const float16_t beta, float16_t *C, const uint64_t ldc);
