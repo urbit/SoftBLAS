@@ -2,13 +2,18 @@
 
 A BLAS/LAPACK implmentation using [Berkeley SoftFloat](http://www.jhauser.us/arithmetic/SoftFloat.html) rather than hardware acceleration.
 
+TODO:
+
+- compare function signatures against reference CBLAS (`const` &c.)
+- finish L2, L3
+
 [BLAS naming conventions](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-1/naming-conventions-for-blas-routines.html) are followed for 32/64 bits, but extensions to the prefix scheme are necessary for other bit widths:
 
 | Bits | Real | Complex |
 | --- | --- | --- |
-| 16 | `h` | `i` |
-| 32 | `s` | `c` |
-| 64 | `d` | `z` |
+|  16 | `h` | `i` |
+|  32 | `s` | `c` |
+|  64 | `d` | `z` |
 | 128 | `q` | `v` |
 
 Per Wikipedia:
@@ -110,6 +115,14 @@ Per Wikipedia:
 
 - `{hi|sc|dz|qv}nrm` - Euclidean norm, complex
 - `q*` - quadruple-precision functions
+
+### Level 2 Functions
+
+#### `s` 32-Bit Single Precision
+
+- `sgemv` - computes a matrix-vector product using a general matrix
+
+
 
 ### Auxiliary Macros
 

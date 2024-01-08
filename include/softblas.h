@@ -1,5 +1,24 @@
 #include "softfloat.h"
 
+//  TYPES
+
+enum SB_LAYOUT {
+   SblasRowMajor=101,     // row-major arrays
+   SblasColMajor=102};    // column-major arrays
+enum SBLAS_TRANSPOSE {
+   SblasNoTrans=78,       // trans='N'
+   SblasTrans=84,         // trans='T'
+   SblasConjTrans=67};    // trans='C'
+enum SBLAS_UPLO {
+   SblasUpper=85,         // uplo ='U'
+   SblasLower=76};        // uplo ='L'
+enum SBLAS_DIAG {
+   SblasNonUnit=78,       // diag ='N'
+   SblasUnit=85};         // diag ='U'
+enum SBLAS_SIDE {
+   SblasLeft=76,          // side ='L'
+   SblasRight=82};        // side ='R'
+
 //  CONSTANTS
 
 #define SB_REAL16_ONE 0x3c00
@@ -95,3 +114,7 @@ void hscal(uint16_t N, float16_t HA, float16_t *HX, uint16_t incX);
 float16_t hsdot(const uint16_t N, const float16_t alpha, const float16_t *X, const uint16_t incX, const float16_t *Y, const uint16_t incY);
 void hswap(uint16_t N, float16_t *HX, uint16_t incX, float16_t *HY, uint16_t incY);
 uint64_t ihamax(uint16_t N, const float16_t *HX, uint16_t incX);
+
+// Level 2
+
+void sgemv(float32_t alpha, float32_t *A, float32_t *x, float32_t beta, float32_t *y, int M, int N, int INCX, int INCY, char TRANS);
