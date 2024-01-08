@@ -122,6 +122,27 @@ Per Wikipedia:
 
 - `sgemv` - computes a matrix-vector product using a general matrix
 
+#### `d` 64-Bit Single Precision
+
+- `dgemv` - computes a matrix-vector product using a general matrix
+
+#### `h` 16-Bit Single Precision
+
+- `hgemv` - computes a matrix-vector product using a general matrix
+
+### Level 3 Functions
+
+#### `s` 32-Bit Single Precision
+
+- `sgemm` - computes a matrix-matrix product using a general matrix
+
+#### `d` 64-Bit Single Precision
+
+- `dgemm` - computes a matrix-matrix product using a general matrix
+
+#### `h` 16-Bit Single Precision
+
+- `hgemm` - computes a matrix-matrix product using a general matrix
 
 
 ### Auxiliary Macros

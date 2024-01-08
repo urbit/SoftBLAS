@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include "softblas.h"
 
-void sgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *X, const uint64_t incX, const float32_t beta, float32_t *Y, const uint64_t incY) {
+void hgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *X, const uint64_t incX, const float16_t beta, float16_t *Y, const uint64_t incY) {
     uint64_t iX, iY, jX, jY, kX, kY, lenX, lenY;
     uint64_t info = 0;
-    float32_t temp, ZERO, ONE;
+    float16_t temp, ZERO, ONE;
 
     if ((trans != SblasNoTrans) &&
         (trans != SblasTrans) &&
@@ -52,8 +52,8 @@ void sgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, c
         kY = 1;
     }
 
-    ZERO = SB_REAL32_ZERO;
-    ONE = SB_REAL32_ONE;
+    ZERO = SB_REAL16_ZERO;
+    ONE = SB_REAL16_ONE;
 
     if (beta != ONE) {
         if (incY == 1) {
@@ -63,7 +63,7 @@ void sgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, c
                 }
             } else {
                 for (uint64_t i = 0; i < M; i++) {
-                    Y[i] = f32_mul(beta, Y[i]);
+                    Y[i] = f16_mul(beta, Y[i]);
                 }
             }
         } else {
@@ -75,7 +75,7 @@ void sgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, c
                 }
             } else {
                 for (uint64_t i = 0; i < M; i++) {
-                    Y[iY] = f32mul(beta, Y[iY]);
+                    Y[iY] = f16mul(beta, Y[iY]);
                     iY = iY + incY;
                 }
             }
@@ -91,7 +91,7 @@ void sgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, c
             for (uint64_t j = 0; j < N; j++) {
                 temp = alpha * X[jX];
                 for (uint64_t i = 0; i < M; i++) {
-                    Y[i] = f32_add(Y[i], f32_mul(temp, A[i * M + j]));
+                    Y[i] = f16_add(Y[i], f16_mul(temp, A[i * M + j]));
                 }
                 jX = jX + incX;
             }
@@ -100,7 +100,7 @@ void sgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, c
                 temp = alpha * X[jX];
                 iY = kY;
                 for (uint64_t i = 0; i < M; i++) {
-                    Y[iY] = f32_add(Y[iY], f32_mul(temp, A[i * M + j]));
+                    Y[iY] = f16_add(Y[iY], f16_mul(temp, A[i * M + j]));
                     iY = iY + incY;
                 }
                 jX = jX + incX;
@@ -113,9 +113,9 @@ void sgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, c
             for (uint64_t j = 0; j < N; j++) {
                 temp = ZERO;
                 for (uint64_t i = 0; i < M; i++) {
-                    temp = f32_add(temp, f32_mul(A[i * M + j], X[i]));
+                    temp = f16_add(temp, f16_mul(A[i * M + j], X[i]));
                 }
-                Y[jY] = f32_add(Y[jY], f32_mul(alpha, temp));
+                Y[jY] = f16_add(Y[jY], f16_mul(alpha, temp));
                 jY = jY + incY;
             }
         } else {
@@ -123,10 +123,10 @@ void sgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, c
                 temp = ZERO;
                 iX = kX;
                 for (uint64_t i = 0; i < M; i++) {
-                    temp = f32_add(temp, f32_mul(A[i * M + j], X[iX]));
+                    temp = f16_add(temp, f16_mul(A[i * M + j], X[iX]));
                     iX = iX + incX;
                 }
-                Y[jY] = f32_add(Y[jY], f32_mul(alpha, temp));
+                Y[jY] = f16_add(Y[jY], f16_mul(alpha, temp));
                 jY = jY + incY;
             }
         }
@@ -141,27 +141,27 @@ void sgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, c
         kY = 1 - (N - 1) * incY;
     }
 
-    if (f32_ne(beta, ONE)) {
+    if (f16_ne(beta, ONE)) {
         if (incY == 1) {
-            if (f32_eq(beta, ZERO)) {
+            if (f16_eq(beta, ZERO)) {
                 for (uint64_t i = 0; i < N; i++) {
                     y[i] = ZERO;
                 }
             } else {
                 for (uint64_t i = 0; i < N; i++) {
-                    y[i] = f32_mul(beta, y[i]);
+                    y[i] = f16_mul(beta, y[i]);
                 }
             }
         } else {
             iY = kY;
-            if (f32_eq(beta, ZERO)) {
+            if (f16_eq(beta, ZERO)) {
                 for (uint64_t i = 0; i < N; i++) {
                     y[iY] = ZERO;
                     iY = iY + incY;
                 }
             } else {
                 for (uint64_t i = 0; i < N; i++) {
-                    y[iY] = f32_mul(beta, y[iY]);
+                    y[iY] = f16_mul(beta, y[iY]);
                     iY = iY + incY;
                 }
             }
