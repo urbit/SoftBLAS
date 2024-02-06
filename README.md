@@ -174,3 +174,11 @@ Per Wikipedia:
 - `f16_min(x, y)` → `( f16_gt( (x) , (y) ) ? (y) : (x) )`
 - `f32_min(x, y)` → `( f32_gt( (x) , (y) ) ? (y) : (x) )`
 - `f64_min(x, y)` → `( f64_gt( (x) , (y) ) ? (y) : (x) )`
+
+---
+
+- sasum simplified logic
+- saxpy simplified logic, kept neg behavior
+- scopy simplified logic, kept neg behavior
+- sdot simplified logic, kept neg behavior
+
