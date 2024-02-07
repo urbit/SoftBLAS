@@ -2,10 +2,11 @@
 
 A BLAS/LAPACK implmentation using [Berkeley SoftFloat](http://www.jhauser.us/arithmetic/SoftFloat.html) rather than hardware acceleration.
 
-TODO:
+**Status WIP ~2024.2.7**
 
-- compare function signatures against reference CBLAS (`const` &c.)
-- finish L2, L3
+- [ ] Complete complex-valued functions.
+- [ ] Compare function signatures against reference CBLAS (`const` &c.).
+- [ ] Construct test suite for all cases.
 
 [BLAS naming conventions](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-1/naming-conventions-for-blas-routines.html) are followed for 32/64 bits, but extensions to the prefix scheme are necessary for other bit widths:
 
