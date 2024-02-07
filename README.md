@@ -176,6 +176,14 @@ Per Wikipedia:
 - `f32_min(x, y)` → `( f32_gt( (x) , (y) ) ? (y) : (x) )`
 - `f64_min(x, y)` → `( f64_gt( (x) , (y) ) ? (y) : (x) )`
 
+##  References
+
+- [BLAS](https://www.netlib.org/blas/)
+- [OpenBLAS](https://github.com/OpenMathLib/OpenBLAS)
+- [ATLAS](https://math-atlas.sourceforge.net/faq.html) LAPACK routimes
+- [Intel MKL](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-1/)
+- [IBM Engineering and Scientific Subroutines](https://www.ibm.com/docs/en/essl/6.3?topic=subroutines-matrix-operation)
+
 ---
 
 - sasum simplified logic
