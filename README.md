@@ -2,6 +2,8 @@
 
 A BLAS/LAPACK implmentation using [Berkeley SoftFloat](http://www.jhauser.us/arithmetic/SoftFloat.html) rather than hardware acceleration.
 
+Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value.
+
 TODO:
 
 - compare function signatures against reference CBLAS (`const` &c.)
@@ -144,6 +146,7 @@ Per Wikipedia:
 
 - `hgemm` - computes a matrix-matrix product using a general matrix
 
+TODO:  `gemm3m` variants
 
 ### Auxiliary Macros
 
@@ -182,3 +185,10 @@ Per Wikipedia:
 - scopy simplified logic, kept neg behavior
 - sdot simplified logic, kept neg behavior
 
+##  Testing
+
+To run the test suite, you need a copy of the source of [SoftFloat 3e](http://www.jhauser.us/arithmetic/SoftFloat-3/doc/SoftFloat.html) and [µnit](https://nemequ.github.io/munit/) in the `SoftBLAS/` directory.
+
+```sh
+gcc -o test_sasum -I.. -I../../../include  -I../../../SoftFloat/source/include -I../../../munit sasum.c ../../../src/blas/level1/sasum.c ../../../munit/munit.c
+```

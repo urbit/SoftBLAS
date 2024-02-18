@@ -1,3 +1,6 @@
+#ifndef SOFTBLAS_H
+#define SOFTBLAS_H
+
 #include "softfloat.h"
 
 //  TYPES
@@ -5,17 +8,17 @@
 enum SB_LAYOUT {
    SblasRowMajor=101,     // row-major arrays
    SblasColMajor=102};    // column-major arrays
-enum SBLAS_TRANSPOSE {
+enum SB_TRANSPOSE {
    SblasNoTrans=78,       // trans='N'
    SblasTrans=84,         // trans='T'
    SblasConjTrans=67};    // trans='C'
-enum SBLAS_UPLO {
+enum SB_UPLO {
    SblasUpper=85,         // uplo ='U'
    SblasLower=76};        // uplo ='L'
-enum SBLAS_DIAG {
+enum SB_DIAG {
    SblasNonUnit=78,       // diag ='N'
    SblasUnit=85};         // diag ='U'
-enum SBLAS_SIDE {
+enum SB_SIDE {
    SblasLeft=76,          // side ='L'
    SblasRight=82};        // side ='R'
 
@@ -98,9 +101,9 @@ typedef struct {
 #define f128_ne !f128_eq
 
 #define ABS(x) ( (x) >= 0 ? (x) : -(x) )
-#define f16_abs(x) ( (x) & 0x7fff )
-#define f32_abs(x) ( (x) & 0x7fffffff )
-#define f64_abs(x) ( (x) & 0x7fffffffffffffff )
+#define f16_abs(x) ( (x) & (float16_t)0x7fff )
+#define f32_abs(x) ( (x) & (float32_t)0x7fffffff )
+#define f64_abs(x) ( (x) & (float64_t)0x7fffffffffffffff )
 
 #define MAX(x, y) ( (x) > (y) ? (x) : (y) )
 #define f16_max(x, y) ( f16_gt( (x) , (y) ) ? (x) : (y) )
@@ -209,8 +212,8 @@ void caxpy(uint64_t N, complex32_t SA, complex32_t *HX, int64_t incX, complex32_
 void ccopy(uint64_t N, const complex32_t *CX, int64_t incX, complex32_t *CY, int64_t incY);
 complex32_t cdotc(uint64_t N, const complex32_t *CX, int64_t incX, const complex32_t *CY, int64_t incY);
 float32_t scnrm2(uint64_t N, const complex32_t *CX, uint64_t incX);
+void csrot(const uint64_t N, complex32_t *CX, const uint64_t incX, complex32_t *CY, const uint64_t incY, const complex32_t c, const complex32_t s);
 
-void crot(const uint64_t N, complex32_t *X, const uint64_t  incX, complex32_t *Y, const uint64_t incY, const complex32_t c, const complex32_t s);
 void cscal(uint64_t N, complex32_t SA, complex32_t *SX, uint64_t incX);
 void cswap(uint64_t N, complex32_t *SX, uint64_t incX, complex32_t *SY, uint64_t incY);
 uint64_t icamax(uint64_t N, const complex32_t *SX, uint64_t incX);
@@ -223,12 +226,65 @@ uint64_t icamax(uint64_t N, const complex32_t *SX, uint64_t incX);
 
 // Level 2
 
-void sgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *X, const uint64_t incX, const float32_t beta, float32_t *Y, const uint64_t incY);
-void dgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *X, const uint64_t incX, const float64_t beta, float64_t *Y, const uint64_t incY);
-void hgemv(const SB_LAYOUT Layout, const SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *X, const uint64_t incX, const float16_t beta, float16_t *Y, const uint64_t incY);
+void sgemv(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *X, const uint64_t incX, const float32_t beta, float32_t *Y, const uint64_t incY);
+void dgemv(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *X, const uint64_t incX, const float64_t beta, float64_t *Y, const uint64_t incY);
+void hgemv(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *X, const uint64_t incX, const float16_t beta, float16_t *Y, const uint64_t incY);
 
 // Level 3
 
-void sgemm(const SB_LAYOUT Layout, const SB_TRANSPOSE transA, const SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *B, const uint64_t ldb, const float32_t beta, float32_t *C, const uint64_t ldc);
-void dgemm(const SB_LAYOUT Layout, const SB_TRANSPOSE transA, const SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc);
-void hgemm(const SB_LAYOUT Layout, const SB_TRANSPOSE transA, const SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *B, const uint64_t ldb, const float16_t beta, float16_t *C, const uint64_t ldc);
+void sgemm(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE transA, const enum SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *B, const uint64_t ldb, const float32_t beta, float32_t *C, const uint64_t ldc);
+void dgemm(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE transA, const enum SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc);
+void hgemm(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE transA, const enum SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *B, const uint64_t ldb, const float16_t beta, float16_t *C, const uint64_t ldc);
+
+// NAN unification
+
+#define HALFNAN 0x7e00
+#define SINGNAN 0x7fc00000
+#define DOUBNAN 0x7ff8000000000000
+#define QUADNAN 0x7fff800000000000
+
+static inline bool nan_test_h(float16_t a) {
+    return f16_ne(a, a);
+}
+
+static inline float16_t nan_unify_h(float16_t a) {
+    if ( nan_test_h(a) ) {
+        *(uint16_t*)(&a) = HALFNAN;
+    }
+    return a;
+}
+
+static inline bool nan_test_s(float32_t a) {
+    return f32_ne(a, a);
+}
+
+static inline float32_t nan_unify_s(float32_t a) {
+    if ( nan_test_s(a) ) {
+        *(uint32_t*)(&a) = SINGNAN;
+    }
+    return a;
+}
+
+static inline bool nan_test_d(float64_t a) {
+    return f64_ne(a, a);
+}
+
+static inline float64_t nan_unify_d(float64_t a) {
+    if ( nan_test_d(a) ) {
+        *(uint64_t*)(&a) = DOUBNAN;
+    }
+    return a;
+}
+
+static inline bool nan_test_q(float128_t* a) {
+    return !f128M_eq(a, a);
+}
+
+static inline void nan_unify_q(float128_t* a) {
+    if ( nan_test_q(a) ) {
+        *( (uint64_t*)a)    = 0;
+        *(((uint64_t*)a)+1) = QUADNAN;
+    }
+}
+
+#endif // SOFTBLAS_H
