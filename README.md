@@ -4,10 +4,11 @@ A BLAS/LAPACK implmentation using [Berkeley SoftFloat](http://www.jhauser.us/ari
 
 Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value.
 
-TODO:
+**Status WIP ~2024.2.7**
 
-- compare function signatures against reference CBLAS (`const` &c.)
-- finish L2, L3
+- [ ] Complete complex-valued functions.
+- [ ] Compare function signatures against reference CBLAS (`const` &c.).
+- [ ] Construct test suite for all cases.
 
 [BLAS naming conventions](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-1/naming-conventions-for-blas-routines.html) are followed for 32/64 bits, but extensions to the prefix scheme are necessary for other bit widths:
 
@@ -177,6 +178,14 @@ TODO:  `gemm3m` variants
 - `f16_min(x, y)` → `( f16_gt( (x) , (y) ) ? (y) : (x) )`
 - `f32_min(x, y)` → `( f32_gt( (x) , (y) ) ? (y) : (x) )`
 - `f64_min(x, y)` → `( f64_gt( (x) , (y) ) ? (y) : (x) )`
+
+##  References
+
+- [BLAS](https://www.netlib.org/blas/)
+- [OpenBLAS](https://github.com/OpenMathLib/OpenBLAS)
+- [ATLAS](https://math-atlas.sourceforge.net/faq.html) LAPACK routimes
+- [Intel MKL](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-1/)
+- [IBM Engineering and Scientific Subroutines](https://www.ibm.com/docs/en/essl/6.3?topic=subroutines-matrix-operation)
 
 ---
 
