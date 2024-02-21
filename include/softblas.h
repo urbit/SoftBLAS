@@ -42,23 +42,23 @@ typedef struct {
 //  CONSTANTS
 
 #define SB_REAL16_ONE 0x3c00
-#define SB_REAL32_ONE 1.0f
-#define SB_REAL64_ONE 1.0
+#define SB_REAL32_ONE 0x3f800000
+#define SB_REAL64_ONE 0x3ff0000000000000
 // #define SB_REAL128U_ONE 1.0
 // #define SB_REAL128L_ONE 0.0
 #define SB_REAL16_ZERO 0x0000
-#define SB_REAL32_ZERO 0.0f
-#define SB_REAL64_ZERO 0.0
+#define SB_REAL32_ZERO 0x00000000
+#define SB_REAL64_ZERO 0x0000000000000000
 // #define SB_REAL128U_ZERO 0.0
 // #define SB_REAL128L_ZERO 0.0
 #define SB_REAL16_NEGONE 0xbc00
-#define SB_REAL32_NEGONE -1.0f
-#define SB_REAL64_NEGONE -1.0
+#define SB_REAL32_NEGONE 0xbf800000
+#define SB_REAL64_NEGONE 0xbff0000000000000
 // #define SB_REAL128U_NEGONE -1.0
 // #define SB_REAL128L_NEGONE 0.0
 #define SB_REAL16_NEGTWO 0xc000
-#define SB_REAL32_NEGTWO -2.0f
-#define SB_REAL64_NEGTWO -2.0
+#define SB_REAL32_NEGTWO 0xc0000000
+#define SB_REAL64_NEGTWO 0xc000000000000000
 
 #define SB_COMPLEX16_ZERO {SB_REAL16_ZERO, SB_REAL16_ZERO}
 #define SB_COMPLEX32_ZERO {SB_REAL32_ZERO, SB_REAL32_ZERO}
@@ -101,9 +101,9 @@ typedef struct {
 #define f128_ne !f128_eq
 
 #define ABS(x) ( (x) >= 0 ? (x) : -(x) )
-#define f16_abs(x) ( (x) & (float16_t)0x7fff )
-#define f32_abs(x) ( (x) & (float32_t)0x7fffffff )
-#define f64_abs(x) ( (x) & (float64_t)0x7fffffffffffffff )
+#define f16_abs(x) (float16_t){ ( (uint16_t)(x.v) & 0x7fff ) }
+#define f32_abs(x) (float32_t){ ( (uint32_t)(x.v) & 0x7fffffff ) }
+#define f64_abs(x) (float64_t){ ( (uint64_t)(x.v) & 0x7fffffffffffffff ) }
 
 #define MAX(x, y) ( (x) > (y) ? (x) : (y) )
 #define f16_max(x, y) ( f16_gt( (x) , (y) ) ? (x) : (y) )
@@ -282,7 +282,7 @@ static inline bool nan_test_q(float128_t* a) {
 
 static inline void nan_unify_q(float128_t* a) {
     if ( nan_test_q(a) ) {
-        *( (uint64_t*)a)    = 0;
+        *( (uint64_t*)a)    = 0x0000000000000000;
         *(((uint64_t*)a)+1) = QUADNAN;
     }
 }
