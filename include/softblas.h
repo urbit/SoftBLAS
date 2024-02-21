@@ -153,7 +153,7 @@ typedef struct {
 #define c128_div(a, b) { f128_div( f128_add( f128_mul(a.real, b.real), f128_mul(a.imag, b.imag) ), f128_add( f128_mul(b.real, b.real), f128_mul(b.imag, b.imag) ) ), f128_div( f128_sub( f128_mul(a.imag, b.real), f128_mul(a.real, b.imag) ), f128_add( f128_mul(b.real, b.real), f128_mul(b.imag, b.imag) ) ) }
 
 #define CONJ(a) { a.real, FNEG(a.imag) }
-#define FNEG(x) ( x ^ (1 << (sizeof(x) * 8 - 1)) )
+#define FNEG(x) ( x.v ^ (1 << (sizeof(x.v) * 8 - 1)) )
 
 //  SOFTBLAS PROTOTYPES
 

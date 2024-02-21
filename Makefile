@@ -3,31 +3,38 @@ CFLAGS = -Iinclude -ISoftFloat/source/include -Imunit -Itests/blas/include
 LDFLAGS = -LSoftFloat/build/Linux-x86_64-GCC/
 LIBS = -l:softfloat.a
 
-SRC_MUNIT = munit/munit.c
-OBJ_MUNIT = $(SRC_MUNIT:.c=.o)
+MUNIT_SRC = munit/munit.c
+MUNIT_OBJ = $(MUNIT_SRC:.c=.o)
 
-SRC_BLAS = src/blas/level1/sasum.c
-OBJ_BLAS = $(SRC_BLAS:.c=.o)
+BLAS_SRC_DIR = ./src/blas/level1
+BLAS_SRCS = $(BLAS_SRC_DIR)/sasum.c $(BLAS_SRC_DIR)/saxpy.c
+BLAS_OBJS = $(BLAS_SRCS:.c=.o)
 
-SRC_TEST = ./tests/blas/level1/sasum.c
-OBJ_TEST = $(SRC_TEST:.c=.o)
+TEST_SRC_DIR = ./tests/blas/level1
+TEST_SRCS = $(wildcard $(TEST_SRC_DIR)/*.c)
+TEST_OBJS = $(TEST_SRCS:.c=.o)
 
-TARGET = test_sasum
+TEST_ALL_SRC = ./tests/test_all.c
+TEST_ALL_OBJ = $(TEST_ALL_SRC:.c=.o)
+
+TARGET = test_all
 
 all: $(TARGET)
 
-$(TARGET): $(OBJ_TEST) $(OBJ_BLAS) $(OBJ_MUNIT)
-	$(CC) $(LDFLAGS) $^ -o $(TARGET) $(LIBS)
+$(TARGET): $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TEST_ALL_OBJ)
+	$(CC) $(LDFLAGS) $^ -o $@ $(LIBS)
 
-$(OBJ_TEST): $(SRC_TEST)
+$(TEST_OBJS): $(TEST_SRC_DIR)/%.o: $(TEST_SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJ_BLAS): $(SRC_BLAS)
+$(TEST_ALL_OBJ): $(TEST_ALL_SRC)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJ_MUNIT): $(SRC_MUNIT)
+$(BLAS_OBJS): $(BLAS_SRC_DIR)/%.o: $(BLAS_SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(MUNIT_OBJ): $(MUNIT_SRC)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ_TEST) $(OBJ_BLAS) $(OBJ_MUNIT) $(TARGET)
-
+	rm -f $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TARGET) $(TEST_ALL_OBJ)
