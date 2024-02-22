@@ -114,10 +114,15 @@ Per Wikipedia:
 - `hswap` - swap x and y
 - `ihamax` - index of max abs value
 
+#### `q` 128-Bit Quadruple Precision
+
+- `qasum` - sum of absolute values
+- `qaxpy` - y = a*x + y
+
 #### Pending
 
 - `{hi|sc|dz|qv}nrm` - Euclidean norm, complex
-- `q*` - quadruple-precision functions
+- Rest of `q*` - quadruple-precision functions
 
 ### Level 2 Functions
 
@@ -179,7 +184,10 @@ TODO:  `gemm3m` variants
 - `f32_min(x, y)` → `( f32_gt( (x) , (y) ) ? (y) : (x) )`
 - `f64_min(x, y)` → `( f64_gt( (x) , (y) ) ? (y) : (x) )`
 
+
 ##  References
+
+The following were found to be particularly helpful in composing these functions.
 
 - [BLAS](https://www.netlib.org/blas/)
 - [OpenBLAS](https://github.com/OpenMathLib/OpenBLAS)
@@ -187,19 +195,13 @@ TODO:  `gemm3m` variants
 - [Intel MKL](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-1/)
 - [IBM Engineering and Scientific Subroutines](https://www.ibm.com/docs/en/essl/6.3?topic=subroutines-matrix-operation)
 
----
-
-- sasum simplified logic
-- saxpy simplified logic, kept neg behavior
-- scopy simplified logic, kept neg behavior
-- sdot simplified logic, kept neg behavior
 
 ##  Testing
 
 To run the test suite, you need a build of [SoftFloat 3e](http://www.jhauser.us/arithmetic/SoftFloat-3/doc/SoftFloat.html) and [µnit](https://nemequ.github.io/munit/) in the `SoftBLAS/` directory.
 
 - SoftFloat 3e at `SoftBLAS/SoftFloat/build/Linux-x86_64-GCC/`
-- 
+- µnit at `SoftBLAS/munit/`
 
 If your setup is different, modify `LDFLAGS` in the Makefile.
 

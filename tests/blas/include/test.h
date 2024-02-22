@@ -7,26 +7,6 @@
 #define MUNIT_ENABLE_ASSERT_ALIASES
 #include "munit.h"
 
-union half {
-    float16_t h;
-    uint16_t u;
-};
-
-union sing {
-    float32_t s;
-    uint32_t u;
-};
-
-union doub {
-    float64_t d;
-    uint64_t u;
-};
-
-union quad {
-    float128_t* q;
-    uint64_t* u;
-};
-
 //  Test function prototypes
 MunitResult test_haxpy_0(const MunitParameter params[],
                          void* user_data_or_fixture);
@@ -59,6 +39,10 @@ MunitResult test_daxpy_stride(const MunitParameter params[],
 MunitResult test_daxpy_neg_stride(const MunitParameter params[],
                                   void* user_data_or_fixture);
 
+MunitResult test_qasum_0(const MunitParameter params[],
+                       void* user_data_or_fixture);
+MunitResult test_qasum_12345(const MunitParameter params[],
+                       void* user_data_or_fixture);
 MunitResult test_qaxpy_0(const MunitParameter params[],
                          void* user_data_or_fixture);
 MunitResult test_qaxpy_sum(const MunitParameter params[],

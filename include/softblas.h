@@ -45,41 +45,43 @@ typedef struct {
 #define SB_REAL16_ONE 0x3c00
 #define SB_REAL32_ONE 0x3f800000
 #define SB_REAL64_ONE 0x3ff0000000000000
-// #define SB_REAL128U_ONE 1.0
-// #define SB_REAL128L_ONE 0.0
+#define SB_REAL128U_ONE 0x3fff000000000000
+#define SB_REAL128L_ONE 0x0000000000000000
 #define SB_REAL16_ZERO 0x0000
 #define SB_REAL32_ZERO 0x00000000
 #define SB_REAL64_ZERO 0x0000000000000000
-// #define SB_REAL128U_ZERO 0.0
-// #define SB_REAL128L_ZERO 0.0
+#define SB_REAL128U_ZERO 0x0000000000000000
+#define SB_REAL128L_ZERO 0x0000000000000000
 #define SB_REAL16_NEGONE 0xbc00
 #define SB_REAL32_NEGONE 0xbf800000
 #define SB_REAL64_NEGONE 0xbff0000000000000
-// #define SB_REAL128U_NEGONE -1.0
-// #define SB_REAL128L_NEGONE 0.0
+#define SB_REAL128U_NEGONE 0xbfff000000000000
+#define SB_REAL128L_NEGONE 0x0000000000000000
 #define SB_REAL16_NEGTWO 0xc000
 #define SB_REAL32_NEGTWO 0xc0000000
 #define SB_REAL64_NEGTWO 0xc000000000000000
+#define SB_REAL128U_NEGTWO 0xc000000000000000
+#define SB_REAL128L_NEGTWO 0x0000000000000000
 
 #define SB_COMPLEX16_ZERO {SB_REAL16_ZERO, SB_REAL16_ZERO}
 #define SB_COMPLEX32_ZERO {SB_REAL32_ZERO, SB_REAL32_ZERO}
 #define SB_COMPLEX64_ZERO {SB_REAL64_ZERO, SB_REAL64_ZERO}
-// #define SB_COMPLEX128_ZERO {SB_REAL128U_ZERO, SB_REAL128L_ZERO}
+#define SB_COMPLEX128_ZERO {SB_REAL128L_ZERO, SB_REAL128U_ZERO}
 
 #define SB_COMPLEX16_ONE {SB_REAL16_ONE, SB_REAL16_ZERO}
 #define SB_COMPLEX32_ONE {SB_REAL32_ONE, SB_REAL32_ZERO}
 #define SB_COMPLEX64_ONE {SB_REAL64_ONE, SB_REAL64_ZERO}
-// #define SB_COMPLEX128_ONE {SB_REAL128U_ONE, SB_REAL128L_ONE}
+#define SB_COMPLEX128_ONE {SB_REAL128L_ONE, SB_REAL128U_ONE}
 
 #define SB_COMPLEX16_NEGONE {SB_REAL16_NEGONE, SB_REAL16_ZERO}
 #define SB_COMPLEX32_NEGONE {SB_REAL32_NEGONE, SB_REAL32_ZERO}
 #define SB_COMPLEX64_NEGONE {SB_REAL64_NEGONE, SB_REAL64_ZERO}
-// #define SB_COMPLEX128_NEGONE {SB_REAL128U_NEGONE, SB_REAL128L_NEGONE}
+#define SB_COMPLEX128_NEGONE {SB_REAL128L_NEGONE, SB_REAL128U_NEGONE}
 
 #define SB_COMPLEX16_NEGTWO {SB_REAL16_NEGTWO, SB_REAL16_ZERO}
 #define SB_COMPLEX32_NEGTWO {SB_REAL32_NEGTWO, SB_REAL32_ZERO}
 #define SB_COMPLEX64_NEGTWO {SB_REAL64_NEGTWO, SB_REAL64_ZERO}
-// #define SB_COMPLEX128_NEGTWO {SB_REAL128U_NEGTWO, SB_REAL128L_ZERO}
+#define SB_COMPLEX128_NEGTWO {SB_REAL128L_NEGTWO, SB_REAL128U_NEGTWO}
 
 #define SB_COMPLEX16_I {SB_REAL16_ZERO, SB_REAL16_ONE}
 #define SB_COMPLEX32_I {SB_REAL32_ZERO, SB_REAL32_ONE}
@@ -105,16 +107,19 @@ typedef struct {
 #define f16_abs(x) (float16_t){ ( (uint16_t)(x.v) & 0x7fff ) }
 #define f32_abs(x) (float32_t){ ( (uint32_t)(x.v) & 0x7fffffff ) }
 #define f64_abs(x) (float64_t){ ( (uint64_t)(x.v) & 0x7fffffffffffffff ) }
+#define f128_abs(x) (&(float128_t){ ( (uint64_t)(x.v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x.v[1]) & 0x7fffffffffffffff ) })
 
 #define MAX(x, y) ( (x) > (y) ? (x) : (y) )
 #define f16_max(x, y) ( f16_gt( (x) , (y) ) ? (x) : (y) )
 #define f32_max(x, y) ( f32_gt( (x) , (y) ) ? (x) : (y) )
 #define f64_max(x, y) ( f64_gt( (x) , (y) ) ? (x) : (y) )
+#define f128_max(x, y) ( f128_gt( (x) , (y) ) ? (x) : (y) )
 
 #define MIN(x, y) ( (x) > (y) ? (y) : (x) )
 #define f16_min(x, y) ( f16_gt( (x) , (y) ) ? (y) : (x) )
 #define f32_min(x, y) ( f32_gt( (x) , (y) ) ? (y) : (x) )
 #define f64_min(x, y) ( f64_gt( (x) , (y) ) ? (y) : (x) )
+#define f128_min(x, y) ( f128_gt( (x) , (y) ) ? (y) : (x) )
 
 #define c16_eq(a, b)  ( (a.real == b.real) && (a.imag == b.imag) )
 #define c32_eq(a, b)  ( (a.real == b.real) && (a.imag == b.imag) )
@@ -206,6 +211,7 @@ void hswap(uint64_t N, float16_t *HX, uint64_t incX, float16_t *HY, uint64_t inc
 uint64_t ihamax(uint64_t N, const float16_t *HX, uint64_t incX);
 
 //    Quad-precision
+float128_t qasum(uint64_t N, const float128_t *QX, uint64_t incX);
 void qaxpy(uint64_t N, float128_t QA, float128_t *QX, int64_t incX, float128_t *QY, int64_t incY);
 
 //    Complex single-precision

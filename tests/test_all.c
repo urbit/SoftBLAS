@@ -18,6 +18,8 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_haxpy_sum", test_haxpy_sum, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_haxpy_stride", test_haxpy_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_haxpy_neg_stride", test_haxpy_neg_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qasum_0", test_qasum_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qasum_12345", test_qasum_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qaxpy_0", test_qaxpy_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qaxpy_sum", test_qaxpy_sum, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qaxpy_stride", test_qaxpy_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},

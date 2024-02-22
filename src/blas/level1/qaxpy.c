@@ -13,4 +13,6 @@ void qaxpy(uint64_t N, float128_t QA, float128_t *QX, int64_t incX, float128_t *
         iX += incX;
         iY += incY;
     }
+
+    nan_unify_q(QY);
 }
