@@ -2,6 +2,7 @@
 #define SOFTBLAS_H
 
 #include "softfloat.h"
+#include <stdlib.h>
 
 //  TYPES
 
@@ -176,7 +177,7 @@ uint64_t isamax(uint64_t N, const float32_t *SX, uint64_t incX);
 
 //    Double-precision
 float64_t dasum(uint64_t N, const float64_t *DX, uint64_t incX);
-void daxpy(uint64_t N, float64_t DA, float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY);
+void daxpy(uint64_t N, float64_t DA, float64_t *DX, int64_t incX, float64_t *DY, int64_t incY);
 void dcopy(uint64_t N, const float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY);
 float64_t ddot(const uint64_t N, const float64_t *X, const uint64_t incX, const float64_t *Y, const uint64_t incY);
 float64_t dnrm2(uint64_t N, const float64_t *X, uint64_t incX);
@@ -191,7 +192,7 @@ uint64_t idamax(uint64_t N, const float64_t *DX, uint64_t incX);
 
 //    Half-precision
 float16_t hasum(uint64_t N, const float16_t *HX, uint64_t incX);
-void haxpy(uint64_t N, float16_t HA, float16_t *HX, uint64_t incX, float16_t *HY, uint64_t incY);
+void haxpy(uint64_t N, float16_t HA, float16_t *HX, int64_t incX, float16_t *HY, int64_t incY);
 void hcopy(uint64_t N, const float16_t *HX, uint64_t incX, float16_t *HY, uint64_t incY);
 float16_t hdot(const uint64_t N, const float16_t *X, const uint64_t incX, const float16_t *Y, const uint64_t incY);
 float16_t hnrm2(uint64_t N, const float16_t *X, uint64_t incX);
@@ -205,6 +206,7 @@ void hswap(uint64_t N, float16_t *HX, uint64_t incX, float16_t *HY, uint64_t inc
 uint64_t ihamax(uint64_t N, const float16_t *HX, uint64_t incX);
 
 //    Quad-precision
+void qaxpy(uint64_t N, float128_t QA, float128_t *QX, int64_t incX, float128_t *QY, int64_t incY);
 
 //    Complex single-precision
 float32_t scasum(uint64_t N, const complex32_t *SX, int64_t incX);
@@ -285,6 +287,96 @@ static inline void nan_unify_q(float128_t* a) {
         *( (uint64_t*)a)    = 0x0000000000000000;
         *(((uint64_t*)a)+1) = QUADNAN;
     }
+}
+
+/*  Convert an array of half-precision floats to an array of float16_t.
+    The array of floats is assumed to be in little-endian format.
+
+    Example usage:
+        float16_t* HX = hvec((uint16_t[]){
+            0x3C00,  // 1.0
+            0xBC00,  // -1.0
+            0x4248,  // 3.14
+        }, 3);
+        free(HX);
+ */
+static inline float16_t* hvec(uint16_t values[], uint64_t size) {
+    float16_t* result = malloc(size * sizeof(float16_t));
+    
+    for (uint64_t i = 0; i < size; i++) {
+        result[i].v = values[i];
+    }
+    
+    return result;
+}
+
+/*  Convert an array of single-precision floats to an array of float32_t.
+    The array of floats is assumed to be in little-endian format. 
+
+    Example usage:
+        float32_t* SX = svec((float[]){
+            1.0f,
+            -1.0f,
+            3.14159274f
+        }, 3);
+        free(SX);
+ */
+static inline float32_t* svec(float values[], uint64_t size) {
+    float32_t* result = malloc(size * sizeof(float32_t));
+    
+    for (uint64_t i = 0; i < size; i++) {
+        result[i].v = *(uint32_t*)&values[i];
+    }
+    
+    return result;
+}
+
+/*  Convert an array of double-precision floats to an array of float64_t.
+    The array of floats is assumed to be in little-endian format. 
+
+    Example usage:
+        float64_t* DX = dvec((double[]){
+            1.0,
+            -1.0,
+            3.1415926535897931
+        }, 3);
+        free(DX);
+ */
+static inline float64_t* dvec(double values[], uint64_t size) {
+    float64_t* result = malloc(size * sizeof(float64_t));
+    
+    for (uint64_t i = 0; i < size; i++) {
+        result[i].v = *(uint64_t*)&values[i];
+    }
+    
+    return result;
+}
+
+typedef struct {
+    uint64_t hi;
+    uint64_t lo;
+} float128_pair_t;
+
+/*  Convert an array of quad-precision float pairs to an array of float128_t.
+    The array of floats is assumed to be in little-endian format. 
+
+    Example usage:
+        float128_t* QX = qvec((float128_pair_t[]){
+            {.hi = 0x3FF0000000000000, .lo = 0x0000000000000000},  // 1.0
+            {.hi = 0xBFF0000000000000, .lo = 0x0000000000000000},  // -1.0
+            {.hi = 0x400921FB54442D18, .lo = 0x469898cc51701b80},  // 3.141592653589793238462643383279502797479068098137295573004504331874296718662975536062731407582759857177734375
+        }, 3);
+        free(QX);
+ */
+static inline float128_t* qvec(float128_pair_t pairs[], uint64_t size) {
+    float128_t* result = malloc(size * sizeof(float128_t));
+    
+    for (uint64_t i = 0; i < size; i++) {
+        result[i].v[0] = pairs[i].lo;
+        result[i].v[1] = pairs[i].hi;
+    }
+    
+    return result;
 }
 
 #endif // SOFTBLAS_H

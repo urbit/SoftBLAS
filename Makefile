@@ -7,7 +7,12 @@ MUNIT_SRC = munit/munit.c
 MUNIT_OBJ = $(MUNIT_SRC:.c=.o)
 
 BLAS_SRC_DIR = ./src/blas/level1
-BLAS_SRCS = $(BLAS_SRC_DIR)/sasum.c $(BLAS_SRC_DIR)/saxpy.c
+BLAS_SRCS = \
+  $(BLAS_SRC_DIR)/sasum.c \
+  $(BLAS_SRC_DIR)/saxpy.c \
+  $(BLAS_SRC_DIR)/daxpy.c \
+  $(BLAS_SRC_DIR)/haxpy.c \
+  $(BLAS_SRC_DIR)/qaxpy.c
 BLAS_OBJS = $(BLAS_SRCS:.c=.o)
 
 TEST_SRC_DIR = ./tests/blas/level1
@@ -19,7 +24,7 @@ TEST_ALL_OBJ = $(TEST_ALL_SRC:.c=.o)
 
 TARGET = test_all
 
-all: $(TARGET)
+tests: $(TARGET)
 
 $(TARGET): $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TEST_ALL_OBJ)
 	$(CC) $(LDFLAGS) $^ -o $@ $(LIBS)

@@ -28,6 +28,15 @@ union quad {
 };
 
 //  Test function prototypes
+MunitResult test_haxpy_0(const MunitParameter params[],
+                         void* user_data_or_fixture);
+MunitResult test_haxpy_sum(const MunitParameter params[],
+                           void* user_data_or_fixture);
+MunitResult test_haxpy_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_haxpy_neg_stride(const MunitParameter params[],
+                                  void* user_data_or_fixture);
+
 MunitResult test_sasum_0(const MunitParameter params[],
                        void* user_data_or_fixture);
 MunitResult test_sasum_12345(const MunitParameter params[],
@@ -39,6 +48,24 @@ MunitResult test_saxpy_sum(const MunitParameter params[],
 MunitResult test_saxpy_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 MunitResult test_saxpy_neg_stride(const MunitParameter params[],
+                                  void* user_data_or_fixture);
+
+MunitResult test_daxpy_0(const MunitParameter params[],
+                         void* user_data_or_fixture);
+MunitResult test_daxpy_sum(const MunitParameter params[],
+                           void* user_data_or_fixture);
+MunitResult test_daxpy_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_daxpy_neg_stride(const MunitParameter params[],
+                                  void* user_data_or_fixture);
+
+MunitResult test_qaxpy_0(const MunitParameter params[],
+                         void* user_data_or_fixture);
+MunitResult test_qaxpy_sum(const MunitParameter params[],
+                           void* user_data_or_fixture);
+MunitResult test_qaxpy_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_qaxpy_neg_stride(const MunitParameter params[],
                                   void* user_data_or_fixture);
 
 #endif // TEST_H

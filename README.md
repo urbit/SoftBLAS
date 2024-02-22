@@ -196,8 +196,22 @@ TODO:  `gemm3m` variants
 
 ##  Testing
 
-To run the test suite, you need a copy of the source of [SoftFloat 3e](http://www.jhauser.us/arithmetic/SoftFloat-3/doc/SoftFloat.html) and [µnit](https://nemequ.github.io/munit/) in the `SoftBLAS/` directory.
+To run the test suite, you need a build of [SoftFloat 3e](http://www.jhauser.us/arithmetic/SoftFloat-3/doc/SoftFloat.html) and [µnit](https://nemequ.github.io/munit/) in the `SoftBLAS/` directory.
+
+- SoftFloat 3e at `SoftBLAS/SoftFloat/build/Linux-x86_64-GCC/`
+- 
+
+If your setup is different, modify `LDFLAGS` in the Makefile.
 
 ```sh
-gcc -o test_sasum -I.. -I../../../include  -I../../../SoftFloat/source/include -I../../../munit sasum.c ../../../src/blas/level1/sasum.c ../../../munit/munit.c
+$ make tests
+$ ./test_all
+Running test suite with seed 0xa623450c...
+/blas/level1/test_sasum_0            [ OK    ] [ 0.00000478 / 0.00000284 CPU ]
+/blas/level1/test_sasum_12345        [ OK    ] [ 0.00000800 / 0.00000671 CPU ]
+/blas/level1/test_saxpy_0            [ OK    ] [ 0.00002413 / 0.00002288 CPU ]
+/blas/level1/test_saxpy_sum          [ OK    ] [ 0.00002411 / 0.00002285 CPU ]
+/blas/level1/test_saxpy_stride       [ OK    ] [ 0.00002446 / 0.00002332 CPU ]
+/blas/level1/test_saxpy_neg_stride   [ OK    ] [ 0.00002927 / 0.00002805 CPU ]
+6 of 6 (100%) tests successful, 0 (0%) test skipped.
 ```
