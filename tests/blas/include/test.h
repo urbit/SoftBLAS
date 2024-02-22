@@ -36,5 +36,9 @@ MunitResult test_saxpy_0(const MunitParameter params[],
                          void* user_data_or_fixture);
 MunitResult test_saxpy_sum(const MunitParameter params[],
                            void* user_data_or_fixture);
+MunitResult test_saxpy_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_saxpy_neg_stride(const MunitParameter params[],
+                                  void* user_data_or_fixture);
 
 #endif // TEST_H
