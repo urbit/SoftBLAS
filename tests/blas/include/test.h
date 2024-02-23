@@ -30,6 +30,10 @@ MunitResult test_saxpy_stride(const MunitParameter params[],
 MunitResult test_saxpy_neg_stride(const MunitParameter params[],
                                   void* user_data_or_fixture);
 
+MunitResult test_dasum_0(const MunitParameter params[],
+                       void* user_data_or_fixture);
+MunitResult test_dasum_12345(const MunitParameter params[],
+                       void* user_data_or_fixture);
 MunitResult test_daxpy_0(const MunitParameter params[],
                          void* user_data_or_fixture);
 MunitResult test_daxpy_sum(const MunitParameter params[],
