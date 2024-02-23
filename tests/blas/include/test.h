@@ -40,6 +40,12 @@ MunitResult test_hnrm2_12345(const MunitParameter params[],
                              void* user_data_or_fixture);
 MunitResult test_hnrm2_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
+MunitResult test_hscal_0(const MunitParameter params[],
+                        void* user_data_or_fixture);
+MunitResult test_hscal_12345(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_hscal_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
 
 MunitResult test_sasum_0(const MunitParameter params[],
                          void* user_data_or_fixture);
@@ -72,6 +78,12 @@ MunitResult test_snrm2_0(const MunitParameter params[],
 MunitResult test_snrm2_12345(const MunitParameter params[],
                              void* user_data_or_fixture);
 MunitResult test_snrm2_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_sscal_0(const MunitParameter params[],
+                         void* user_data_or_fixture);
+MunitResult test_sscal_12345(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_sscal_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 
 MunitResult test_dasum_0(const MunitParameter params[],
@@ -106,6 +118,12 @@ MunitResult test_dnrm2_12345(const MunitParameter params[],
                              void* user_data_or_fixture);
 MunitResult test_dnrm2_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
+MunitResult test_dscal_0(const MunitParameter params[],
+                         void* user_data_or_fixture);
+MunitResult test_dscal_12345(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_dscal_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
 
 MunitResult test_qasum_0(const MunitParameter params[],
                        void* user_data_or_fixture);
@@ -138,6 +156,12 @@ MunitResult test_qnrm2_0(const MunitParameter params[],
 MunitResult test_qnrm2_12345(const MunitParameter params[],
                              void* user_data_or_fixture);
 MunitResult test_qnrm2_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_qscal_0(const MunitParameter params[],
+                         void* user_data_or_fixture);
+MunitResult test_qscal_12345(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_qscal_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 
 #endif // TEST_H

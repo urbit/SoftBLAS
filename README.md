@@ -93,8 +93,8 @@ Per Wikipedia:
 - `daxpy` - y = a*x + y
 - `dcopy` - copy x into y
 - `ddot` - dot product
-- `dnrm2` - Euclidean norm
 - ~~`dsdot` - dot product with extended precision accumulation (returns `float64_t`)~~
+- `dnrm2` - Euclidean norm
 - `drot` - apply Givens rotation
 - `drotg` - set up Givens rotation
 - `drotm` - apply modified Givens rotation

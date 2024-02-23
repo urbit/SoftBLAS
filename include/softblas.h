@@ -169,8 +169,6 @@ float32_t sasum(uint64_t N, const float32_t *SX, uint64_t incX);
 void saxpy(uint64_t N, float32_t SA, float32_t *SX, int64_t incX, float32_t *SY, int64_t incY);
 void scopy(uint64_t N, const float32_t *SX, int64_t incX, float32_t *SY, int64_t incY);
 float32_t sdot(const uint64_t N, const float32_t *X, const int64_t incX, const float32_t *Y, const int64_t incY);
-
-float32_t sdsdot(const uint64_t N, const float32_t alpha, const float32_t *X, const uint64_t incX, const float32_t *Y, const uint64_t incY);
 float32_t snrm2(uint64_t N, const float32_t *X, uint64_t incX);
 void srot(const uint64_t N, float32_t *X, const uint64_t  incX, float32_t *Y, const uint64_t incY, const float32_t c, const float32_t s);
 void srotg(float32_t *a, float32_t *b, float32_t *c, float32_t *s);
@@ -191,7 +189,6 @@ void drotg(float64_t *a, float64_t *b, float64_t *c, float64_t *s);
 void drotm(const uint64_t N, float64_t *X, const uint64_t incX, float64_t *Y, const uint64_t incY, const float64_t *P);
 void drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, float64_t *P);
 void dscal(uint64_t N, float64_t DA, float64_t *DX, uint64_t incX);
-float64_t dsdot(const uint64_t N, const float64_t alpha, const float64_t *X, const uint64_t incX, const float64_t *Y, const uint64_t incY);
 void dswap(uint64_t N, float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY);
 uint64_t idamax(uint64_t N, const float64_t *DX, uint64_t incX);
 
@@ -206,7 +203,6 @@ void hrotg(float16_t *a, float16_t *b, float16_t *c, float16_t *s);
 void hrotm(const uint64_t N, float16_t *X, const uint64_t incX, float16_t *Y, const uint64_t incY, const float16_t *P);
 void hrotmg(float16_t *D1, float16_t *D2, float16_t *X1, const float16_t y1, float16_t *P);
 void hscal(uint64_t N, float16_t HA, float16_t *HX, uint64_t incX);
-float16_t hsdot(const uint64_t N, const float16_t alpha, const float16_t *X, const uint64_t incX, const float16_t *Y, const uint64_t incY);
 void hswap(uint64_t N, float16_t *HX, uint64_t incX, float16_t *HY, uint64_t incY);
 uint64_t ihamax(uint64_t N, const float16_t *HX, uint64_t incX);
 
@@ -216,18 +212,25 @@ void qaxpy(uint64_t N, float128_t QA, float128_t *QX, int64_t incX, float128_t *
 void qcopy(uint64_t N, const float128_t *QX, int64_t incX, float128_t *QY, int64_t incY);
 float128_t qdot(const uint64_t N, const float128_t *X, const int64_t incX, const float128_t *Y, const int64_t incY);
 float128_t qnrm2(uint64_t N, const float128_t *X, uint64_t incX);
+void qrot(const uint64_t N, float16_t *X, const uint64_t  incX, float16_t *Y, const uint64_t incY, const float16_t c, const float16_t s);
+void qrotg(float128_t *a, float128_t *b, float128_t *c, float128_t *s);
+void qrotm(const uint64_t N, float128_t *X, const uint64_t incX, float128_t *Y, const uint64_t incY, const float128_t *P);
+void qrotmg(float128_t *D1, float128_t *D2, float128_t *X1, const float128_t y1, float128_t *P);
+void qscal(uint64_t N, float128_t QA, float128_t *QX, uint64_t incX);
+void qswap(uint64_t N, float128_t *QX, uint64_t incX, float128_t *QY, uint64_t incY);
+uint64_t iqamax(uint64_t N, const float128_t *QX, uint64_t incX);
 
 //    Complex single-precision
-float32_t scasum(uint64_t N, const complex32_t *SX, int64_t incX);
-void caxpy(uint64_t N, complex32_t SA, complex32_t *HX, int64_t incX, complex32_t *HY, int64_t incY);
+float32_t scasum(uint64_t N, const complex32_t *CX, int64_t incX);
+void caxpy(uint64_t N, complex32_t CA, complex32_t *CX, int64_t incX, complex32_t *HY, int64_t incY);
 void ccopy(uint64_t N, const complex32_t *CX, int64_t incX, complex32_t *CY, int64_t incY);
 complex32_t cdotc(uint64_t N, const complex32_t *CX, int64_t incX, const complex32_t *CY, int64_t incY);
 float32_t scnrm2(uint64_t N, const complex32_t *CX, uint64_t incX);
 void csrot(const uint64_t N, complex32_t *CX, const uint64_t incX, complex32_t *CY, const uint64_t incY, const complex32_t c, const complex32_t s);
 
-void cscal(uint64_t N, complex32_t SA, complex32_t *SX, uint64_t incX);
-void cswap(uint64_t N, complex32_t *SX, uint64_t incX, complex32_t *SY, uint64_t incY);
-uint64_t icamax(uint64_t N, const complex32_t *SX, uint64_t incX);
+void cscal(uint64_t N, complex32_t CA, complex32_t *CX, uint64_t incX);
+void cswap(uint64_t N, complex32_t *CX, uint64_t incX, complex32_t *CY, uint64_t incY);
+uint64_t icamax(uint64_t N, const complex32_t *CX, uint64_t incX);
 
 //    Complex double-precision
 
