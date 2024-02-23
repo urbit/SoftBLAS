@@ -2,11 +2,10 @@
 
 MunitResult test_scopy_all(const MunitParameter params[],
                            void* user_data_or_fixture) {
-    const uint64_t N = 5;
-    float32_t* SX = svec((float[]){1.0f, -2.0f, 3.0f, -4.0f, 5.0f}, N);
-    float32_t* SY = svec((float[]){0.0f, 0.0f, 0.0f, 0.0f, 0.0f}, N);
+    float32_t* SX = svec((float[]){1.0f, -2.0f, 3.0f, -4.0f, 5.0f}, 5);
+    float32_t* SY = svec((float[]){0.0f, 0.0f, 0.0f, 0.0f, 0.0f}, 5);
 
-    scopy(N, (float32_t*)SX, 1, SY, 1);
+    scopy(5, (float32_t*)SX, 1, SY, 1);
 
     float32_t RY[] = {
         {*(uint32_t*)&(float){1.0f}},

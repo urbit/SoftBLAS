@@ -23,6 +23,8 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_sscal_0", test_sscal_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sscal_12345", test_sscal_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sscal_stride", test_sscal_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sswap_two", test_sswap_two, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sswap_stride", test_sswap_two, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             
             {"/test_dasum_0", test_dasum_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dasum_12345", test_dasum_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -43,6 +45,8 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_dscal_0", test_dscal_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dscal_12345", test_dscal_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dscal_stride", test_dscal_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_dswap_two", test_dswap_two, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_dswap_stride", test_dswap_two, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             
             {"/test_hasum_0", test_hasum_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_hasum_12345", test_hasum_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -63,7 +67,9 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_hscal_0", test_hscal_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_hscal_12345", test_hscal_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_hscal_stride", test_hscal_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
-
+            {"/test_hswap_two", test_hswap_two, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_hswap_stride", test_hswap_two, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            
             {"/test_qasum_0", test_qasum_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qasum_12345", test_qasum_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qasum_stride", test_qasum_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -83,7 +89,9 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_qscal_0", test_qscal_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qscal_12345", test_qscal_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qscal_stride", test_qscal_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
-
+            {"/test_qswap_two", test_qswap_two, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qswap_stride", test_qswap_two, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            
             {NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
         },
         NULL,
