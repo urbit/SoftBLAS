@@ -35,7 +35,12 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR)/sswap.c \
   $(BLAS_SRC_DIR)/dswap.c \
   $(BLAS_SRC_DIR)/hswap.c \
-  $(BLAS_SRC_DIR)/qswap.c
+  $(BLAS_SRC_DIR)/qswap.c \
+  $(BLAS_SRC_DIR)/isamax.c \
+  $(BLAS_SRC_DIR)/idamax.c \
+  $(BLAS_SRC_DIR)/ihamax.c \
+  $(BLAS_SRC_DIR)/iqamax.c
+#   $(BLAS_SRC_DIR)/srotg.c
 BLAS_OBJS = $(BLAS_SRCS:.c=.o)
 
 TEST_SRC_DIR = ./tests/blas/level1

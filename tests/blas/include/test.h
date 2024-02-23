@@ -50,6 +50,14 @@ MunitResult test_sswap_two(const MunitParameter params[],
                            void* user_data_or_fixture);
 MunitResult test_sswap_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
+MunitResult test_isamax_0(const MunitParameter params[],
+                          void* user_data_or_fixture);
+MunitResult test_isamax_12345(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_isamax_stride(const MunitParameter params[],
+                               void* user_data_or_fixture);
+MunitResult test_isamax_13542(const MunitParameter params[],
+                              void* user_data_or_fixture);
 
 MunitResult test_dasum_0(const MunitParameter params[],
                        void* user_data_or_fixture);
@@ -92,6 +100,14 @@ MunitResult test_dscal_stride(const MunitParameter params[],
 MunitResult test_dswap_two(const MunitParameter params[],
                            void* user_data_or_fixture);
 MunitResult test_dswap_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_idamax_0(const MunitParameter params[],
+                          void* user_data_or_fixture);
+MunitResult test_idamax_12345(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_idamax_stride(const MunitParameter params[],
+                               void* user_data_or_fixture);
+MunitResult test_idamax_13542(const MunitParameter params[],
                               void* user_data_or_fixture);
 
 MunitResult test_hasum_0(const MunitParameter params[],
@@ -136,6 +152,14 @@ MunitResult test_hswap_two(const MunitParameter params[],
                            void* user_data_or_fixture);
 MunitResult test_hswap_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
+MunitResult test_ihamax_0(const MunitParameter params[],
+                          void* user_data_or_fixture);
+MunitResult test_ihamax_12345(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_ihamax_stride(const MunitParameter params[],
+                               void* user_data_or_fixture);
+MunitResult test_ihamax_13542(const MunitParameter params[],
+                              void* user_data_or_fixture);
 
 MunitResult test_qasum_0(const MunitParameter params[],
                        void* user_data_or_fixture);
@@ -178,6 +202,14 @@ MunitResult test_qscal_stride(const MunitParameter params[],
 MunitResult test_qswap_two(const MunitParameter params[],
                            void* user_data_or_fixture);
 MunitResult test_qswap_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_iqamax_0(const MunitParameter params[],
+                          void* user_data_or_fixture);
+MunitResult test_iqamax_12345(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_iqamax_stride(const MunitParameter params[],
+                               void* user_data_or_fixture);
+MunitResult test_iqamax_13542(const MunitParameter params[],
                               void* user_data_or_fixture);
 
 #endif // TEST_H

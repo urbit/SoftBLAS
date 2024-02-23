@@ -90,30 +90,34 @@ typedef struct {
 
 //  SOFTFLOAT FUNCTIONS
 
-#define f16_ge !f16_lt
-#define f16_gt !f16_le
-#define f16_ne !f16_eq
-#define f32_ge !f32_lt
-#define f32_gt !f32_le
-#define f32_ne !f32_eq
-#define f64_ge !f64_lt
-#define f64_gt !f64_le
-#define f64_ne !f64_eq
-#define f128M_ge !f128M_lt
-#define f128M_gt !f128M_le
-#define f128M_ne !f128M_eq
+#define f16_ge(x,y) ( !(f16_lt( x,y ) ))
+#define f16_gt(x,y) ( !(f16_le( x,y ) ))
+#define f16_ne(x,y) ( !(f16_eq( x,y ) ))
+#define f32_ge(x,y) ( !(f32_lt( x,y ) ))
+#define f32_gt(x,y) ( !(f32_le( x,y ) ))
+#define f32_ne(x,y) ( !(f32_eq( x,y ) ))
+#define f64_ge(x,y) ( !(f64_lt( x,y ) ))
+#define f64_gt(x,y) ( !(f64_le( x,y ) ))
+#define f64_ne(x,y) ( !(f64_eq( x,y ) ))
+#define f128M_ge(x,y) ( !(f128M_lt( x,y ) ))
+#define f128M_gt(x,y) ( !(f128M_le( x,y ) ))
+#define f128M_ne(x,y) ( !(f128M_eq( x,y ) ))
 
 #define ABS(x) ( (x) >= 0 ? (x) : -(x) )
 #define f16_abs(x) (float16_t){ ( (uint16_t)(x.v) & 0x7fff ) }
 #define f32_abs(x) (float32_t){ ( (uint32_t)(x.v) & 0x7fffffff ) }
 #define f64_abs(x) (float64_t){ ( (uint64_t)(x.v) & 0x7fffffffffffffff ) }
-#define f128_abs(x) (&(float128_t){ ( (uint64_t)(x.v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x.v[1]) & 0x7fffffffffffffff ) })
+#define f128_abs(x) (float128_t){ ( (uint64_t)(x.v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x.v[1]) & 0x7fffffffffffffff ) }
+#define f16M_abs(x) (float16_t){ ( (uint16_t)(x->v) & 0x7fff ) }
+#define f32M_abs(x) (float32_t){ ( (uint32_t)(x->v) & 0x7fffffff ) }
+#define f64M_abs(x) (float64_t){ ( (uint64_t)(x->v) & 0x7fffffffffffffff ) }
+#define f128M_abs(x) (float128_t){ ( (uint64_t)(x->v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x->v[1]) & 0x7fffffffffffffff ) }
 
 #define MAX(x, y) ( (x) > (y) ? (x) : (y) )
 #define f16_max(x, y) ( f16_gt( (x) , (y) ) ? (x) : (y) )
 #define f32_max(x, y) ( f32_gt( (x) , (y) ) ? (x) : (y) )
 #define f64_max(x, y) ( f64_gt( (x) , (y) ) ? (x) : (y) )
-#define f128_max(x, y) ( f128_gt( (x) , (y) ) ? (x) : (y) )
+#define f128M_max(x, y) ( f128M_gt( (x) , (y) ) ? (x) : (y) )
 
 #define MIN(x, y) ( (x) > (y) ? (y) : (x) )
 #define f16_min(x, y) ( f16_gt( (x) , (y) ) ? (y) : (x) )

@@ -8,7 +8,10 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 
 **Status WIP ~2024.2.23**
 
-- [ ] Construct test suite for all cases.  (Current task)
+- [ ] Construct test suite for all cases.
+  - [x] Construct test suite for Level 1.
+  - [ ] Construct test suite for Level 2.
+  - [ ] Construct test suite for Level 3.
 - [ ] Compare function signatures against reference CBLAS (`const` &c.).
 - [ ] Complete complex-valued functions.
 - [ ] Run everything through a linter.
@@ -79,10 +82,10 @@ Per Wikipedia:
 - `sdot` - dot product
 - ~~`sdsdot` - dot product with extended precision accumulation (returns `float64_t`)~~
 - `snrm2` - Euclidean norm
-- `srot` - apply Givens rotation
-- `srotg` - set up Givens rotation
-- `srotm` - apply modified Givens rotation
-- `srotmg` - set up modified Givens rotation
+- ~~`srot` - apply Givens rotation~~
+- ~~`srotg` - set up Givens rotation~~
+- ~~`srotm` - apply modified Givens rotation~~
+- ~~`srotmg` - set up modified Givens rotation~~
 - `sscal` - x = a*x
 - `sswap` - swap x and y
 - `isamax` - index of max abs value
@@ -95,10 +98,10 @@ Per Wikipedia:
 - `ddot` - dot product
 - ~~`dsdot` - dot product with extended precision accumulation (returns `float64_t`)~~
 - `dnrm2` - Euclidean norm
-- `drot` - apply Givens rotation
-- `drotg` - set up Givens rotation
-- `drotm` - apply modified Givens rotation
-- `drotmg` - set up modified Givens rotation
+- ~~`drot` - apply Givens rotation~~
+- ~~`drotg` - set up Givens rotation~~
+- ~~`drotm` - apply modified Givens rotation~~
+- ~~`drotmg` - set up modified Givens rotation~~
 - `dscal` - x = a*x
 - `dswap` - swap x and y
 - `idamax` - index of max abs value
@@ -110,10 +113,10 @@ Per Wikipedia:
 - `hcopy` - copy x into y
 - `hdot` - dot product
 - `hnrm2` - Euclidean norm
-- `hrot` - apply Givens rotation
-- `hrotg` - set up Givens rotation
-- `hrotm` - apply modified Givens rotation
-- `hrotmg` - set up modified Givens rotation
+- ~~`hrot` - apply Givens rotation~~
+- ~~`hrotg` - set up Givens rotation~~
+- ~~`hrotm` - apply modified Givens rotation~~
+- ~~`hrotmg` - set up modified Givens rotation~~
 - `hscal` - x = a*x
 - `hswap` - swap x and y
 - `ihamax` - index of max abs value
@@ -124,11 +127,20 @@ Per Wikipedia:
 - `qaxpy` - y = a*x + y
 - `qcopy` - copy x into y
 - `qdot` - dot product
+- `qnrm2` - Euclidean norm
+- ~~`qrot` - apply Givens rotation~~
+- ~~`qrotg` - set up Givens rotation~~
+- ~~`qrotm` - apply modified Givens rotation~~
+- ~~`qrotmg` - set up modified Givens rotation~~
+- `qscal` - x = a*x
+- `qswap` - swap x and y
+- `iqamax` - index of max abs value
 
 #### Pending
 
 - `{hi|sc|dz|qv}nrm` - Euclidean norm, complex
-- Rest of `q*` - quadruple-precision functions
+- `?rot??` Givens rotation functions in Level 1
+- Various OpenBLAS extended functions like `i?amin`
 
 ### Level 2 Functions
 
@@ -175,26 +187,30 @@ These are provided as convenient extensions of SoftFloat definitions.
 - `f64_ge` → `!f64_lt`
 - `f64_gt` → `!f64_le`
 - `f64_ne` → `!f64_eq`
-- `f128_ge` → `!f128_lt`
-- `f128_gt` → `!f128_le`
-- `f128_ne` → `!f128_eq`
+- `f128M_ge` → `!f128M_lt`
+- `f128M_gt` → `!f128M_le`
+- `f128M_ne` → `!f128M_eq`
 
 - `ABS(x)` → `( (x) >= 0 ? (x) : -(x) )`
 - `f16_abs(x)` → `( (x) & 0x7fff )`
 - `f32_abs(x)` → `( (x) & 0x7fffffff )`
 - `f64_abs(x)` → `( (x) & 0x7fffffffffffffff )`
+- `f128_abs(x)` → `{ ( (uint64_t)(x.v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x.v[1]) & 0x7fffffffffffffff ) }`
+- `M` variants for pointers
 
 - `MAX(x, y)` → `( (x) > (y) ? (x) : (y) )`
 - `f16_max(x, y)` → `( f16_gt( (x) , (y) ) ? (x) : (y) )`
 - `f32_max(x, y)` → `( f32_gt( (x) , (y) ) ? (x) : (y) )`
 - `f64_max(x, y)` → `( f64_gt( (x) , (y) ) ? (x) : (y) )`
+- `f128M_max(x, y)`
 
 - `MIN(x, y)` → `( (x) > (y) ? (y) : (x) )`
 - `f16_min(x, y)` → `( f16_gt( (x) , (y) ) ? (y) : (x) )`
 - `f32_min(x, y)` → `( f32_gt( (x) , (y) ) ? (y) : (x) )`
 - `f64_min(x, y)` → `( f64_gt( (x) , (y) ) ? (y) : (x) )`
+- `f128M_min(x, y)`
 
-There is additionally a Juypter notebook, `adapt-type.ipynb`, helpful for quickly converting a file from single-precision type to half or double.
+There is additionally a Jupyter notebook, `adapt-type.ipynb`, helpful for quickly converting a file from single-precision type to half or double.
 
 
 ##  References

@@ -1,29 +1,44 @@
 #include "softblas.h"
 
-void srotg(float32_t *a, float32_t *b, float32_t *c, float32_t *s) {
-   float32_t roe, scal, r, z, aa, ab, t0, t1;
+// *** XXX WIP XXX ***
 
-   aa = f32_abs(*a);
-   ab = f32_abs(*b);
-   if f32_gt(aa, ab) roe = *a;
-   else roe = *b;
-   scal = f32_add(aa, ab);
-   if f32_ne(scal, SB_REAL32_ZERO)
-   {
-      t0 = f32_div(aa, scal); t1 = f32_div(ab, scal);
-      r = f32_mul(scal, f32_sqrt(f32_add(f32_mul(t0, t0), f32_mul(t1, t1))));
-      if f32_le(roe, SB_REAL32_ZERO) r = f32_neg(r);
-      *c = f32_div(*a, r);
-      *s = f32_div(*b, r);
-      if f32_gt(aa, ab) z = *s;
-      else if f32_ne(*c, SB_REAL32_ZERO) z = f32_div(SB_REAL32_ONE, *c);
-      else z = SB_REAL32_ONE;
-      *a = r;
-      *b = z;
+//  Given a vertical matrix containing a and b, computes the values of cos θ and
+//  sin θ that zero the lower value (b).  Returns the value of sin θ in s, the
+//  value of cos θ in c, and the upper value (r) in a.
+void srotg(float32_t *A, float32_t *B, float32_t *C, float32_t *S) {
+   const float32_t SZERO = { SB_REAL32_ZERO };
+   const float32_t SONE = { SB_REAL32_ONE };
+   float32_t roe, scale, R, Z;
+
+   if (f32_gt(f32M_abs(A), f32M_abs(B))) {
+      roe = *A;
+   } else {
+      roe = *B;
    }
-   else
-   {
-      *c = SB_REAL32_ONE;
-      *s = *a = *b = SB_REAL32_ZERO;
+   scale = f32_add(f32M_abs(A), f32M_abs(B));
+
+   if (f32_eq(scale, SZERO)) {
+      C = &((float32_t){ SB_REAL32_ONE });
+      S = &((float32_t){ SB_REAL32_ZERO });
+      R = (float32_t){ SB_REAL32_ZERO };
+      Z = (float32_t){ SB_REAL32_ZERO };
+      A = &R;
+      B = &Z;
+   } else {
+      R = f32_mul(scale, f32_sqrt(f32_add(f32_mul(f32_div(*A, scale), f32_div(*A, scale)), f32_mul(f32_div(*B, scale), f32_div(*B, scale)))));
+      R = f32_mul(f32_abs(roe), R);
+
+      *C = f32_div(*A, R);
+      *S = f32_div(*B, R);
+      Z = SONE;
+      if (f32_gt(f32M_abs(*A), f32M_abs(*B))) {
+         Z = *S;
+      }
+      if (f32_ge(f32M_abs(*B), f32M_abs(*A)) && f32_ne(*C, SZERO)) {
+         Z = f32_div(SONE, *C);
+      }
    }
+
+   *A = R;
+   *B = Z;
 }
