@@ -11,6 +11,7 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 - [ ] Construct test suite for all cases.  (Current task)
 - [ ] Compare function signatures against reference CBLAS (`const` &c.).
 - [ ] Complete complex-valued functions.
+- [ ] Run everything through a linter.
 
 [BLAS naming conventions](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-1/naming-conventions-for-blas-routines.html) are followed for 32/64 bits, but extensions to the prefix scheme are necessary for 16/128 bit widths; we use:
 
@@ -76,7 +77,7 @@ Per Wikipedia:
 - `saxpy` - y = a*x + y
 - `scopy` - copy x into y
 - `sdot` - dot product
-- `sdsdot` - dot product with extended precision accumulation (returns `float64_t`)
+- ~~`sdsdot` - dot product with extended precision accumulation (returns `float64_t`)~~
 - `snrm2` - Euclidean norm
 - `srot` - apply Givens rotation
 - `srotg` - set up Givens rotation
@@ -93,7 +94,7 @@ Per Wikipedia:
 - `dcopy` - copy x into y
 - `ddot` - dot product
 - `dnrm2` - Euclidean norm
-- `dsdot` - dot product with extended precision accumulation (returns `float64_t`)
+- ~~`dsdot` - dot product with extended precision accumulation (returns `float64_t`)~~
 - `drot` - apply Givens rotation
 - `drotg` - set up Givens rotation
 - `drotm` - apply modified Givens rotation
@@ -109,7 +110,6 @@ Per Wikipedia:
 - `hcopy` - copy x into y
 - `hdot` - dot product
 - `hnrm2` - Euclidean norm
-- `hsdot` - dot product with extended precision accumulation (returns `float32_t`)
 - `hrot` - apply Givens rotation
 - `hrotg` - set up Givens rotation
 - `hrotm` - apply modified Givens rotation
@@ -122,6 +122,8 @@ Per Wikipedia:
 
 - `qasum` - sum of absolute values
 - `qaxpy` - y = a*x + y
+- `qcopy` - copy x into y
+- `qdot` - dot product
 
 #### Pending
 

@@ -17,7 +17,7 @@ MunitResult test_qcopy_all(const MunitParameter params[],
             {.hi = 0x0000000000000000, .lo = 0x0000000000000000}},
         5);
 
-    qcopy(5, (float64_t*)QX, 1, QY, 1);
+    qcopy(5, (float128_t*)QX, 1, QY, 1);
 
     float128_t* RY = qvec((float128_pair_t[]){
             {.hi = 0x3fff000000000000, .lo = 0x0000000000000000},

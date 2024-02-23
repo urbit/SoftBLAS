@@ -17,6 +17,9 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_sdot_12345", test_sdot_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sdot_stride", test_sdot_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sdot_neg_stride", test_sdot_neg_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_snrm2_0", test_snrm2_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_snrm2_12345", test_snrm2_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_snrm2_stride", test_snrm2_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             
             {"/test_dasum_0", test_dasum_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dasum_12345", test_dasum_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -31,6 +34,9 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_ddot_12345", test_ddot_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_ddot_stride", test_ddot_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_ddot_neg_stride", test_ddot_neg_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_dnrm2_0", test_dnrm2_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_dnrm2_12345", test_dnrm2_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_dnrm2_stride", test_dnrm2_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             
             {"/test_hasum_0", test_hasum_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_hasum_12345", test_hasum_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -45,6 +51,9 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_hdot_12345", test_hdot_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_hdot_stride", test_hdot_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_hdot_neg_stride", test_hdot_neg_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_hnrm2_0", test_hnrm2_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_hnrm2_12345", test_hnrm2_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_hnrm2_stride", test_hnrm2_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
             {"/test_qasum_0", test_qasum_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qasum_12345", test_qasum_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -55,6 +64,13 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_qaxpy_neg_stride", test_qaxpy_neg_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qcopy_all", test_qcopy_all, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qcopy_stride", test_qcopy_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qdot_0", test_qdot_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qdot_12345", test_qdot_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qdot_stride", test_qdot_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qdot_neg_stride", test_qdot_neg_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qnrm2_0", test_qnrm2_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qnrm2_12345", test_qnrm2_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qnrm2_stride", test_qnrm2_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
             {NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
         },

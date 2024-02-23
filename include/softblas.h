@@ -99,9 +99,9 @@ typedef struct {
 #define f64_ge !f64_lt
 #define f64_gt !f64_le
 #define f64_ne !f64_eq
-#define f128_ge !f128_lt
-#define f128_gt !f128_le
-#define f128_ne !f128_eq
+#define f128M_ge !f128M_lt
+#define f128M_gt !f128M_le
+#define f128M_ne !f128M_eq
 
 #define ABS(x) ( (x) >= 0 ? (x) : -(x) )
 #define f16_abs(x) (float16_t){ ( (uint16_t)(x.v) & 0x7fff ) }
@@ -215,6 +215,7 @@ float128_t qasum(uint64_t N, const float128_t *QX, uint64_t incX);
 void qaxpy(uint64_t N, float128_t QA, float128_t *QX, int64_t incX, float128_t *QY, int64_t incY);
 void qcopy(uint64_t N, const float128_t *QX, int64_t incX, float128_t *QY, int64_t incY);
 float128_t qdot(const uint64_t N, const float128_t *X, const int64_t incX, const float128_t *Y, const int64_t incY);
+float128_t qnrm2(uint64_t N, const float128_t *X, uint64_t incX);
 
 //    Complex single-precision
 float32_t scasum(uint64_t N, const complex32_t *SX, int64_t incX);

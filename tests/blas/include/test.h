@@ -34,6 +34,12 @@ MunitResult test_hdot_stride(const MunitParameter params[],
                              void* user_data_or_fixture);
 MunitResult test_hdot_neg_stride(const MunitParameter params[],
                                  void* user_data_or_fixture);
+MunitResult test_hnrm2_0(const MunitParameter params[],
+                         void* user_data_or_fixture);
+MunitResult test_hnrm2_12345(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_hnrm2_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
 
 MunitResult test_sasum_0(const MunitParameter params[],
                          void* user_data_or_fixture);
@@ -61,6 +67,12 @@ MunitResult test_sdot_stride(const MunitParameter params[],
                              void* user_data_or_fixture);
 MunitResult test_sdot_neg_stride(const MunitParameter params[],
                                  void* user_data_or_fixture);
+MunitResult test_snrm2_0(const MunitParameter params[],
+                         void* user_data_or_fixture);
+MunitResult test_snrm2_12345(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_snrm2_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
 
 MunitResult test_dasum_0(const MunitParameter params[],
                        void* user_data_or_fixture);
@@ -88,6 +100,12 @@ MunitResult test_ddot_stride(const MunitParameter params[],
                              void* user_data_or_fixture);
 MunitResult test_ddot_neg_stride(const MunitParameter params[],
                                  void* user_data_or_fixture);
+MunitResult test_dnrm2_0(const MunitParameter params[],
+                         void* user_data_or_fixture);
+MunitResult test_dnrm2_12345(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_dnrm2_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
 
 MunitResult test_qasum_0(const MunitParameter params[],
                        void* user_data_or_fixture);
@@ -106,6 +124,20 @@ MunitResult test_qaxpy_neg_stride(const MunitParameter params[],
 MunitResult test_qcopy_all(const MunitParameter params[],
                               void* user_data_or_fixture);
 MunitResult test_qcopy_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_qdot_0(const MunitParameter params[],
+                        void* user_data_or_fixture);
+MunitResult test_qdot_12345(const MunitParameter params[],
+                            void* user_data_or_fixture);
+MunitResult test_qdot_stride(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_qdot_neg_stride(const MunitParameter params[],
+                                 void* user_data_or_fixture);
+MunitResult test_qnrm2_0(const MunitParameter params[],
+                         void* user_data_or_fixture);
+MunitResult test_qnrm2_12345(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_qnrm2_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 
 #endif // TEST_H
