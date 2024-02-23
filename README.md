@@ -66,6 +66,8 @@ Per Wikipedia:
 > 
 > where $\boldsymbol{T}$ is a triangular matrix, among other functionality.
 
+![](./img/logo2.jpg)
+
 ### Level 1 Functions
 
 #### `s` 32-Bit Single Precision
@@ -156,6 +158,8 @@ Per Wikipedia:
 
 TODO:  `gemm3m` variants
 
+![](./img/logo3.jpg)
+
 ### Auxiliary Macros
 
 - `f16_ge` → `!f16_lt`
@@ -201,6 +205,8 @@ The following were found to be particularly helpful in composing these functions
 
 
 ##  Testing
+
+![](./img/logo4.jpg)
 
 To run the test suite, you need a build of [SoftFloat 3e](http://www.jhauser.us/arithmetic/SoftFloat-3/doc/SoftFloat.html) and [µnit](https://nemequ.github.io/munit/) in the `SoftBLAS/` directory.
 
