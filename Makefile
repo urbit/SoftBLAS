@@ -19,7 +19,11 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR)/scopy.c \
   $(BLAS_SRC_DIR)/dcopy.c \
   $(BLAS_SRC_DIR)/hcopy.c \
-  $(BLAS_SRC_DIR)/qcopy.c
+  $(BLAS_SRC_DIR)/qcopy.c \
+  $(BLAS_SRC_DIR)/sdot.c \
+  $(BLAS_SRC_DIR)/ddot.c \
+  $(BLAS_SRC_DIR)/hdot.c \
+  $(BLAS_SRC_DIR)/qdot.c
 BLAS_OBJS = $(BLAS_SRCS:.c=.o)
 
 TEST_SRC_DIR = ./tests/blas/level1

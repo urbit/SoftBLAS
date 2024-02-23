@@ -6,13 +6,13 @@ A BLAS/LAPACK implmentation using [Berkeley SoftFloat](http://www.jhauser.us/ari
 
 Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value.
 
-**Status WIP ~2024.2.22**
+**Status WIP ~2024.2.23**
 
 - [ ] Construct test suite for all cases.  (Current task)
 - [ ] Compare function signatures against reference CBLAS (`const` &c.).
 - [ ] Complete complex-valued functions.
 
-[BLAS naming conventions](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-1/naming-conventions-for-blas-routines.html) are followed for 32/64 bits, but extensions to the prefix scheme are necessary for other bit widths:
+[BLAS naming conventions](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-1/naming-conventions-for-blas-routines.html) are followed for 32/64 bits, but extensions to the prefix scheme are necessary for 16/128 bit widths; we use:
 
 | Bits | Real | Complex |
 | --- | --- | --- |
