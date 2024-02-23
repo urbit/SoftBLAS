@@ -10,6 +10,7 @@ BLAS_SRC_DIR = ./src/blas/level1
 BLAS_SRCS = \
   $(BLAS_SRC_DIR)/sasum.c \
   $(BLAS_SRC_DIR)/dasum.c \
+  $(BLAS_SRC_DIR)/hasum.c \
   $(BLAS_SRC_DIR)/qasum.c \
   $(BLAS_SRC_DIR)/saxpy.c \
   $(BLAS_SRC_DIR)/daxpy.c \

@@ -29,8 +29,8 @@ MunitResult test_qaxpy_0(const MunitParameter params[], void *user_data) {
     qaxpy(N, QA, QX, 1, QY, 1);
 
     for (uint64_t i = 0; i < N; i++) {
-        assert_ulong(QY[i].v[0], ==, RY[i].v[0]);
-        assert_ulong(QY[i].v[1], ==, RY[i].v[1]);
+        assert_ullong(QY[i].v[0], ==, RY[i].v[0]);
+        assert_ullong(QY[i].v[1], ==, RY[i].v[1]);
     }
 
     free(QX);
@@ -69,8 +69,8 @@ MunitResult test_qaxpy_sum(const MunitParameter params[], void *user_data) {
     qaxpy(N, QA, QX, 1, QY, 1);
 
     for (uint64_t i = 0; i < N; i++) {
-        assert_ulong(QY[i].v[0], ==, RY[i].v[0]);
-        assert_ulong(QY[i].v[1], ==, RY[i].v[1]);
+        assert_ullong(QY[i].v[0], ==, RY[i].v[0]);
+        assert_ullong(QY[i].v[1], ==, RY[i].v[1]);
     }
 
     free(QX);
@@ -117,8 +117,8 @@ MunitResult test_qaxpy_stride(const MunitParameter params[], void *user_data) {
     qaxpy(N, QA, QX, 1, QY, 2);
 
     for (uint64_t i = 0; i < 9; i++) {
-        assert_ulong(QY[i].v[0], ==, RY[i].v[0]);
-        assert_ulong(QY[i].v[1], ==, RY[i].v[1]);
+        assert_ullong(QY[i].v[0], ==, RY[i].v[0]);
+        assert_ullong(QY[i].v[1], ==, RY[i].v[1]);
     }
 
     free(QX);
@@ -157,8 +157,8 @@ MunitResult test_qaxpy_neg_stride(const MunitParameter params[], void *user_data
     qaxpy(N, QA, QX, 1, QY, -1);
 
     for (uint64_t i = 0; i < N; i++) {
-        assert_ulong(QY[i].v[0], ==, RY[i].v[0]);
-        assert_ulong(QY[i].v[1], ==, RY[i].v[1]);
+        assert_ullong(QY[i].v[0], ==, RY[i].v[0]);
+        assert_ullong(QY[i].v[1], ==, RY[i].v[1]);
     }
 
     free(QX);

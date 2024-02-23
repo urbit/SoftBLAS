@@ -8,8 +8,10 @@ MunitResult test_dasum_0(const MunitParameter params[],
     float64_t D = (float64_t) dasum(N, (float64_t*)DX, 1);
     float64_t R = (float64_t){0.0};
 
-    assert_int(D.v, ==, R.v);
+    assert_ullong(D.v, ==, R.v);
     
+    free(DX);
+
     return MUNIT_OK;
 }
 
@@ -21,9 +23,23 @@ MunitResult test_dasum_12345(const MunitParameter params[],
     float64_t D = (float64_t) dasum(N, (float64_t*)DX, 1);
     float64_t R = {*(uint64_t*)&(double){15.0}};
     
-    assert_int(D.v, ==, R.v);
+    assert_ullong(D.v, ==, R.v);
     
+    free(DX);
+
     return MUNIT_OK;
 }
 
-// TODO test stride
+MunitResult test_dasum_stride(const MunitParameter params[],
+                              void *user_data) {
+    float64_t* DX = dvec((double[]){1.0, 2.0, 1.0, 2.0, 1.0, 2.0, 1.0, 2.0, 1.0}, 9);
+
+    float64_t D = (float64_t) dasum(5, (float64_t*)DX, 2);
+    float64_t R = {*(uint64_t*)&(double){5.0}};
+
+    assert_ullong(D.v, ==, R.v);
+
+    free(DX);
+
+    return MUNIT_OK;
+}

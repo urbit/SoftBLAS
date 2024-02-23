@@ -8,8 +8,10 @@ MunitResult test_sasum_0(const MunitParameter params[],
     float32_t S = (float32_t) sasum(N, (float32_t*)SX, 1);
     float32_t R = (float32_t){0.0f};
 
-    assert_int(S.v, ==, R.v);
+    assert_ulong(S.v, ==, R.v);
     
+    free(SX);
+
     return MUNIT_OK;
 }
 
@@ -21,9 +23,23 @@ MunitResult test_sasum_12345(const MunitParameter params[],
     float32_t S = (float32_t) sasum(N, (float32_t*)SX, 1);
     float32_t R = {*(uint32_t*)&(float){15.0f}};
     
-    assert_int(S.v, ==, R.v);
+    assert_ulong(S.v, ==, R.v);
     
+    free(SX);
+
     return MUNIT_OK;
 }
 
-// TODO test stride
+MunitResult test_sasum_stride(const MunitParameter params[],
+                              void *user_data) {
+    float32_t* SX = svec((float[]){1.0f, 2.0f, 1.0f, 2.0f, 1.0f, 2.0f, 1.0f, 2.0f, 1.0f}, 9);
+
+    float32_t S = (float32_t) sasum(5, (float32_t*)SX, 2);
+    float32_t R = {*(uint32_t*)&(float){5.0f}};
+
+    assert_ulong(S.v, ==, R.v);
+
+    free(SX);
+
+    return MUNIT_OK;
+}

@@ -11,7 +11,7 @@ MunitResult test_saxpy_0(const MunitParameter params[], void *user_data) {
     float32_t* RY = svec((float[]){10.0f, 20.0f, 30.0f, 40.0f, 50.0f}, 5);
 
     for (uint64_t i = 0; i < N; i++) {
-        assert_int(SY[i].v, ==, RY[i].v);
+        assert_ulong(SY[i].v, ==, RY[i].v);
     }
 
     free(SX);
@@ -32,7 +32,7 @@ MunitResult test_saxpy_sum(const MunitParameter params[],
     saxpy(N, SA, SX, 1, SY, 1);
 
     for (uint64_t i = 0; i < N; i++) {
-        assert_int(SY[i].v, ==, RY[i].v);
+        assert_ulong(SY[i].v, ==, RY[i].v);
     }
 
     free(SX);
@@ -53,7 +53,7 @@ MunitResult test_saxpy_stride(const MunitParameter params[],
     saxpy(N, SA, SX, 1, SY, 2);
 
     for (uint64_t i = 0; i < 9; i++) {
-        assert_int(SY[i].v, ==, RY[i].v);
+        assert_ulong(SY[i].v, ==, RY[i].v);
     }
 
     free(SX);
@@ -74,7 +74,7 @@ MunitResult test_saxpy_neg_stride(const MunitParameter params[],
     saxpy(N, SA, SX, 1, SY, -1);
 
     for (uint64_t i = 0; i < N; i++) {
-        assert_int(SY[i].v, ==, RY[i].v);
+        assert_ulong(SY[i].v, ==, RY[i].v);
     }
 
     free(SX);

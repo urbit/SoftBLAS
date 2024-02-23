@@ -10,7 +10,7 @@ MunitResult test_haxpy_0(const MunitParameter params[], void *user_data) {
     haxpy(N, HA, HX, 1, HY, 1);
 
     for (uint64_t i = 0; i < N; i++) {
-        assert_short(HY[i].v, ==, RY[i].v);
+        assert_ushort(HY[i].v, ==, RY[i].v);
     }
 
     free(HX);
@@ -31,7 +31,7 @@ MunitResult test_haxpy_sum(const MunitParameter params[],
     haxpy(N, HA, HX, 1, HY, 1);
     
     for (uint64_t i = 0; i < N; i++) {
-        assert_short(HY[i].v, ==, RY[i].v);
+        assert_ushort(HY[i].v, ==, RY[i].v);
     }
 
     free(HX);
@@ -52,7 +52,7 @@ MunitResult test_haxpy_stride(const MunitParameter params[],
     haxpy(N, HA, HX, 1, HY, 2);
 
     for (uint64_t i = 0; i < 9; i++) {
-        assert_short(HY[i].v, ==, RY[i].v);
+        assert_ushort(HY[i].v, ==, RY[i].v);
     }
 
     free(HX);
@@ -73,7 +73,7 @@ MunitResult test_haxpy_neg_stride(const MunitParameter params[],
     haxpy(N, HA, HX, 1, HY, -1);
 
     for (uint64_t i = 0; i < N; i++) {
-        assert_short(HY[i].v, ==, RY[i].v);
+        assert_ushort(HY[i].v, ==, RY[i].v);
     }
 
     free(HX);

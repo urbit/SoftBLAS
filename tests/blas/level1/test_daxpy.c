@@ -10,7 +10,7 @@ MunitResult test_daxpy_0(const MunitParameter params[], void *user_data) {
     daxpy(N, DA, DX, 1, DY, 1);
 
     for (uint64_t i = 0; i < N; i++) {
-        assert_ulong(DY[i].v, ==, RY[i].v);
+        assert_ullong(DY[i].v, ==, RY[i].v);
     }
 
     free(DX);
@@ -31,7 +31,7 @@ MunitResult test_daxpy_sum(const MunitParameter params[],
     daxpy(N, DA, DX, 1, DY, 1);
 
     for (uint64_t i = 0; i < N; i++) {
-        assert_ulong(DY[i].v, ==, RY[i].v);
+        assert_ullong(DY[i].v, ==, RY[i].v);
     }
 
     free(DX);
@@ -52,7 +52,7 @@ MunitResult test_daxpy_stride(const MunitParameter params[],
     daxpy(N, DA, DX, 1, DY, 2);
 
     for (uint64_t i = 0; i < 9; i++) {
-        assert_ulong(DY[i].v, ==, RY[i].v);
+        assert_ullong(DY[i].v, ==, RY[i].v);
     }
 
     free(DX);
@@ -73,7 +73,7 @@ MunitResult test_daxpy_neg_stride(const MunitParameter params[],
     daxpy(N, DA, DX, 1, DY, -1);
 
     for (uint64_t i = 0; i < N; i++) {
-        assert_ulong(DY[i].v, ==, RY[i].v);
+        assert_ullong(DY[i].v, ==, RY[i].v);
     }
 
     free(DX);
