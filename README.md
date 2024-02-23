@@ -1,12 +1,14 @@
-# SoftBLAS
+#   SoftBLAS
 
 A BLAS/LAPACK implmentation using [Berkeley SoftFloat](http://www.jhauser.us/arithmetic/SoftFloat.html) rather than hardware acceleration.
 
+![](./img/logo.jpg)
+
 Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value.
 
-**Status WIP ~2024.2.21**
+**Status WIP ~2024.2.22**
 
-- [ ] Construct test suite for all cases.
+- [ ] Construct test suite for all cases.  (Current task)
 - [ ] Compare function signatures against reference CBLAS (`const` &c.).
 - [ ] Complete complex-valued functions.
 
@@ -183,6 +185,8 @@ TODO:  `gemm3m` variants
 - `f16_min(x, y)` → `( f16_gt( (x) , (y) ) ? (y) : (x) )`
 - `f32_min(x, y)` → `( f32_gt( (x) , (y) ) ? (y) : (x) )`
 - `f64_min(x, y)` → `( f64_gt( (x) , (y) ) ? (y) : (x) )`
+
+There is additionally a Juypter notebook, `adapt-type.ipynb`, helpful for quickly converting a file from single-precision type to half or double.
 
 
 ##  References
