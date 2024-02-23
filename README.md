@@ -162,6 +162,8 @@ TODO:  `gemm3m` variants
 
 ### Auxiliary Macros
 
+These are provided as convenient extensions of SoftFloat definitions.
+
 - `f16_ge` → `!f16_lt`
 - `f16_gt` → `!f16_le`
 - `f16_ne` → `!f16_eq`
@@ -225,5 +227,6 @@ Running test suite with seed 0xa623450c...
 /blas/level1/test_saxpy_sum          [ OK    ] [ 0.00002411 / 0.00002285 CPU ]
 /blas/level1/test_saxpy_stride       [ OK    ] [ 0.00002446 / 0.00002332 CPU ]
 /blas/level1/test_saxpy_neg_stride   [ OK    ] [ 0.00002927 / 0.00002805 CPU ]
-6 of 6 (100%) tests successful, 0 (0%) test skipped.
+* * *
+150 of 150 (100%) tests successful, 0 (0%) test skipped.
 ```

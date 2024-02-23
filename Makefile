@@ -15,7 +15,11 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR)/saxpy.c \
   $(BLAS_SRC_DIR)/daxpy.c \
   $(BLAS_SRC_DIR)/haxpy.c \
-  $(BLAS_SRC_DIR)/qaxpy.c
+  $(BLAS_SRC_DIR)/qaxpy.c \
+  $(BLAS_SRC_DIR)/scopy.c \
+  $(BLAS_SRC_DIR)/dcopy.c \
+  $(BLAS_SRC_DIR)/hcopy.c \
+  $(BLAS_SRC_DIR)/qcopy.c
 BLAS_OBJS = $(BLAS_SRCS:.c=.o)
 
 TEST_SRC_DIR = ./tests/blas/level1
@@ -45,4 +49,7 @@ $(MUNIT_OBJ): $(MUNIT_SRC)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TARGET) $(TEST_ALL_OBJ)
+	rm -f $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TEST_ALL_OBJ)
+
+allclean:
+	rm -f $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TEST_ALL_OBJ) $(TARGET)

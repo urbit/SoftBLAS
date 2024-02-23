@@ -1,7 +1,6 @@
 #include "test.h"
 
 MunitResult test_qaxpy_0(const MunitParameter params[], void *user_data) {
-    const uint64_t N = 5;
     // XXX note that 0,1 is lo,hi
     const float128_t QA = {0x0000000000000000, 0x0000000000000000};
     float128_t* QX = qvec((float128_pair_t[]){
@@ -26,9 +25,9 @@ MunitResult test_qaxpy_0(const MunitParameter params[], void *user_data) {
             {.hi = 0x4004900000000000, .lo = 0x0000000000000000}},
         5);
 
-    qaxpy(N, QA, QX, 1, QY, 1);
+    qaxpy(5, QA, QX, 1, QY, 1);
 
-    for (uint64_t i = 0; i < N; i++) {
+    for (uint64_t i = 0; i < 5; i++) {
         assert_ullong(QY[i].v[0], ==, RY[i].v[0]);
         assert_ullong(QY[i].v[1], ==, RY[i].v[1]);
     }
@@ -41,7 +40,6 @@ MunitResult test_qaxpy_0(const MunitParameter params[], void *user_data) {
 }
 
 MunitResult test_qaxpy_sum(const MunitParameter params[], void *user_data) {
-    const uint64_t N = 5;
     // XXX note that 0,1 is lo,hi
     const float128_t QA = {0x0000000000000000, 0x4000000000000000};
     float128_t* QX = qvec((float128_pair_t[]){
@@ -66,9 +64,9 @@ MunitResult test_qaxpy_sum(const MunitParameter params[], void *user_data) {
             {.hi = 0x4004e00000000000, .lo = 0x0000000000000000}},
         5);
 
-    qaxpy(N, QA, QX, 1, QY, 1);
+    qaxpy(5, QA, QX, 1, QY, 1);
 
-    for (uint64_t i = 0; i < N; i++) {
+    for (uint64_t i = 0; i < 5; i++) {
         assert_ullong(QY[i].v[0], ==, RY[i].v[0]);
         assert_ullong(QY[i].v[1], ==, RY[i].v[1]);
     }
@@ -81,7 +79,6 @@ MunitResult test_qaxpy_sum(const MunitParameter params[], void *user_data) {
 }
 
 MunitResult test_qaxpy_stride(const MunitParameter params[], void *user_data) {
-    const uint64_t N = 5;
     // XXX note that 0,1 is lo,hi
     const float128_t QA = {0x0000000000000000, 0x4000000000000000};
     float128_t* QX = qvec((float128_pair_t[]){
@@ -114,9 +111,9 @@ MunitResult test_qaxpy_stride(const MunitParameter params[], void *user_data) {
             {.hi = 0x4002600000000000, .lo = 0x0000000000000000}},
         9);
 
-    qaxpy(N, QA, QX, 1, QY, 2);
+    qaxpy(5, QA, QX, 1, QY, 2);
 
-    for (uint64_t i = 0; i < 9; i++) {
+    for (uint64_t i = 0; i < 5; i++) {
         assert_ullong(QY[i].v[0], ==, RY[i].v[0]);
         assert_ullong(QY[i].v[1], ==, RY[i].v[1]);
     }
@@ -129,7 +126,6 @@ MunitResult test_qaxpy_stride(const MunitParameter params[], void *user_data) {
 }
 
 MunitResult test_qaxpy_neg_stride(const MunitParameter params[], void *user_data) {
-    const uint64_t N = 5;
     // XXX note that 0,1 is lo,hi
     const float128_t QA = {0x0000000000000000, 0x4000000000000000};
     float128_t* QX = qvec((float128_pair_t[]){
@@ -154,9 +150,9 @@ MunitResult test_qaxpy_neg_stride(const MunitParameter params[], void *user_data
             {.hi = 0x4000800000000000, .lo = 0x0000000000000000}},
         5);
 
-    qaxpy(N, QA, QX, 1, QY, -1);
+    qaxpy(5, QA, QX, 1, QY, -1);
 
-    for (uint64_t i = 0; i < N; i++) {
+    for (uint64_t i = 0; i < 5; i++) {
         assert_ullong(QY[i].v[0], ==, RY[i].v[0]);
         assert_ullong(QY[i].v[1], ==, RY[i].v[1]);
     }

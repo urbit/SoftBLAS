@@ -22,6 +22,10 @@ MunitResult test_haxpy_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 MunitResult test_haxpy_neg_stride(const MunitParameter params[],
                                   void* user_data_or_fixture);
+MunitResult test_hcopy_all(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_hcopy_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
 
 MunitResult test_sasum_0(const MunitParameter params[],
                        void* user_data_or_fixture);
@@ -37,6 +41,10 @@ MunitResult test_saxpy_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 MunitResult test_saxpy_neg_stride(const MunitParameter params[],
                                   void* user_data_or_fixture);
+MunitResult test_scopy_all(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_scopy_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
 
 MunitResult test_dasum_0(const MunitParameter params[],
                        void* user_data_or_fixture);
@@ -52,6 +60,10 @@ MunitResult test_daxpy_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 MunitResult test_daxpy_neg_stride(const MunitParameter params[],
                                   void* user_data_or_fixture);
+MunitResult test_dcopy_all(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_dcopy_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
 
 MunitResult test_qasum_0(const MunitParameter params[],
                        void* user_data_or_fixture);
@@ -67,5 +79,9 @@ MunitResult test_qaxpy_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 MunitResult test_qaxpy_neg_stride(const MunitParameter params[],
                                   void* user_data_or_fixture);
+MunitResult test_qcopy_all(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_qcopy_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
 
 #endif // TEST_H

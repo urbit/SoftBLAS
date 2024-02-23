@@ -183,7 +183,7 @@ uint64_t isamax(uint64_t N, const float32_t *SX, uint64_t incX);
 //    Double-precision
 float64_t dasum(uint64_t N, const float64_t *DX, uint64_t incX);
 void daxpy(uint64_t N, float64_t DA, float64_t *DX, int64_t incX, float64_t *DY, int64_t incY);
-void dcopy(uint64_t N, const float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY);
+void dcopy(uint64_t N, const float64_t *DX, int64_t incX, float64_t *DY, int64_t incY);
 float64_t ddot(const uint64_t N, const float64_t *X, const uint64_t incX, const float64_t *Y, const uint64_t incY);
 float64_t dnrm2(uint64_t N, const float64_t *X, uint64_t incX);
 void drot(const uint64_t N, float64_t *X, const uint64_t  incX, float64_t *Y, const uint64_t incY, const float64_t c, const float64_t s);
@@ -198,7 +198,7 @@ uint64_t idamax(uint64_t N, const float64_t *DX, uint64_t incX);
 //    Half-precision
 float16_t hasum(uint64_t N, const float16_t *HX, uint64_t incX);
 void haxpy(uint64_t N, float16_t HA, float16_t *HX, int64_t incX, float16_t *HY, int64_t incY);
-void hcopy(uint64_t N, const float16_t *HX, uint64_t incX, float16_t *HY, uint64_t incY);
+void hcopy(uint64_t N, const float16_t *HX, int64_t incX, float16_t *HY, int64_t incY);
 float16_t hdot(const uint64_t N, const float16_t *X, const uint64_t incX, const float16_t *Y, const uint64_t incY);
 float16_t hnrm2(uint64_t N, const float16_t *X, uint64_t incX);
 void hrot(const uint64_t N, float16_t *X, const uint64_t  incX, float16_t *Y, const uint64_t incY, const float16_t c, const float16_t s);
@@ -213,6 +213,7 @@ uint64_t ihamax(uint64_t N, const float16_t *HX, uint64_t incX);
 //    Quad-precision
 float128_t qasum(uint64_t N, const float128_t *QX, uint64_t incX);
 void qaxpy(uint64_t N, float128_t QA, float128_t *QX, int64_t incX, float128_t *QY, int64_t incY);
+void qcopy(uint64_t N, const float128_t *QX, int64_t incX, float128_t *QY, int64_t incY);
 
 //    Complex single-precision
 float32_t scasum(uint64_t N, const complex32_t *SX, int64_t incX);
