@@ -16,5 +16,5 @@ uint64_t iqamax(uint64_t N, const float128_t *QX, uint64_t incX) {
         ix += incX;
     }
     
-    return idamax;
+    return iqamax;
 }

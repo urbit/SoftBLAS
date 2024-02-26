@@ -108,10 +108,10 @@ typedef struct {
 #define f32_abs(x) (float32_t){ ( (uint32_t)(x.v) & 0x7fffffff ) }
 #define f64_abs(x) (float64_t){ ( (uint64_t)(x.v) & 0x7fffffffffffffff ) }
 #define f128_abs(x) (float128_t){ ( (uint64_t)(x.v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x.v[1]) & 0x7fffffffffffffff ) }
-#define f16M_abs(x) (float16_t){ ( (uint16_t)(x->v) & 0x7fff ) }
-#define f32M_abs(x) (float32_t){ ( (uint32_t)(x->v) & 0x7fffffff ) }
-#define f64M_abs(x) (float64_t){ ( (uint64_t)(x->v) & 0x7fffffffffffffff ) }
-#define f128M_abs(x) (float128_t){ ( (uint64_t)(x->v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x->v[1]) & 0x7fffffffffffffff ) }
+#define f16M_abs(x) (float16_t*){ ( (uint16_t)(x->v) & 0x7fff ) }
+#define f32M_abs(x) (float32_t*){ ( (uint32_t)(x->v) & 0x7fffffff ) }
+#define f64M_abs(x) (float64_t*){ ( (uint64_t)(x->v) & 0x7fffffffffffffff ) }
+#define f128M_abs(x) (float128_t*){ ( (uint64_t)(x->v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x->v[1]) & 0x7fffffffffffffff ) }
 
 #define MAX(x, y) ( (x) > (y) ? (x) : (y) )
 #define f16_max(x, y) ( f16_gt( (x) , (y) ) ? (x) : (y) )
@@ -244,7 +244,7 @@ uint64_t icamax(uint64_t N, const complex32_t *CX, uint64_t incX);
 
 // Level 2
 
-void sgemv(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *X, const uint64_t incX, const float32_t beta, float32_t *Y, const uint64_t incY);
+void sgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *X, const int64_t incX, const float32_t beta, float32_t *Y, const int64_t incY);
 void dgemv(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *X, const uint64_t incX, const float64_t beta, float64_t *Y, const uint64_t incY);
 void hgemv(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *X, const uint64_t incX, const float16_t beta, float16_t *Y, const uint64_t incY);
 

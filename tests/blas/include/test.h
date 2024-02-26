@@ -7,7 +7,7 @@
 #define MUNIT_ENABLE_ASSERT_ALIASES
 #include "munit.h"
 
-//  Test function prototypes
+//  Test function prototypes for BLAS Level 1
 MunitResult test_sasum_0(const MunitParameter params[],
                          void* user_data_or_fixture);
 MunitResult test_sasum_12345(const MunitParameter params[],
@@ -211,5 +211,18 @@ MunitResult test_iqamax_stride(const MunitParameter params[],
                                void* user_data_or_fixture);
 MunitResult test_iqamax_13542(const MunitParameter params[],
                               void* user_data_or_fixture);
+
+//  Test function prototypes for BLAS Level 2
+MunitResult test_sgemv_0_row(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_sgemv_0_col(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_sgemv_12345(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_sgemv_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
+MunitResult test_sgemv_neg_stride(const MunitParameter params[],
+                                  void* user_data_or_fixture);
+
 
 #endif // TEST_H

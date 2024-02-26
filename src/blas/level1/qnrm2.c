@@ -6,7 +6,7 @@ float128_t qnrm2(uint64_t N, const float128_t *X, uint64_t incX) {
     if (N < 1 || incX < 1) {
         return norm;
     } else if (N == 1) {
-        norm = *f128_abs(X[0]);
+        norm = f128_abs(X[0]);
         return norm;
     } else {
         float128_t scale = { SB_REAL128L_ZERO, SB_REAL128U_ZERO };
@@ -23,7 +23,7 @@ float128_t qnrm2(uint64_t N, const float128_t *X, uint64_t incX) {
 
         for (uint64_t ix = 0; ix < 1 + (N - 1) * incX; ix += incX) {
             if (f128M_ne(&(X[ix]), &QZERO)) {
-                absXI = *f128_abs(X[ix]);
+                absXI = f128_abs(X[ix]);
                 if (f128M_lt(&scale, &absXI)) {
                     f128M_mul(&absXI, &absXI, QT);
                     f128M_mul(&scale, &scale, QU);

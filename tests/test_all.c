@@ -108,6 +108,12 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_iqamax_stride", test_isamax_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_iqamax_13542", test_isamax_13542, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             
+            {"/test_sgemv_0_row", test_sgemv_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sgemv_0_col", test_sgemv_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sgemv_12345", test_sgemv_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sgemv_stride", test_sgemv_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sgemv_neg_stride", test_sgemv_neg_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+
             {NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
         },
         NULL,

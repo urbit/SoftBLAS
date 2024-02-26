@@ -6,41 +6,43 @@ LIBS = -l:softfloat.a
 MUNIT_SRC = munit/munit.c
 MUNIT_OBJ = $(MUNIT_SRC:.c=.o)
 
-BLAS_SRC_DIR = ./src/blas/level1
+BLAS_SRC_DIR_L1 = ./src/blas/level1
+BLAS_SRC_DIR_L2 = ./src/blas/level2
 BLAS_SRCS = \
-  $(BLAS_SRC_DIR)/sasum.c \
-  $(BLAS_SRC_DIR)/dasum.c \
-  $(BLAS_SRC_DIR)/hasum.c \
-  $(BLAS_SRC_DIR)/qasum.c \
-  $(BLAS_SRC_DIR)/saxpy.c \
-  $(BLAS_SRC_DIR)/daxpy.c \
-  $(BLAS_SRC_DIR)/haxpy.c \
-  $(BLAS_SRC_DIR)/qaxpy.c \
-  $(BLAS_SRC_DIR)/scopy.c \
-  $(BLAS_SRC_DIR)/dcopy.c \
-  $(BLAS_SRC_DIR)/hcopy.c \
-  $(BLAS_SRC_DIR)/qcopy.c \
-  $(BLAS_SRC_DIR)/sdot.c \
-  $(BLAS_SRC_DIR)/ddot.c \
-  $(BLAS_SRC_DIR)/hdot.c \
-  $(BLAS_SRC_DIR)/qdot.c \
-  $(BLAS_SRC_DIR)/snrm2.c \
-  $(BLAS_SRC_DIR)/dnrm2.c \
-  $(BLAS_SRC_DIR)/hnrm2.c \
-  $(BLAS_SRC_DIR)/qnrm2.c \
-  $(BLAS_SRC_DIR)/sscal.c \
-  $(BLAS_SRC_DIR)/dscal.c \
-  $(BLAS_SRC_DIR)/hscal.c \
-  $(BLAS_SRC_DIR)/qscal.c \
-  $(BLAS_SRC_DIR)/sswap.c \
-  $(BLAS_SRC_DIR)/dswap.c \
-  $(BLAS_SRC_DIR)/hswap.c \
-  $(BLAS_SRC_DIR)/qswap.c \
-  $(BLAS_SRC_DIR)/isamax.c \
-  $(BLAS_SRC_DIR)/idamax.c \
-  $(BLAS_SRC_DIR)/ihamax.c \
-  $(BLAS_SRC_DIR)/iqamax.c
-#   $(BLAS_SRC_DIR)/srotg.c
+  $(BLAS_SRC_DIR_L1)/sasum.c \
+  $(BLAS_SRC_DIR_L1)/dasum.c \
+  $(BLAS_SRC_DIR_L1)/hasum.c \
+  $(BLAS_SRC_DIR_L1)/qasum.c \
+  $(BLAS_SRC_DIR_L1)/saxpy.c \
+  $(BLAS_SRC_DIR_L1)/daxpy.c \
+  $(BLAS_SRC_DIR_L1)/haxpy.c \
+  $(BLAS_SRC_DIR_L1)/qaxpy.c \
+  $(BLAS_SRC_DIR_L1)/scopy.c \
+  $(BLAS_SRC_DIR_L1)/dcopy.c \
+  $(BLAS_SRC_DIR_L1)/hcopy.c \
+  $(BLAS_SRC_DIR_L1)/qcopy.c \
+  $(BLAS_SRC_DIR_L1)/sdot.c \
+  $(BLAS_SRC_DIR_L1)/ddot.c \
+  $(BLAS_SRC_DIR_L1)/hdot.c \
+  $(BLAS_SRC_DIR_L1)/qdot.c \
+  $(BLAS_SRC_DIR_L1)/snrm2.c \
+  $(BLAS_SRC_DIR_L1)/dnrm2.c \
+  $(BLAS_SRC_DIR_L1)/hnrm2.c \
+  $(BLAS_SRC_DIR_L1)/qnrm2.c \
+  $(BLAS_SRC_DIR_L1)/sscal.c \
+  $(BLAS_SRC_DIR_L1)/dscal.c \
+  $(BLAS_SRC_DIR_L1)/hscal.c \
+  $(BLAS_SRC_DIR_L1)/qscal.c \
+  $(BLAS_SRC_DIR_L1)/sswap.c \
+  $(BLAS_SRC_DIR_L1)/dswap.c \
+  $(BLAS_SRC_DIR_L1)/hswap.c \
+  $(BLAS_SRC_DIR_L1)/qswap.c \
+  $(BLAS_SRC_DIR_L1)/isamax.c \
+  $(BLAS_SRC_DIR_L1)/idamax.c \
+  $(BLAS_SRC_DIR_L1)/ihamax.c \
+  $(BLAS_SRC_DIR_L1)/iqamax.c \
+  $(BLAS_SRC_DIR_L2)/sgemv.c
+#   $(BLAS_SRC_DIR_L1)/srotg.c
 BLAS_OBJS = $(BLAS_SRCS:.c=.o)
 
 TEST_SRC_DIR = ./tests/blas/level1
@@ -63,7 +65,10 @@ $(TEST_OBJS): $(TEST_SRC_DIR)/%.o: $(TEST_SRC_DIR)/%.c
 $(TEST_ALL_OBJ): $(TEST_ALL_SRC)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(BLAS_OBJS): $(BLAS_SRC_DIR)/%.o: $(BLAS_SRC_DIR)/%.c
+$(BLAS_OBJS): $(BLAS_SRC_DIR_L1)/%.o: $(BLAS_SRC_DIR_L1)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BLAS_OBJS): $(BLAS_SRC_DIR_L2)/%.o: $(BLAS_SRC_DIR_L2)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(MUNIT_OBJ): $(MUNIT_SRC)

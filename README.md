@@ -6,7 +6,7 @@ A BLAS/LAPACK implmentation using [Berkeley SoftFloat](http://www.jhauser.us/ari
 
 Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value.
 
-**Status WIP ~2024.2.23**
+**Status WIP ~2024.2.26**
 
 - [ ] Construct test suite for all cases.
   - [x] Construct test suite for Level 1.
