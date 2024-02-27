@@ -41,7 +41,10 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR_L1)/idamax.c \
   $(BLAS_SRC_DIR_L1)/ihamax.c \
   $(BLAS_SRC_DIR_L1)/iqamax.c \
-  $(BLAS_SRC_DIR_L2)/sgemv.c
+  $(BLAS_SRC_DIR_L2)/sgemv.c \
+  $(BLAS_SRC_DIR_L2)/dgemv.c \
+  $(BLAS_SRC_DIR_L2)/hgemv.c \
+  $(BLAS_SRC_DIR_L2)/qgemv.c
 #   $(BLAS_SRC_DIR_L1)/srotg.c
 BLAS_OBJS = $(BLAS_SRCS:.c=.o)
 

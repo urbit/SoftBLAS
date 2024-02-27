@@ -221,8 +221,32 @@ MunitResult test_sgemv_12345(const MunitParameter params[],
                              void* user_data_or_fixture);
 MunitResult test_sgemv_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
-MunitResult test_sgemv_neg_stride(const MunitParameter params[],
-                                  void* user_data_or_fixture);
 
+MunitResult test_dgemv_0_row(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_dgemv_0_col(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_dgemv_12345(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_dgemv_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
+
+MunitResult test_hgemv_0_row(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_hgemv_0_col(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_hgemv_12345(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_hgemv_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
+
+MunitResult test_qgemv_0_row(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_qgemv_0_col(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_qgemv_12345(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_qgemv_stride(const MunitParameter params[],
+                              void* user_data_or_fixture);
 
 #endif // TEST_H

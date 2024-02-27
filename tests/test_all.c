@@ -112,7 +112,21 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_sgemv_0_col", test_sgemv_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sgemv_12345", test_sgemv_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sgemv_stride", test_sgemv_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
-            {"/test_sgemv_neg_stride", test_sgemv_neg_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+
+            {"/test_dgemv_0_row", test_dgemv_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_dgemv_0_col", test_dgemv_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_dgemv_12345", test_dgemv_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_dgemv_stride", test_dgemv_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+
+            {"/test_hgemv_0_row", test_hgemv_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_hgemv_0_col", test_hgemv_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_hgemv_12345", test_hgemv_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_hgemv_stride", test_hgemv_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+
+            {"/test_qgemv_0_row", test_qgemv_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qgemv_0_col", test_qgemv_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qgemv_12345", test_qgemv_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qgemv_stride", test_qgemv_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
             {NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
         },

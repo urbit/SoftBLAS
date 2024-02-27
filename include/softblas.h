@@ -244,9 +244,10 @@ uint64_t icamax(uint64_t N, const complex32_t *CX, uint64_t incX);
 
 // Level 2
 
-void sgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *X, const int64_t incX, const float32_t beta, float32_t *Y, const int64_t incY);
-void dgemv(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *X, const uint64_t incX, const float64_t beta, float64_t *Y, const uint64_t incY);
-void hgemv(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE trans, const uint64_t M, const uint64_t N, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *X, const uint64_t incX, const float16_t beta, float16_t *Y, const uint64_t incY);
+void sgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *X, const int64_t incX, const float32_t beta, float32_t *Y, const uint64_t incY);
+void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *X, const int64_t incX, const float64_t beta, float64_t *Y, const uint64_t incY);
+void hgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *X, const int64_t incX, const float16_t beta, float16_t *Y, const uint64_t incY);
+void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float128_t alpha, const float128_t *A, const uint64_t lda, const float128_t *X, const int64_t incX, const float128_t beta, float128_t *Y, const uint64_t incY);
 
 // Level 3
 
