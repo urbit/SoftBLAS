@@ -1,6 +1,6 @@
 #   SoftBLAS
 
-A BLAS/LAPACK implmentation using [Berkeley SoftFloat](http://www.jhauser.us/arithmetic/SoftFloat.html) rather than hardware acceleration.
+A BLAS/LAPACK implementation using [Berkeley SoftFloat](http://www.jhauser.us/arithmetic/SoftFloat.html) rather than hardware acceleration.
 
 ![](./img/logo.jpg)
 
