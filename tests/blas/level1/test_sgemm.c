@@ -99,9 +99,9 @@ MunitResult test_sgemm_0_col(const MunitParameter params[],
 
 MunitResult test_sgemm_3x2x1_0(const MunitParameter params[],
                              void *user_data) {
-    const char transA = 'T';  // No transpose
-    const char transB = 'T';  // No transpose
-    const float32_t alpha = {*(uint32_t*)&(float){2.5f}};
+    const char transA = 'N';  // No transpose
+    const char transB = 'N';  // No transpose
+    const float32_t alpha = {*(uint32_t*)&(float){1.0f}};
     const float32_t beta = {*(uint32_t*)&(float){0.0f}};
 
     const uint64_t M = 3;     // Number of rows in A
@@ -133,9 +133,9 @@ MunitResult test_sgemm_3x2x1_0(const MunitParameter params[],
     // Call sgemm
     sgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
 
-    float32_t* R = svec((float[]){ 12.5f,
-                                   27.5f,
-                                   42.5f},
+    float32_t* R = svec((float[]){ 5.0f,
+                                   11.0f,
+                                   17.0f},
                         M*P);
 
     for (uint64_t i = 0; i < M*P; i++) {
