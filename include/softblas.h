@@ -6,23 +6,6 @@
 
 //  TYPES
 
-enum SB_LAYOUT {
-   SblasRowMajor=101,     // row-major arrays
-   SblasColMajor=102};    // column-major arrays
-enum SB_TRANSPOSE {
-   SblasNoTrans=78,       // trans='N'
-   SblasTrans=84,         // trans='T'
-   SblasConjTrans=67};    // trans='C'
-enum SB_UPLO {
-   SblasUpper=85,         // uplo ='U'
-   SblasLower=76};        // uplo ='L'
-enum SB_DIAG {
-   SblasNonUnit=78,       // diag ='N'
-   SblasUnit=85};         // diag ='U'
-enum SB_SIDE {
-   SblasLeft=76,          // side ='L'
-   SblasRight=82};        // side ='R'
-
 typedef struct {
    float32_t real;
    float32_t imag;
@@ -251,9 +234,9 @@ void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
 
 // Level 3
 
-void sgemm(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE transA, const enum SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *B, const uint64_t ldb, const float32_t beta, float32_t *C, const uint64_t ldc);
-void dgemm(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE transA, const enum SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc);
-void hgemm(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE transA, const enum SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *B, const uint64_t ldb, const float16_t beta, float16_t *C, const uint64_t ldc);
+void sgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *B, const uint64_t ldb, const float32_t beta, float32_t *C, const uint64_t ldc);
+// void dgemm(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE transA, const enum SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc);
+// void hgemm(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE transA, const enum SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *B, const uint64_t ldb, const float16_t beta, float16_t *C, const uint64_t ldc);
 
 // NAN unification
 

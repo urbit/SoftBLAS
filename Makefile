@@ -8,6 +8,7 @@ MUNIT_OBJ = $(MUNIT_SRC:.c=.o)
 
 BLAS_SRC_DIR_L1 = ./src/blas/level1
 BLAS_SRC_DIR_L2 = ./src/blas/level2
+BLAS_SRC_DIR_L3 = ./src/blas/level3
 BLAS_SRCS = \
   $(BLAS_SRC_DIR_L1)/sasum.c \
   $(BLAS_SRC_DIR_L1)/dasum.c \
@@ -44,7 +45,8 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR_L2)/sgemv.c \
   $(BLAS_SRC_DIR_L2)/dgemv.c \
   $(BLAS_SRC_DIR_L2)/hgemv.c \
-  $(BLAS_SRC_DIR_L2)/qgemv.c
+  $(BLAS_SRC_DIR_L2)/qgemv.c \
+  $(BLAS_SRC_DIR_L3)/sgemm.c
 #   $(BLAS_SRC_DIR_L1)/srotg.c
 BLAS_OBJS = $(BLAS_SRCS:.c=.o)
 
@@ -72,6 +74,9 @@ $(BLAS_OBJS): $(BLAS_SRC_DIR_L1)/%.o: $(BLAS_SRC_DIR_L1)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BLAS_OBJS): $(BLAS_SRC_DIR_L2)/%.o: $(BLAS_SRC_DIR_L2)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BLAS_OBJS): $(BLAS_SRC_DIR_L3)/%.o: $(BLAS_SRC_DIR_L3)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(MUNIT_OBJ): $(MUNIT_SRC)

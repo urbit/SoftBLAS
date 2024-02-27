@@ -128,6 +128,11 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_qgemv_12345", test_qgemv_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qgemv_stride", test_qgemv_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
+            {"/test_sgemm_0_row", test_sgemm_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sgemm_0_col", test_sgemm_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sgemm_3x2x1_0", test_sgemm_3x2x1_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sgemm_5x4x3", test_sgemm_5x4x3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+
             {NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
         },
         NULL,

@@ -249,4 +249,15 @@ MunitResult test_qgemv_12345(const MunitParameter params[],
 MunitResult test_qgemv_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 
+//  Test function prototypes for BLAS Level 3
+MunitResult test_sgemm_0_row(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_sgemm_0_col(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_sgemm_3x2x1_0(const MunitParameter params[],
+                               void* user_data_or_fixture);
+MunitResult test_sgemm_5x4x3(const MunitParameter params[],
+                             void* user_data_or_fixture);
+
+
 #endif // TEST_H
