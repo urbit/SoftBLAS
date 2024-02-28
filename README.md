@@ -252,5 +252,5 @@ Running test suite with seed 0xa623450c...
 /blas/level1/test_saxpy_stride       [ OK    ] [ 0.00002446 / 0.00002332 CPU ]
 /blas/level1/test_saxpy_neg_stride   [ OK    ] [ 0.00002927 / 0.00002805 CPU ]
 * * *
-150 of 150 (100%) tests successful, 0 (0%) test skipped.
+132 of 132 (100%) tests successful, 0 (0%) test skipped.
 ```
