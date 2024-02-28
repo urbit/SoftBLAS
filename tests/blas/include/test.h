@@ -259,5 +259,31 @@ MunitResult test_sgemm_3x2x1_0(const MunitParameter params[],
 MunitResult test_sgemm_5x4x3(const MunitParameter params[],
                              void* user_data_or_fixture);
 
+MunitResult test_dgemm_0_row(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_dgemm_0_col(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_dgemm_3x2x1_0(const MunitParameter params[],
+                               void* user_data_or_fixture);
+MunitResult test_dgemm_5x4x3(const MunitParameter params[],
+                             void* user_data_or_fixture);
+
+MunitResult test_hgemm_0_row(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_hgemm_0_col(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_hgemm_3x2x1_0(const MunitParameter params[],
+                               void* user_data_or_fixture);
+MunitResult test_hgemm_5x4x3(const MunitParameter params[],
+                             void* user_data_or_fixture);
+
+MunitResult test_qgemm_0_row(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_qgemm_0_col(const MunitParameter params[],
+                             void* user_data_or_fixture);
+MunitResult test_qgemm_3x2x1_0(const MunitParameter params[],
+                               void* user_data_or_fixture);
+MunitResult test_qgemm_5x4x3(const MunitParameter params[],
+                             void* user_data_or_fixture);
 
 #endif // TEST_H

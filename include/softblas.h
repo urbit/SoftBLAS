@@ -235,8 +235,9 @@ void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
 // Level 3
 
 void sgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *B, const uint64_t ldb, const float32_t beta, float32_t *C, const uint64_t ldc);
-// void dgemm(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE transA, const enum SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc);
-// void hgemm(const enum SB_LAYOUT Layout, const enum SB_TRANSPOSE transA, const enum SB_TRANSPOSE transB, const uint64_t M, const uint64_t N, const uint64_t K, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *B, const uint64_t ldb, const float16_t beta, float16_t *C, const uint64_t ldc);
+void dgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc);
+void hgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *B, const uint64_t ldb, const float16_t beta, float16_t *C, const uint64_t ldc);
+void qgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float128_t alpha, const float128_t *A, const uint64_t lda, const float128_t *B, const uint64_t ldb, const float128_t beta, float128_t *C, const uint64_t ldc);
 
 // NAN unification
 

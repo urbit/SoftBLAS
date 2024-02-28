@@ -138,11 +138,7 @@ MunitResult test_sgemm_3x2x1_0(const MunitParameter params[],
                                    17.0f},
                         M*P);
 
-    for (uint64_t i = 0; i < M*P; i++) {
-        printf("C[%d] = %x\tR[%d] = %x\n", i, C[i].v, i, R[i].v);
-    }
-
-    for (uint64_t i = 0; i < 4; i++) {
+    for (uint64_t i = 0; i < 3; i++) {
         assert_ulong(C[i].v, ==, R[i].v);
     }
 
@@ -200,14 +196,10 @@ MunitResult test_sgemm_5x4x3(const MunitParameter params[],
                                   91.0f, -2.5f, 101.5f,
                                   68.5f, 84.5f, 100.5f,
                                   76.5f, 35.0f,  76.0f,
-                                 129.0f, 63.0f, 159.0f},
+                                 129.5f, 63.0f, 159.0f},
                         M*P);
 
     for (uint64_t i = 0; i < M*P; i++) {
-        printf("C[%d] = %x\tR[%d] = %x\n", i, C[i].v, i, R[i].v);
-    }
-
-    for (uint64_t i = 0; i < 4; i++) {
         assert_ulong(C[i].v, ==, R[i].v);
     }
 

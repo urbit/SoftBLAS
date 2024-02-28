@@ -13,7 +13,6 @@ void sgemm(const char transA, const char transB, const uint64_t M, const uint64_
         return;
     }
 
-    printf("\n");
     for (uint64_t i = 0; i < M; i++) {
         for (uint64_t j = 0; j < P; j++) {
             float32_t dotProduct = ZERO;
