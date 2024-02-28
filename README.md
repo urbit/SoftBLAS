@@ -6,13 +6,8 @@ A BLAS/LAPACK implementation using [Berkeley SoftFloat](http://www.jhauser.us/ar
 
 Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value.
 
-**Status WIP ~2024.2.26**
+**Status WIP ~2024.2.28**
 
-- [ ] Construct test suite for all cases.
-  - [x] Construct test suite for Level 1.
-  - [ ] Construct test suite for Level 2.
-  - [ ] Construct test suite for Level 3.
-- [ ] Compare function signatures against reference CBLAS (`const` &c.).
 - [ ] Complete complex-valued functions.
 - [ ] Run everything through a linter.
 
@@ -156,6 +151,10 @@ Per Wikipedia:
 
 - `hgemv` - computes a matrix-vector product using a general matrix
 
+#### `q` 128-Bit Single Precision
+
+- `qgemv` - computes a matrix-vector product using a general matrix
+
 ### Level 3 Functions
 
 #### `s` 32-Bit Single Precision
@@ -170,7 +169,13 @@ Per Wikipedia:
 
 - `hgemm` - computes a matrix-matrix product using a general matrix
 
-TODO:  `gemm3m` variants
+#### `h` 128-Bit Single Precision
+
+- `qgemm` - computes a matrix-matrix product using a general matrix
+
+#### Pending
+
+- `?gemm3m` accelerated variants
 
 ![](./img/logo3.jpg)
 
@@ -178,39 +183,40 @@ TODO:  `gemm3m` variants
 
 These are provided as convenient extensions of SoftFloat definitions.
 
-- `f16_ge` → `!f16_lt`
-- `f16_gt` → `!f16_le`
-- `f16_ne` → `!f16_eq`
-- `f32_ge` → `!f32_lt`
-- `f32_gt` → `!f32_le`
-- `f32_ne` → `!f32_eq`
-- `f64_ge` → `!f64_lt`
-- `f64_gt` → `!f64_le`
-- `f64_ne` → `!f64_eq`
-- `f128M_ge` → `!f128M_lt`
-- `f128M_gt` → `!f128M_le`
-- `f128M_ne` → `!f128M_eq`
+- `f16_ge(x,y)` → `( !(f16_lt( x,y ) ))
+- `f16_gt(x,y)` → `( !(f16_le( x,y ) ))
+- `f16_ne(x,y)` → `( !(f16_eq( x,y ) ))
+- `f32_ge(x,y)` → `( !(f32_lt( x,y ) ))
+- `f32_gt(x,y)` → `( !(f32_le( x,y ) ))
+- `f32_ne(x,y)` → `( !(f32_eq( x,y ) ))
+- `f64_ge(x,y)` → `( !(f64_lt( x,y ) ))
+- `f64_gt(x,y)` → `( !(f64_le( x,y ) ))
+- `f64_ne(x,y)` → `( !(f64_eq( x,y ) ))`
+- `f128M_ge(x,y)` → `( !(f128M_lt( x,y ) ))`
+- `f128M_gt(x,y)` → `( !(f128M_le( x,y ) ))`
+- `f128M_ne(x,y)` → `( !(f128M_eq( x,y ) ))`
 
 - `ABS(x)` → `( (x) >= 0 ? (x) : -(x) )`
-- `f16_abs(x)` → `( (x) & 0x7fff )`
-- `f32_abs(x)` → `( (x) & 0x7fffffff )`
-- `f64_abs(x)` → `( (x) & 0x7fffffffffffffff )`
-- `f128_abs(x)` → `{ ( (uint64_t)(x.v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x.v[1]) & 0x7fffffffffffffff ) }`
-- `M` variants for pointers
+- `f16_abs(x)` → `(float16_t){ ( (uint16_t)(x.v) & 0x7fff ) }`
+- `f32_abs(x)` → `(float32_t){ ( (uint32_t)(x.v) & 0x7fffffff ) }`
+- `f64_abs(x)` → `(float64_t){ ( (uint64_t)(x.v) & 0x7fffffffffffffff ) }`
+- `f128_abs(x)` → `(float128_t){ ( (uint64_t)(x.v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x.v[1]) & 0x7fffffffffffffff ) }`
+- `f16M_abs(x)` → `(float16_t*){ ( (uint16_t)(x->v) & 0x7fff ) }`
+- `f32M_abs(x)` → `(float32_t*){ ( (uint32_t)(x->v) & 0x7fffffff ) }`
+- `f64M_abs(x)` → `(float64_t*){ ( (uint64_t)(x->v) & 0x7fffffffffffffff ) }`
+- `f128M_abs(x)` → `(float128_t*){ ( (uint64_t)(x->v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x->v[1]) & 0x7fffffffffffffff ) }`
 
 - `MAX(x, y)` → `( (x) > (y) ? (x) : (y) )`
 - `f16_max(x, y)` → `( f16_gt( (x) , (y) ) ? (x) : (y) )`
 - `f32_max(x, y)` → `( f32_gt( (x) , (y) ) ? (x) : (y) )`
 - `f64_max(x, y)` → `( f64_gt( (x) , (y) ) ? (x) : (y) )`
-- `f128M_max(x, y)`
+- `f128M_max(x, y)` → `( f128M_gt( (x) , (y) ) ? (x) : (y) )`
 
 - `MIN(x, y)` → `( (x) > (y) ? (y) : (x) )`
 - `f16_min(x, y)` → `( f16_gt( (x) , (y) ) ? (y) : (x) )`
 - `f32_min(x, y)` → `( f32_gt( (x) , (y) ) ? (y) : (x) )`
 - `f64_min(x, y)` → `( f64_gt( (x) , (y) ) ? (y) : (x) )`
-- `f128M_min(x, y)`
-
-There is additionally a Jupyter notebook, `adapt-type.ipynb`, helpful for quickly converting a file from single-precision type to half or double.
+- `f128_min(x, y)` → `( f128_gt( (x) , (y) ) ? (y) : (x) )`
 
 
 ##  References
