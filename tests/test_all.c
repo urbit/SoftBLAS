@@ -143,10 +143,10 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_hgemm_3x2x1_0", test_hgemm_3x2x1_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_hgemm_5x4x3", test_hgemm_5x4x3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
-            // {"/test_sgemm_0_row", test_sgemm_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
-            // {"/test_sgemm_0_col", test_sgemm_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
-            // {"/test_sgemm_3x2x1_0", test_sgemm_3x2x1_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
-            // {"/test_sgemm_5x4x3", test_sgemm_5x4x3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qgemm_0_row", test_qgemm_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qgemm_0_col", test_qgemm_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qgemm_3x2x1_0", test_qgemm_3x2x1_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qgemm_5x4x3", test_qgemm_5x4x3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
             {NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL}
         },
