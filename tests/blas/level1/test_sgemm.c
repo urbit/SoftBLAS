@@ -159,7 +159,7 @@ MunitResult test_sgemm_5x4x3(const MunitParameter params[],
     const char transA = 'N';  // No transpose
     const char transB = 'N';  // No transpose
     const float32_t alpha = {*(uint32_t*)&(float){2.5f}};
-    const float32_t beta = {*(uint32_t*)&(float){0.0f}};
+    const float32_t beta = {*(uint32_t*)&(float){-1.0f}};
 
     const uint64_t M = 5;     // Number of rows in A
     const uint64_t N = 4;     // Number of columns in A
