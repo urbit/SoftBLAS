@@ -1,4 +1,5 @@
 #include "softblas.h"
+#include <stdio.h>
 
 void qgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float128_t alpha, const float128_t *A, const uint64_t lda, const float128_t *B, const uint64_t ldb, const float128_t beta, float128_t *C, const uint64_t ldc) {
     const float128_t ZERO = { SB_REAL128L_ZERO, SB_REAL128U_ZERO };

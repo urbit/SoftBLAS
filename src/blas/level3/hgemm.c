@@ -1,4 +1,5 @@
 #include "softblas.h"
+#include <stdio.h>
 
 void hgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *B, const uint64_t ldb, const float16_t beta, float16_t *C, const uint64_t ldc) {
     const float16_t ZERO = {SB_REAL16_ZERO};

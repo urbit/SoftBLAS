@@ -60,11 +60,20 @@ TEST_OBJS = $(TEST_SRCS:.c=.o)
 TEST_ALL_SRC = ./tests/test_all.c
 TEST_ALL_OBJ = $(TEST_ALL_SRC:.c=.o)
 
-TARGET = test_all
+# set default target to library
+.DEFAULT_GOAL := library
 
-tests: $(TARGET)
+TARGET = libsoftblas.a
+TEST_TARGET = test_all
 
-$(TARGET): $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TEST_ALL_OBJ)
+library: $(TARGET)
+
+tests: $(TEST_TARGET)
+
+$(TARGET): $(BLAS_OBJS)
+	ar rcs $@ $^
+
+$(TEST_TARGET): $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TEST_ALL_OBJ)
 	$(CC) $(LDFLAGS) $^ -o $@ $(LIBS)
 
 $(TEST_OBJS): $(TEST_SRC_DIR)/%.o: $(TEST_SRC_DIR)/%.c
@@ -89,4 +98,4 @@ clean:
 	rm -f $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TEST_ALL_OBJ)
 
 allclean:
-	rm -f $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TEST_ALL_OBJ) $(TARGET)
+	rm -f $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TEST_ALL_OBJ) $(TEST_TARGET)
