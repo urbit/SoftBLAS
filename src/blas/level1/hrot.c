@@ -1,4 +1,5 @@
 void hrot(const uint16_t N, float16_t *X, const uint16_t  incX, float16_t *Y, const uint16_t incY, const float16_t c, const float16_t s) {
+    _set_rounding(rndMode);
     float16_t tmp;
 
     if (c != SB_REAL32_ONE || s != SB_REAL32_ZERO) {

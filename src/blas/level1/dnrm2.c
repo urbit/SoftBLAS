@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-float64_t dnrm2(uint64_t N, const float64_t *X, uint64_t incX) {
+float64_t dnrm2(uint64_t N, const float64_t *X, uint64_t incX, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     float64_t norm = { SB_REAL64_ZERO };
     
     if (N < 1 || incX < 1) {

@@ -4,6 +4,15 @@
 #include "softfloat.h"
 #include <stdlib.h>
 
+/*  If we are building for Urbit, we need to use the Urbit allocator.
+    You are responsible for linking SoftBLAS in that case.
+*/
+#ifdef VERE
+#include "noun.h"
+#define malloc u3a_malloc
+#define free u3a_free
+#endif
+
 //  TYPES
 
 typedef struct {
@@ -69,7 +78,7 @@ typedef struct {
 #define SB_COMPLEX16_I {SB_REAL16_ZERO, SB_REAL16_ONE}
 #define SB_COMPLEX32_I {SB_REAL32_ZERO, SB_REAL32_ONE}
 #define SB_COMPLEX64_I {SB_REAL64_ZERO, SB_REAL64_ONE}
-// #define SB_COMPLEX128_I {SB_REAL128L_ZERO, SB_REAL128U_ONE}
+#define SB_COMPLEX128_I {SB_REAL128L_ZERO, SB_REAL128U_ZERO, SB_REAL128L_ONE, SB_REAL128U_ONE}
 
 //  SOFTFLOAT FUNCTIONS
 
@@ -152,72 +161,72 @@ typedef struct {
 
 //  Level 1
 //    Single-precision
-float32_t sasum(uint64_t N, const float32_t *SX, uint64_t incX);
-void saxpy(uint64_t N, float32_t SA, float32_t *SX, int64_t incX, float32_t *SY, int64_t incY);
-void scopy(uint64_t N, const float32_t *SX, int64_t incX, float32_t *SY, int64_t incY);
-float32_t sdot(const uint64_t N, const float32_t *X, const int64_t incX, const float32_t *Y, const int64_t incY);
-float32_t snrm2(uint64_t N, const float32_t *X, uint64_t incX);
-void srot(const uint64_t N, float32_t *X, const uint64_t  incX, float32_t *Y, const uint64_t incY, const float32_t c, const float32_t s);
-void srotg(float32_t *a, float32_t *b, float32_t *c, float32_t *s);
-void srotm(const uint64_t N, float32_t *X, const uint64_t incX, float32_t *Y, const uint64_t incY, const float32_t *P);
-void srotmg(float32_t *D1, float32_t *D2, float32_t *X1, const float32_t y1, float32_t *P);
-void sscal(uint64_t N, float32_t SA, float32_t *SX, uint64_t incX);
-void sswap(uint64_t N, float32_t *SX, uint64_t incX, float32_t *SY, uint64_t incY);
+float32_t sasum(uint64_t N, const float32_t *SX, uint64_t incX, const uint_fast8_t rndMode);
+void saxpy(uint64_t N, float32_t SA, float32_t *SX, int64_t incX, float32_t *SY, int64_t incY, const uint_fast8_t rndMode);
+void scopy(uint64_t N, const float32_t *SX, int64_t incX, float32_t *SY, int64_t incY, const uint_fast8_t rndMode);
+float32_t sdot(const uint64_t N, const float32_t *X, const int64_t incX, const float32_t *Y, const int64_t incY, const uint_fast8_t rndMode);
+float32_t snrm2(uint64_t N, const float32_t *X, uint64_t incX, const uint_fast8_t rndMode);
+void srot(const uint64_t N, float32_t *X, const uint64_t  incX, float32_t *Y, const uint64_t incY, const float32_t c, const float32_t s, const uint_fast8_t rndMode);
+void srotg(float32_t *a, float32_t *b, float32_t *c, float32_t *s, const uint_fast8_t rndMode);
+void srotm(const uint64_t N, float32_t *X, const uint64_t incX, float32_t *Y, const uint64_t incY, const float32_t *P, const uint_fast8_t rndMode);
+void srotmg(float32_t *D1, float32_t *D2, float32_t *X1, const float32_t y1, float32_t *P, const uint_fast8_t rndMode);
+void sscal(uint64_t N, float32_t SA, float32_t *SX, uint64_t incX, const uint_fast8_t rndMode);
+void sswap(uint64_t N, float32_t *SX, uint64_t incX, float32_t *SY, uint64_t incY, const uint_fast8_t rndMode);
 uint64_t isamax(uint64_t N, const float32_t *SX, uint64_t incX);
 
 //    Double-precision
-float64_t dasum(uint64_t N, const float64_t *DX, uint64_t incX);
-void daxpy(uint64_t N, float64_t DA, float64_t *DX, int64_t incX, float64_t *DY, int64_t incY);
-void dcopy(uint64_t N, const float64_t *DX, int64_t incX, float64_t *DY, int64_t incY);
-float64_t ddot(const uint64_t N, const float64_t *X, const int64_t incX, const float64_t *Y, const int64_t incY);
-float64_t dnrm2(uint64_t N, const float64_t *X, uint64_t incX);
-void drot(const uint64_t N, float64_t *X, const uint64_t  incX, float64_t *Y, const uint64_t incY, const float64_t c, const float64_t s);
-void drotg(float64_t *a, float64_t *b, float64_t *c, float64_t *s);
-void drotm(const uint64_t N, float64_t *X, const uint64_t incX, float64_t *Y, const uint64_t incY, const float64_t *P);
-void drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, float64_t *P);
-void dscal(uint64_t N, float64_t DA, float64_t *DX, uint64_t incX);
-void dswap(uint64_t N, float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY);
+float64_t dasum(uint64_t N, const float64_t *DX, uint64_t incX, const uint_fast8_t rndMode);
+void daxpy(uint64_t N, float64_t DA, float64_t *DX, int64_t incX, float64_t *DY, int64_t incY, const uint_fast8_t rndMode);
+void dcopy(uint64_t N, const float64_t *DX, int64_t incX, float64_t *DY, int64_t incY, const uint_fast8_t rndMode);
+float64_t ddot(const uint64_t N, const float64_t *X, const int64_t incX, const float64_t *Y, const int64_t incY, const uint_fast8_t rndMode);
+float64_t dnrm2(uint64_t N, const float64_t *X, uint64_t incX, const uint_fast8_t rndMode);
+void drot(const uint64_t N, float64_t *X, const uint64_t  incX, float64_t *Y, const uint64_t incY, const float64_t c, const float64_t s, const uint_fast8_t rndMode);
+void drotg(float64_t *a, float64_t *b, float64_t *c, float64_t *s, const uint_fast8_t rndMode);
+void drotm(const uint64_t N, float64_t *X, const uint64_t incX, float64_t *Y, const uint64_t incY, const float64_t *P, const uint_fast8_t rndMode);
+void drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, float64_t *P, const uint_fast8_t rndMode);
+void dscal(uint64_t N, float64_t DA, float64_t *DX, uint64_t incX, const uint_fast8_t rndMode);
+void dswap(uint64_t N, float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY, const uint_fast8_t rndMode);
 uint64_t idamax(uint64_t N, const float64_t *DX, uint64_t incX);
 
 //    Half-precision
-float16_t hasum(uint64_t N, const float16_t *HX, uint64_t incX);
-void haxpy(uint64_t N, float16_t HA, float16_t *HX, int64_t incX, float16_t *HY, int64_t incY);
-void hcopy(uint64_t N, const float16_t *HX, int64_t incX, float16_t *HY, int64_t incY);
-float16_t hdot(const uint64_t N, const float16_t *X, const int64_t incX, const float16_t *Y, const int64_t incY);
-float16_t hnrm2(uint64_t N, const float16_t *X, uint64_t incX);
-void hrot(const uint64_t N, float16_t *X, const uint64_t  incX, float16_t *Y, const uint64_t incY, const float16_t c, const float16_t s);
-void hrotg(float16_t *a, float16_t *b, float16_t *c, float16_t *s);
-void hrotm(const uint64_t N, float16_t *X, const uint64_t incX, float16_t *Y, const uint64_t incY, const float16_t *P);
-void hrotmg(float16_t *D1, float16_t *D2, float16_t *X1, const float16_t y1, float16_t *P);
-void hscal(uint64_t N, float16_t HA, float16_t *HX, uint64_t incX);
-void hswap(uint64_t N, float16_t *HX, uint64_t incX, float16_t *HY, uint64_t incY);
+float16_t hasum(uint64_t N, const float16_t *HX, uint64_t incX, const uint_fast8_t rndMode);
+void haxpy(uint64_t N, float16_t HA, float16_t *HX, int64_t incX, float16_t *HY, int64_t incY, const uint_fast8_t rndMode);
+void hcopy(uint64_t N, const float16_t *HX, int64_t incX, float16_t *HY, int64_t incY, const uint_fast8_t rndMode);
+float16_t hdot(const uint64_t N, const float16_t *X, const int64_t incX, const float16_t *Y, const int64_t incY, const uint_fast8_t rndMode);
+float16_t hnrm2(uint64_t N, const float16_t *X, uint64_t incX, const uint_fast8_t rndMode);
+void hrot(const uint64_t N, float16_t *X, const uint64_t  incX, float16_t *Y, const uint64_t incY, const float16_t c, const float16_t s, const uint_fast8_t rndMode);
+void hrotg(float16_t *a, float16_t *b, float16_t *c, float16_t *s, const uint_fast8_t rndMode);
+void hrotm(const uint64_t N, float16_t *X, const uint64_t incX, float16_t *Y, const uint64_t incY, const float16_t *P, const uint_fast8_t rndMode);
+void hrotmg(float16_t *D1, float16_t *D2, float16_t *X1, const float16_t y1, float16_t *P, const uint_fast8_t rndMode);
+void hscal(uint64_t N, float16_t HA, float16_t *HX, uint64_t incX, const uint_fast8_t rndMode);
+void hswap(uint64_t N, float16_t *HX, uint64_t incX, float16_t *HY, uint64_t incY, const uint_fast8_t rndMode);
 uint64_t ihamax(uint64_t N, const float16_t *HX, uint64_t incX);
 
 //    Quad-precision
-float128_t qasum(uint64_t N, const float128_t *QX, uint64_t incX);
-void qaxpy(uint64_t N, float128_t QA, float128_t *QX, int64_t incX, float128_t *QY, int64_t incY);
-void qcopy(uint64_t N, const float128_t *QX, int64_t incX, float128_t *QY, int64_t incY);
-float128_t qdot(const uint64_t N, const float128_t *X, const int64_t incX, const float128_t *Y, const int64_t incY);
-float128_t qnrm2(uint64_t N, const float128_t *X, uint64_t incX);
-void qrot(const uint64_t N, float16_t *X, const uint64_t  incX, float16_t *Y, const uint64_t incY, const float16_t c, const float16_t s);
-void qrotg(float128_t *a, float128_t *b, float128_t *c, float128_t *s);
-void qrotm(const uint64_t N, float128_t *X, const uint64_t incX, float128_t *Y, const uint64_t incY, const float128_t *P);
-void qrotmg(float128_t *D1, float128_t *D2, float128_t *X1, const float128_t y1, float128_t *P);
-void qscal(uint64_t N, float128_t QA, float128_t *QX, uint64_t incX);
-void qswap(uint64_t N, float128_t *QX, uint64_t incX, float128_t *QY, uint64_t incY);
+float128_t qasum(uint64_t N, const float128_t *QX, uint64_t incX, const uint_fast8_t rndMode);
+void qaxpy(uint64_t N, float128_t QA, float128_t *QX, int64_t incX, float128_t *QY, int64_t incY, const uint_fast8_t rndMode);
+void qcopy(uint64_t N, const float128_t *QX, int64_t incX, float128_t *QY, int64_t incY, const uint_fast8_t rndMode);
+float128_t qdot(const uint64_t N, const float128_t *X, const int64_t incX, const float128_t *Y, const int64_t incY, const uint_fast8_t rndMode);
+float128_t qnrm2(uint64_t N, const float128_t *X, uint64_t incX, const uint_fast8_t rndMode);
+void qrot(const uint64_t N, float16_t *X, const uint64_t  incX, float16_t *Y, const uint64_t incY, const float16_t c, const float16_t s, const uint_fast8_t rndMode);
+void qrotg(float128_t *a, float128_t *b, float128_t *c, float128_t *s, const uint_fast8_t rndMode);
+void qrotm(const uint64_t N, float128_t *X, const uint64_t incX, float128_t *Y, const uint64_t incY, const float128_t *P, const uint_fast8_t rndMode);
+void qrotmg(float128_t *D1, float128_t *D2, float128_t *X1, const float128_t y1, float128_t *P, const uint_fast8_t rndMode);
+void qscal(uint64_t N, float128_t QA, float128_t *QX, uint64_t incX, const uint_fast8_t rndMode);
+void qswap(uint64_t N, float128_t *QX, uint64_t incX, float128_t *QY, uint64_t incY, const uint_fast8_t rndMode);
 uint64_t iqamax(uint64_t N, const float128_t *QX, uint64_t incX);
 
 //    Complex single-precision
-float32_t scasum(uint64_t N, const complex32_t *CX, int64_t incX);
-void caxpy(uint64_t N, complex32_t CA, complex32_t *CX, int64_t incX, complex32_t *HY, int64_t incY);
-void ccopy(uint64_t N, const complex32_t *CX, int64_t incX, complex32_t *CY, int64_t incY);
-complex32_t cdotc(uint64_t N, const complex32_t *CX, int64_t incX, const complex32_t *CY, int64_t incY);
-float32_t scnrm2(uint64_t N, const complex32_t *CX, uint64_t incX);
-void csrot(const uint64_t N, complex32_t *CX, const uint64_t incX, complex32_t *CY, const uint64_t incY, const complex32_t c, const complex32_t s);
+float32_t scasum(uint64_t N, const complex32_t *CX, int64_t incX, const uint_fast8_t rndMode);
+void caxpy(uint64_t N, complex32_t CA, complex32_t *CX, int64_t incX, complex32_t *HY, int64_t incY, const uint_fast8_t rndMode);
+void ccopy(uint64_t N, const complex32_t *CX, int64_t incX, complex32_t *CY, int64_t incY, const uint_fast8_t rndMode);
+complex32_t cdotc(uint64_t N, const complex32_t *CX, int64_t incX, const complex32_t *CY, int64_t incY, const uint_fast8_t rndMode);
+float32_t scnrm2(uint64_t N, const complex32_t *CX, uint64_t incX, const uint_fast8_t rndMode);
+void csrot(const uint64_t N, complex32_t *CX, const uint64_t incX, complex32_t *CY, const uint64_t incY, const complex32_t c, const complex32_t s, const uint_fast8_t rndMode);
 
-void cscal(uint64_t N, complex32_t CA, complex32_t *CX, uint64_t incX);
-void cswap(uint64_t N, complex32_t *CX, uint64_t incX, complex32_t *CY, uint64_t incY);
-uint64_t icamax(uint64_t N, const complex32_t *CX, uint64_t incX);
+void cscal(uint64_t N, complex32_t CA, complex32_t *CX, uint64_t incX, const uint_fast8_t rndMode);
+void cswap(uint64_t N, complex32_t *CX, uint64_t incX, complex32_t *CY, uint64_t incY, const uint_fast8_t rndMode);
+uint64_t icamax(uint64_t N, const complex32_t *CX, uint64_t incX, const uint_fast8_t rndMode);
 
 //    Complex double-precision
 
@@ -227,17 +236,17 @@ uint64_t icamax(uint64_t N, const complex32_t *CX, uint64_t incX);
 
 // Level 2
 
-void sgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *X, const int64_t incX, const float32_t beta, float32_t *Y, const uint64_t incY);
-void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *X, const int64_t incX, const float64_t beta, float64_t *Y, const uint64_t incY);
-void hgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *X, const int64_t incX, const float16_t beta, float16_t *Y, const uint64_t incY);
-void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float128_t alpha, const float128_t *A, const uint64_t lda, const float128_t *X, const int64_t incX, const float128_t beta, float128_t *Y, const uint64_t incY);
+void sgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *X, const int64_t incX, const float32_t beta, float32_t *Y, const uint64_t incY, const uint_fast8_t rndMode);
+void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *X, const int64_t incX, const float64_t beta, float64_t *Y, const uint64_t incY, const uint_fast8_t rndMode);
+void hgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *X, const int64_t incX, const float16_t beta, float16_t *Y, const uint64_t incY, const uint_fast8_t rndMode);
+void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float128_t alpha, const float128_t *A, const uint64_t lda, const float128_t *X, const int64_t incX, const float128_t beta, float128_t *Y, const uint64_t incY, const uint_fast8_t rndMode);
 
 // Level 3
 
-void sgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *B, const uint64_t ldb, const float32_t beta, float32_t *C, const uint64_t ldc);
-void dgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc);
-void hgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *B, const uint64_t ldb, const float16_t beta, float16_t *C, const uint64_t ldc);
-void qgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float128_t alpha, const float128_t *A, const uint64_t lda, const float128_t *B, const uint64_t ldb, const float128_t beta, float128_t *C, const uint64_t ldc);
+void sgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *B, const uint64_t ldb, const float32_t beta, float32_t *C, const uint64_t ldc, const uint_fast8_t rndMode);
+void dgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc, const uint_fast8_t rndMode);
+void hgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *B, const uint64_t ldb, const float16_t beta, float16_t *C, const uint64_t ldc, const uint_fast8_t rndMode);
+void qgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float128_t alpha, const float128_t *A, const uint64_t lda, const float128_t *B, const uint64_t ldb, const float128_t beta, float128_t *C, const uint64_t ldc, const uint_fast8_t rndMode);
 
 // NAN unification
 
@@ -379,5 +388,28 @@ static inline float128_t* qvec(float128_pair_t pairs[], uint64_t size) {
     
     return result;
 }
+
+  static inline void
+  _set_rounding(uint_fast8_t a)
+  {
+    switch ( a )
+    {
+    default:
+      exit(1);
+      break;
+    case 'n':
+      softfloat_roundingMode = softfloat_round_near_even;
+      break;
+    case 'z':
+      softfloat_roundingMode = softfloat_round_minMag;
+      break;
+    case 'u':
+      softfloat_roundingMode = softfloat_round_max;
+      break;
+    case 'd':
+      softfloat_roundingMode = softfloat_round_min;
+      break;
+    }
+  }
 
 #endif // SOFTBLAS_H
