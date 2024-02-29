@@ -6,8 +6,9 @@ A BLAS/LAPACK implementation using [Berkeley SoftFloat](http://www.jhauser.us/ar
 
 Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value.
 
-**Status WIP ~2024.2.28**
+**Status WIP ~2024.2.29**
 
+- [ ] Add rounding-mode propagation to fn signatures.
 - [ ] Complete complex-valued functions.
 - [ ] Run everything through a linter.
 
