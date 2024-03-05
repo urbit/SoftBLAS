@@ -14,8 +14,8 @@ void qgemm(const char transA, const char transB, const uint64_t M, const uint64_
         return;
     }
 
-    float128_t *qtemp = malloc(sizeof(float128_t));
-    float128_t *qtemp2 = malloc(sizeof(float128_t));
+    float128_t qtemp;
+    float128_t qtemp2;
     for (uint64_t i = 0; i < M; i++) {
         for (uint64_t j = 0; j < P; j++) {
             float128_t dotProduct = ZERO;
@@ -24,13 +24,12 @@ void qgemm(const char transA, const char transB, const uint64_t M, const uint64_
                 uint64_t indexB = (transB == 'N' || transB == 'n') ? j + k * ldc : k + j * ldc;
                 float128_t a = A[indexA];
                 float128_t b = B[indexB];
-                f128M_mul(&a, &b, qtemp);
-                f128M_add(&dotProduct, qtemp, &dotProduct);
+                f128M_mul(&a, &b, &qtemp);
+                f128M_add(&dotProduct, &qtemp, &dotProduct);
             }
-            f128M_mul(&alpha, &dotProduct, qtemp);
-            f128M_mul(&beta, &C[j + i * ldc], qtemp2);
-            f128M_add(qtemp, qtemp2, &(C[j + i * ldc]));
+            f128M_mul(&alpha, &dotProduct, &qtemp);
+            f128M_mul(&beta, &C[j + i * ldc], &qtemp2);
+            f128M_add(&qtemp, &qtemp2, &(C[j + i * ldc]));
         }
     }
-    free(qtemp);
 }

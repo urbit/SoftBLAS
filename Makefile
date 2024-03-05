@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Iinclude -ISoftFloat/source/include -Imunit -Itests/blas/include
+CFLAGS = -Iinclude -ISoftFloat/source/include
 LDFLAGS = -LSoftFloat/build/Linux-x86_64-GCC/
 LIBS = -l:softfloat.a
 
@@ -68,10 +68,7 @@ TEST_TARGET = test_all
 
 library: $(TARGET)
 
-# not intended as the replacement for Vere, but a test run
-urbit: CFLAGS += -DVERE -DU3_OS_linux -DU3_OS_ENDIAN_little
-urbit: $(TARGET)
-
+tests: CFLAGS += -Imunit -Itests/blas/include
 tests: $(TEST_TARGET)
 
 $(TARGET): $(BLAS_OBJS)

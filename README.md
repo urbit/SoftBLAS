@@ -6,10 +6,14 @@ A BLAS/LAPACK implementation using [Berkeley SoftFloat](http://www.jhauser.us/ar
 
 Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value.
 
-**Status WIP ~2024.2.28**
+**Status WIP ~2024.3.5**
 
+- [ ] Remove `malloc` entirely.
 - [ ] Complete complex-valued functions.
 - [ ] Run everything through a linter.
+- [ ] Add (kelvin) versioning, at least on interface.
+
+##  BLAS
 
 [BLAS naming conventions](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-1/naming-conventions-for-blas-routines.html) are followed for 32/64 bits, but extensions to the prefix scheme are necessary for 16/128 bit widths; we use:
 
@@ -19,6 +23,14 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 |  32 | `s` | `c` |
 |  64 | `d` | `z` |
 | 128 | `q` | `v` |
+
+The rounding mode should be set via the global variable `softblas_roundingMode` (a `char` `typedef`), defined in `softblas.h`.  Valid values are:
+
+- `'n'` - round to nearest (even)
+- `'z'` - round towards zero
+- `'u'` - round up
+- `'d'` - round down
+- `'a'` - round away from zero
 
 Per Wikipedia:
 

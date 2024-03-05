@@ -4,16 +4,6 @@
 #include "softfloat.h"
 #include <stdlib.h>
 
-/*  If we are building for Urbit, we need to use the Urbit allocator.
-    You are responsible for linking SoftBLAS in that case.
-*/
-#ifdef VERE
-// #include "types.h"
-#include "allocate.h"
-#define malloc u3a_malloc
-#define free u3a_free
-#endif
-
 //  $?(%n %u %d %z %a)
 typedef char sb_rounding_mode_t;
 extern sb_rounding_mode_t softblas_roundingMode;
