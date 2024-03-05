@@ -13,6 +13,32 @@
 #define free u3a_free
 #endif
 
+//  $?(%n %u %d %z %a)
+typedef char sb_rounding_mode_t;
+extern sb_rounding_mode_t softblas_roundingMode;
+
+static inline void set_rounding() {
+    switch ( softblas_roundingMode )
+    {
+    default:
+    case 'n':
+        softfloat_roundingMode = softfloat_round_near_even;
+        break;
+    case 'z':
+        softfloat_roundingMode = softfloat_round_minMag;
+        break;
+    case 'u':
+        softfloat_roundingMode = softfloat_round_max;
+        break;
+    case 'd':
+        softfloat_roundingMode = softfloat_round_min;
+        break;
+    case 'a':
+        softfloat_roundingMode = softfloat_round_near_maxMag;
+        break;
+    }
+}
+
 //  TYPES
 
 typedef struct {
