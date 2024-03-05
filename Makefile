@@ -68,6 +68,10 @@ TEST_TARGET = test_all
 
 library: $(TARGET)
 
+# not intended as the replacement for Vere, but a test run
+urbit: CFLAGS += -DVERE -DU3_OS_linux -DU3_OS_ENDIAN_little
+urbit: $(TARGET)
+
 tests: $(TEST_TARGET)
 
 $(TARGET): $(BLAS_OBJS)

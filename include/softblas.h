@@ -8,7 +8,8 @@
     You are responsible for linking SoftBLAS in that case.
 */
 #ifdef VERE
-#include "noun.h"
+// #include "types.h"
+#include "allocate.h"
 #define malloc u3a_malloc
 #define free u3a_free
 #endif
