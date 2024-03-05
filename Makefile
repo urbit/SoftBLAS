@@ -6,10 +6,12 @@ LIBS = -l:softfloat.a
 MUNIT_SRC = munit/munit.c
 MUNIT_OBJ = $(MUNIT_SRC:.c=.o)
 
+BLAS_STATE_DIR = ./src
 BLAS_SRC_DIR_L1 = ./src/blas/level1
 BLAS_SRC_DIR_L2 = ./src/blas/level2
 BLAS_SRC_DIR_L3 = ./src/blas/level3
 BLAS_SRCS = \
+  $(BLAS_STATE_DIR)/softblas_state.c \
   $(BLAS_SRC_DIR_L1)/sasum.c \
   $(BLAS_SRC_DIR_L1)/dasum.c \
   $(BLAS_SRC_DIR_L1)/hasum.c \
@@ -81,6 +83,9 @@ $(TEST_OBJS): $(TEST_SRC_DIR)/%.o: $(TEST_SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TEST_ALL_OBJ): $(TEST_ALL_SRC)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BLAS_OBJS): $(BLAS_STATE_DIR)/%.o: $(BLAS_STATE_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BLAS_OBJS): $(BLAS_SRC_DIR_L1)/%.o: $(BLAS_SRC_DIR_L1)/%.c
