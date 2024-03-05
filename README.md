@@ -8,7 +8,6 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 
 **Status WIP ~2024.3.5**
 
-- [ ] Remove `malloc` entirely.
 - [ ] Complete complex-valued functions.
 - [ ] Run everything through a linter.
 - [ ] Add (kelvin) versioning, at least on interface.
@@ -17,12 +16,12 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 
 [BLAS naming conventions](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-1/naming-conventions-for-blas-routines.html) are followed for 32/64 bits, but extensions to the prefix scheme are necessary for 16/128 bit widths; we use:
 
-| Bits | Real | Complex |
-| --- | --- | --- |
-|  16 | `h` | `i` |
-|  32 | `s` | `c` |
-|  64 | `d` | `z` |
-| 128 | `q` | `v` |
+| Bit Width | Real | Real Form | Bit Width | Complex | Complex Form |
+| --- | --- | --- | --- | --- | --- |
+|  16 | `h` |  `float16_t` |  16 | `i` |  `complex16_t` |
+|  32 | `s` |  `float32_t` |  32 | `c` |  `complex32_t` |
+|  64 | `d` |  `float64_t` |  64 | `z` |  `complex64_t` |
+| 128 | `q` | `float128_t` | 128 | `v` | `complex128_t` |
 
 The rounding mode should be set via the global variable `softblas_roundingMode` (a `char` `typedef`), defined in `softblas.h`.  Valid values are:
 
@@ -266,3 +265,8 @@ Running test suite with seed 0xa623450c...
 * * *
 132 of 132 (100%) tests successful, 0 (0%) test skipped.
 ```
+
+
+##  Versioning
+
+When the initial complete release is complete, SoftBLAS will be [kelvin versioned](https://docs.urbit.org/glossary/kelvin).  We will start relatively hot, at room temperature or so.
