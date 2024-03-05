@@ -1,36 +1,32 @@
 #include "softblas.h"
 
-float32_t scnrm2(uint64_t N, const complex32_t *CX, uint64_t incX) {
-      float32_t norm, scale, ssq, temp;
-      
-      if (N < 1 || incX < 1) {
-            norm = SB_REAL32_ZERO;
-      } else {
-            scale = SB_REAL32_ZERO;
-            ssq = SB_REAL32_ONE;
+float32_t scnrm2(uint64_t N, const complex32_t *X, uint64_t incX) {
+    float32_t norm = { SB_REAL32_ZERO };
+    
+    if (N < 1 || incX < 1) {
+        return norm;
+    } else if (N == 1) {
+        norm = f32_abs(X[0]);
+        return norm;
+    } else {
+        float32_t scale = { SB_REAL32_ZERO };
+        float32_t ssq = { SB_REAL32_ONE };
+        float32_t absXI;
 
-            for (uint64_t ix = 0; ix < 1 + (N - 1) * incX; ix += incX) {
-                  if (f32_ne(REAL(CX[ix]), SB_REAL32_ZERO)) {
-                        temp = f32_abs(REAL(CX[ix]));
-                        if (f32_lt(scale, temp)) {
-                              ssq = f32_add(SB_REAL32_ONE, f32_mul(ssq, f32_div(f32_mul(scale, scale), f32_mul(temp, temp))));
-                              scale = temp;
-                        } else {
-                              ssq = f32_add(ssq, f32_div(f32_mul(temp, temp), f32_mul(scale, scale)));
-                        }
-                  }
-                  if (f32_ne(IMAG(CX[ix]), SB_REAL32_ZERO)) {
-                        temp = f32_abs(IMAG(CX[ix]));
-                        if (f32_lt(scale, temp)) {
-                              ssq = f32_add(SB_REAL32_ONE, f32_mul(ssq, f32_div(f32_mul(scale, scale), f32_mul(temp, temp))));
-                              scale = temp;
-                        } else {
-                              ssq = f32_add(ssq, f32_div(f32_mul(temp, temp), f32_mul(scale, scale)));
-                        }
-                  }
+        for (uint64_t ix = 0; ix < 1 + (N - 1) * incX; ix += incX) {
+            if (f32_ne(X[ix], (complex32_t){ SB_REAL32_ZERO })) {
+                absXI = f32_abs(X[ix]);
+                if (f32_lt(scale, absXI)) {
+                    ssq = f32_add((complex32_t){ SB_REAL32_ONE }, f32_mul(ssq, f32_div(f32_mul(scale, scale), f32_mul(absXI, absXI))));
+                    scale = absXI;
+                } else {
+                    ssq = f32_add(ssq, f32_div(f32_mul(absXI, absXI), f32_mul(scale, scale)));
+                }
             }
-            norm = f32_mul(scale, f32_sqrt(ssq));
-      }
+        }
 
-      return norm;
+        norm = f32_mul(scale, f32_sqrt(ssq));
+
+        return norm;
+    }
 }

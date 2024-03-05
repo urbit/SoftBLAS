@@ -142,9 +142,66 @@ Per Wikipedia:
 - `qswap` - swap x and y
 - `iqamax` - index of max abs value
 
+#### `c` 32-Bit Single Precision (Complex)
+
+- `casum` - sum of absolute values
+- `caxpy` - y = a*x + y
+- `ccopy` - copy x into y
+- `cdot` - dot product
+- ~~`cdsdot` - dot product with extended precision accumulation (returns `float64_t`)~~
+- `cnrm2` - Euclidean norm
+- ~~`crot` - apply Givens rotation~~
+- ~~`crotg` - set up Givens rotation~~
+- ~~`crotm` - apply modified Givens rotation~~
+- ~~`crotmg` - set up modified Givens rotation~~
+- `cscal` - x = a*x
+- `cswap` - swap x and y
+
+#### `z` 64-Bit Double Precision (Complex)
+
+- `zasum` - sum of absolute values
+- `zaxpy` - y = a*x + y
+- `zcopy` - copy x into y
+- `zdot` - dot product
+- ~~`zsdot` - dot product with extended precision accumulation (returns `float64_t`)~~
+- `znrm2` - Euclidean norm
+- ~~`zrot` - apply Givens rotation~~
+- ~~`zrotg` - set up Givens rotation~~
+- ~~`zrotm` - apply modified Givens rotation~~
+- ~~`zrotmg` - set up modified Givens rotation~~
+- `zscal` - x = a*x
+- `zswap` - swap x and y
+
+#### `i` 16-Bit Half Precision (Complex)
+
+- `iasum` - sum of absolute values
+- `iaxpy` - y = a*x + y
+- `icopy` - copy x into y
+- `idot` - dot product
+- `inrm2` - Euclidean norm
+- ~~`irot` - apply Givens rotation~~
+- ~~`irotg` - set up Givens rotation~~
+- ~~`irotm` - apply modified Givens rotation~~
+- ~~`irotmg` - set up modified Givens rotation~~
+- `iscal` - x = a*x
+- `iswap` - swap x and y
+
+#### `v` 128-Bit Quadruple Precision (Complex)
+
+- `vasum` - sum of absolute values
+- `vaxpy` - y = a*x + y
+- `vcopy` - copy x into y
+- `vdot` - dot product
+- `vnrm2` - Euclidean norm
+- ~~`vrot` - apply Givens rotation~~
+- ~~`vrotg` - set up Givens rotation~~
+- ~~`vrotm` - apply modified Givens rotation~~
+- ~~`vrotmg` - set up modified Givens rotation~~
+- `vscal` - x = a*x
+- `vswap` - swap x and y
+
 #### Pending
 
-- `{hi|sc|dz|qv}nrm` - Euclidean norm, complex
 - `?rot??` Givens rotation functions in Level 1
 - Various OpenBLAS extended functions like `i?amin`
 
@@ -166,6 +223,22 @@ Per Wikipedia:
 
 - `qgemv` - computes a matrix-vector product using a general matrix
 
+#### `s` 32-Bit Single Precision (Complex)
+
+- `cgemv` - computes a matrix-vector product using a general matrix
+
+#### `d` 64-Bit Single Precision (Complex)
+
+- `zgemv` - computes a matrix-vector product using a general matrix
+
+#### `h` 16-Bit Single Precision (Complex)
+
+- `igemv` - computes a matrix-vector product using a general matrix
+
+#### `q` 128-Bit Single Precision (Complex)
+
+- `vgemv` - computes a matrix-vector product using a general matrix
+
 ### Level 3 Functions
 
 #### `s` 32-Bit Single Precision
@@ -183,6 +256,22 @@ Per Wikipedia:
 #### `h` 128-Bit Single Precision
 
 - `qgemm` - computes a matrix-matrix product using a general matrix
+
+#### `s` 32-Bit Single Precision (Complex)
+
+- `cgemm` - computes a matrix-matrix product using a general matrix
+
+#### `d` 64-Bit Single Precision (Complex)
+
+- `zgemm` - computes a matrix-matrix product using a general matrix
+
+#### `h` 16-Bit Single Precision (Complex)
+
+- `igemm` - computes a matrix-matrix product using a general matrix
+
+#### `h` 128-Bit Single Precision (Complex)
+
+- `vgemm` - computes a matrix-matrix product using a general matrix
 
 #### Pending
 

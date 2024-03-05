@@ -16,18 +16,22 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR_L1)/dasum.c \
   $(BLAS_SRC_DIR_L1)/hasum.c \
   $(BLAS_SRC_DIR_L1)/qasum.c \
+  $(BLAS_SRC_DIR_L1)/scasum.c \
   $(BLAS_SRC_DIR_L1)/saxpy.c \
   $(BLAS_SRC_DIR_L1)/daxpy.c \
   $(BLAS_SRC_DIR_L1)/haxpy.c \
   $(BLAS_SRC_DIR_L1)/qaxpy.c \
+  $(BLAS_SRC_DIR_L1)/caxpy.c \
   $(BLAS_SRC_DIR_L1)/scopy.c \
   $(BLAS_SRC_DIR_L1)/dcopy.c \
   $(BLAS_SRC_DIR_L1)/hcopy.c \
   $(BLAS_SRC_DIR_L1)/qcopy.c \
+  $(BLAS_SRC_DIR_L1)/ccopy.c \
   $(BLAS_SRC_DIR_L1)/sdot.c \
   $(BLAS_SRC_DIR_L1)/ddot.c \
   $(BLAS_SRC_DIR_L1)/hdot.c \
   $(BLAS_SRC_DIR_L1)/qdot.c \
+  $(BLAS_SRC_DIR_L1)/cdotc.c \
   $(BLAS_SRC_DIR_L1)/snrm2.c \
   $(BLAS_SRC_DIR_L1)/dnrm2.c \
   $(BLAS_SRC_DIR_L1)/hnrm2.c \

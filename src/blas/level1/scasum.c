@@ -1,12 +1,11 @@
 #include "softblas.h"
 
 float32_t scasum(uint64_t N, const complex32_t *CX, uint64_t incX) {
-      float32_t stemp = SB_FLOAT32_ZERO;
+    float32_t stemp = { SB_REAL32_ZERO };
+    
+    for (uint64_t i = 0; i < N; i++) {
+        stemp = f32_add(stemp, f32_add(f32_abs(CX[i*incX].real), f32_abs(CX[i*incX].imag)));
+    }
 
-      uint64_t NincX = N * incX;
-      for (uint64_t i = 0; i < NincX; i += incX) {
-         stemp += f32_add(ABS(REAL(CX[i])), ABS(IMAG(CX[i])));
-      }
-
-      return stemp;
+    return nan_unify_s(stemp);
 }

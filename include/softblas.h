@@ -134,10 +134,10 @@ typedef struct {
 #define f64_min(x, y) ( f64_gt( (x) , (y) ) ? (y) : (x) )
 #define f128_min(x, y) ( f128_gt( (x) , (y) ) ? (y) : (x) )
 
-#define c16_eq(a, b)  ( (a.real == b.real) && (a.imag == b.imag) )
-#define c32_eq(a, b)  ( (a.real == b.real) && (a.imag == b.imag) )
-#define c64_eq(a, b)  ( (a.real == b.real) && (a.imag == b.imag) )
-#define c128_eq(a, b) ( (a.real == b.real) && (a.imag == b.imag) )
+#define c16_eq(a, b)  ( f16_eq(a.real, b.real) && f16_eq(a.imag, b.imag) )
+#define c32_eq(a, b)  ( f32_eq(a.real, b.real) && f32_eq(a.imag, b.imag) )
+#define c64_eq(a, b)  ( f64_eq(a.real, b.real) && f64_eq(a.imag, b.imag) )
+#define c128_eq(a, b) ( f128_eq(a.real, b.real) && f128_eq(a.imag, b.imag) )
 #define c16_ne  !c16_eq
 #define c32_ne  !c32_eq
 #define c64_ne  !c64_eq
@@ -151,27 +151,30 @@ typedef struct {
 #define REAL(a)  (a.real)
 #define IMAG(a)  (a.imag)
 
-#define c16_add(a, b) { f16_add(a.real, b.real), f16_add(a.imag, b.imag) }
-#define c32_add(a, b) { f32_add(a.real, b.real), f32_add(a.imag, b.imag) }
-#define c64_add(a, b) { f64_add(a.real, b.real), f64_add(a.imag, b.imag) }
-#define c128_add(a, b) { f128_add(a.real, b.real), f128_add(a.imag, b.imag) }
+#define c16_add(a, b) (complex16_t){ f16_add(a.real, b.real), f16_add(a.imag, b.imag) }
+#define c32_add(a, b) (complex32_t){ f32_add(a.real, b.real), f32_add(a.imag, b.imag) }
+#define c64_add(a, b) (complex64_t){ f64_add(a.real, b.real), f64_add(a.imag, b.imag) }
+#define c128_add(a, b) (complex128_t){ f128_add(a.real, b.real), f128_add(a.imag, b.imag) }
 
-#define c16_sub(a, b) { f16_sub(a.real, b.real), f16_sub(a.imag, b.imag) }
-#define c32_sub(a, b) { f32_sub(a.real, b.real), f32_sub(a.imag, b.imag) }
-#define c64_sub(a, b) { f64_sub(a.real, b.real), f64_sub(a.imag, b.imag) }
-#define c128_sub(a, b) { f128_sub(a.real, b.real), f128_sub(a.imag, b.imag) }
+#define c16_sub(a, b) (complex16_t){ f16_sub(a.real, b.real), f16_sub(a.imag, b.imag) }
+#define c32_sub(a, b) (complex32_t){ f32_sub(a.real, b.real), f32_sub(a.imag, b.imag) }
+#define c64_sub(a, b) (complex64_t){ f64_sub(a.real, b.real), f64_sub(a.imag, b.imag) }
+#define c128_sub(a, b) (complex128_t){ f128_sub(a.real, b.real), f128_sub(a.imag, b.imag) }
 
-#define c16_mul(a, b) { f16_sub( f16_mul(a.real, b.real), f16_mul(a.imag, b.imag) ), f16_add( f16_mul(a.real, b.imag), f16_mul(a.imag, b.real) ) }
-#define c32_mul(a, b) { f32_sub( f32_mul(a.real, b.real), f32_mul(a.imag, b.imag) ), f32_add( f32_mul(a.real, b.imag), f32_mul(a.imag, b.real) ) }
-#define c64_mul(a, b) { f64_sub( f64_mul(a.real, b.real), f64_mul(a.imag, b.imag) ), f64_add( f64_mul(a.real, b.imag), f64_mul(a.imag, b.real) ) }
-#define c128_mul(a, b) { f128_sub( f128_mul(a.real, b.real), f128_mul(a.imag, b.imag) ), f128_add( f128_mul(a.real, b.imag), f128_mul(a.imag, b.real) ) }
+#define c16_mul(a, b) (complex16_t){ f16_sub( f16_mul(a.real, b.real), f16_mul(a.imag, b.imag) ), f16_add( f16_mul(a.real, b.imag), f16_mul(a.imag, b.real) ) }
+#define c32_mul(a, b) (complex32_t){ f32_sub( f32_mul(a.real, b.real), f32_mul(a.imag, b.imag) ), f32_add( f32_mul(a.real, b.imag), f32_mul(a.imag, b.real) ) }
+#define c64_mul(a, b) (complex64_t){ f64_sub( f64_mul(a.real, b.real), f64_mul(a.imag, b.imag) ), f64_add( f64_mul(a.real, b.imag), f64_mul(a.imag, b.real) ) }
+#define c128_mul(a, b) (complex128_t){ f128_sub( f128_mul(a.real, b.real), f128_mul(a.imag, b.imag) ), f128_add( f128_mul(a.real, b.imag), f128_mul(a.imag, b.real) ) }
 
-#define c16_div(a, b) { f16_div( f16_add( f16_mul(a.real, b.real), f16_mul(a.imag, b.imag) ), f16_add( f16_mul(b.real, b.real), f16_mul(b.imag, b.imag) ) ), f16_div( f16_sub( f16_mul(a.imag, b.real), f16_mul(a.real, b.imag) ), f16_add( f16_mul(b.real, b.real), f16_mul(b.imag, b.imag) ) ) }
-#define c32_div(a, b) { f32_div( f32_add( f32_mul(a.real, b.real), f32_mul(a.imag, b.imag) ), f32_add( f32_mul(b.real, b.real), f32_mul(b.imag, b.imag) ) ), f32_div( f32_sub( f32_mul(a.imag, b.real), f32_mul(a.real, b.imag) ), f32_add( f32_mul(b.real, b.real), f32_mul(b.imag, b.imag) ) ) }
-#define c64_div(a, b) { f64_div( f64_add( f64_mul(a.real, b.real), f64_mul(a.imag, b.imag) ), f64_add( f64_mul(b.real, b.real), f64_mul(b.imag, b.imag) ) ), f64_div( f64_sub( f64_mul(a.imag, b.real), f64_mul(a.real, b.imag) ), f64_add( f64_mul(b.real, b.real), f64_mul(b.imag, b.imag) ) ) }
-#define c128_div(a, b) { f128_div( f128_add( f128_mul(a.real, b.real), f128_mul(a.imag, b.imag) ), f128_add( f128_mul(b.real, b.real), f128_mul(b.imag, b.imag) ) ), f128_div( f128_sub( f128_mul(a.imag, b.real), f128_mul(a.real, b.imag) ), f128_add( f128_mul(b.real, b.real), f128_mul(b.imag, b.imag) ) ) }
+#define c16_div(a, b) (complex16_t){ f16_div( f16_add( f16_mul(a.real, b.real), f16_mul(a.imag, b.imag) ), f16_add( f16_mul(b.real, b.real), f16_mul(b.imag, b.imag) ) ), f16_div( f16_sub( f16_mul(a.imag, b.real), f16_mul(a.real, b.imag) ), f16_add( f16_mul(b.real, b.real), f16_mul(b.imag, b.imag) ) ) }
+#define c32_div(a, b) (complex32_t){ f32_div( f32_add( f32_mul(a.real, b.real), f32_mul(a.imag, b.imag) ), f32_add( f32_mul(b.real, b.real), f32_mul(b.imag, b.imag) ) ), f32_div( f32_sub( f32_mul(a.imag, b.real), f32_mul(a.real, b.imag) ), f32_add( f32_mul(b.real, b.real), f32_mul(b.imag, b.imag) ) ) }
+#define c64_div(a, b) (complex64_t){ f64_div( f64_add( f64_mul(a.real, b.real), f64_mul(a.imag, b.imag) ), f64_add( f64_mul(b.real, b.real), f64_mul(b.imag, b.imag) ) ), f64_div( f64_sub( f64_mul(a.imag, b.real), f64_mul(a.real, b.imag) ), f64_add( f64_mul(b.real, b.real), f64_mul(b.imag, b.imag) ) ) }
+#define c128_div(a, b) (complex128_t){ f128_div( f128_add( f128_mul(a.real, b.real), f128_mul(a.imag, b.imag) ), f128_add( f128_mul(b.real, b.real), f128_mul(b.imag, b.imag) ) ), f128_div( f128_sub( f128_mul(a.imag, b.real), f128_mul(a.real, b.imag) ), f128_add( f128_mul(b.real, b.real), f128_mul(b.imag, b.imag) ) ) }
 
-#define CONJ(a) { a.real, FNEG(a.imag) }
+#define c16_conj(a) (complex16_t){ a.real, FNEG(a.imag) }
+#define c32_conj(a) (complex32_t){ a.real, FNEG(a.imag) }
+#define c64_conj(a) (complex64_t){ a.real, FNEG(a.imag) }
+#define c128_conj(a) (complex128_t){ a.real, FNEG(a.imag) }
 #define FNEG(x) ( x.v ^ (1 << (sizeof(x.v) * 8 - 1)) )
 
 //  SOFTBLAS PROTOTYPES
@@ -234,16 +237,15 @@ void qswap(uint64_t N, float128_t *QX, uint64_t incX, float128_t *QY, uint64_t i
 uint64_t iqamax(uint64_t N, const float128_t *QX, uint64_t incX);
 
 //    Complex single-precision
-float32_t scasum(uint64_t N, const complex32_t *CX, int64_t incX);
-void caxpy(uint64_t N, complex32_t CA, complex32_t *CX, int64_t incX, complex32_t *HY, int64_t incY);
+float32_t scasum(uint64_t N, const complex32_t *CX, uint64_t incX);
+void caxpy(uint64_t N, complex32_t CA, complex32_t *CX, int64_t incX, complex32_t *CY, int64_t incY);
 void ccopy(uint64_t N, const complex32_t *CX, int64_t incX, complex32_t *CY, int64_t incY);
 complex32_t cdotc(uint64_t N, const complex32_t *CX, int64_t incX, const complex32_t *CY, int64_t incY);
-float32_t scnrm2(uint64_t N, const complex32_t *CX, uint64_t incX);
-void csrot(const uint64_t N, complex32_t *CX, const uint64_t incX, complex32_t *CY, const uint64_t incY, const complex32_t c, const complex32_t s);
-
-void cscal(uint64_t N, complex32_t CA, complex32_t *CX, uint64_t incX);
-void cswap(uint64_t N, complex32_t *CX, uint64_t incX, complex32_t *CY, uint64_t incY);
-uint64_t icamax(uint64_t N, const complex32_t *CX, uint64_t incX);
+// float32_t scnrm2(uint64_t N, const complex32_t *CX, uint64_t incX);
+// void csrot(const uint64_t N, complex32_t *CX, const uint64_t incX, complex32_t *CY, const uint64_t incY, const complex32_t c, const complex32_t s);
+// void cscal(uint64_t N, complex32_t CA, complex32_t *CX, uint64_t incX);
+// void cswap(uint64_t N, complex32_t *CX, uint64_t incX, complex32_t *CY, uint64_t incY);
+// uint64_t icamax(uint64_t N, const complex32_t *CX, uint64_t incX);
 
 //    Complex double-precision
 
@@ -313,6 +315,55 @@ static inline void nan_unify_q(float128_t* a) {
     if ( nan_test_q(a) ) {
         *( (uint64_t*)a)    = 0x0000000000000000;
         *(((uint64_t*)a)+1) = QUADNAN;
+    }
+}
+
+static inline bool nan_test_i(complex16_t a) {
+    return c16_ne(a, a);
+}
+
+static inline complex16_t nan_unify_i(complex16_t a) {
+    if ( nan_test_i(a) ) {
+        *(uint16_t*)(&a) = HALFNAN;
+        *((uint16_t*)(&a)+1) = HALFNAN;
+    }
+    return a;
+}
+
+static inline bool nan_test_c(complex32_t a) {
+    return c32_ne(a, a);
+}
+
+static inline complex32_t nan_unify_c(complex32_t a) {
+    if ( nan_test_c(a) ) {
+        *(uint32_t*)(&a) = SINGNAN;
+        *((uint32_t*)(&a)+1) = SINGNAN;
+    }
+    return a;
+}
+
+static inline bool nan_test_z(complex64_t a) {
+    return c64_ne(a, a);
+}
+
+static inline complex64_t nan_unify_z(complex64_t a) {
+    if ( nan_test_z(a) ) {
+        *(uint64_t*)(&a) = DOUBNAN;
+        *((uint64_t*)(&a)+1) = DOUBNAN;
+    }
+    return a;
+}
+
+static inline bool nan_test_v(complex128_t* a) {
+    return (!f128M_eq(&(a->real), &(a->real)) || !f128M_eq(&(a->imag), &(a->imag)));
+}
+
+static inline void nan_unify_v(complex128_t* a) {
+    if ( nan_test_v(a) ) {
+        *( (uint64_t*)a)    = 0x0000000000000000;
+        *(((uint64_t*)a)+1) = QUADNAN;
+        *(((uint64_t*)a)+2) = 0x0000000000000000;
+        *(((uint64_t*)a)+3) = QUADNAN;
     }
 }
 
