@@ -8,7 +8,7 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 
 **Status WIP ~2024.3.5**
 
-- [ ] Complete complex-valued functions.
+- [ ] Complete complex-valued functions (in progress).
 - [ ] Run everything through a linter.
 - [ ] Add (kelvin) versioning, at least on interface.
 
