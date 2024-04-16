@@ -132,7 +132,7 @@ typedef struct {
 #define f16_min(x, y) ( f16_gt( (x) , (y) ) ? (y) : (x) )
 #define f32_min(x, y) ( f32_gt( (x) , (y) ) ? (y) : (x) )
 #define f64_min(x, y) ( f64_gt( (x) , (y) ) ? (y) : (x) )
-#define f128_min(x, y) ( f128_gt( (x) , (y) ) ? (y) : (x) )
+#define f128M_min(x, y) ( f128M_gt( (x) , (y) ) ? (y) : (x) )
 
 #define c16_eq(a, b)  ( f16_eq(a.real, b.real) && f16_eq(a.imag, b.imag) )
 #define c32_eq(a, b)  ( f32_eq(a.real, b.real) && f32_eq(a.imag, b.imag) )
