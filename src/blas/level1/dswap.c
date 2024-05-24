@@ -3,7 +3,7 @@
 void dswap(uint64_t N, float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY) {
     float64_t dtemp;
 
-    if (N == 0) return;
+    if (N == 0) exit(-1);
 
     uint64_t iX = 0;
     uint64_t iY = 0;

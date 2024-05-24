@@ -15,14 +15,14 @@ void drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, flo
     {
         *P = SB_REAL64_NEGONE;
         *D1 = *D2 = *X1 = P[1] = P[2] = P[3] = P[4] = SB_REAL64_ZERO;
-        return;
+        exit(-1);
     }
 
     p2 = f64_mul(d2, y1);
     if (f64_eq(p2, SB_REAL64_ZERO))
     {
         *P = SB_REAL64_NEGTWO;
-        return;
+        exit(-1);
     }
 
     p1 = f64_mul(d1, x1);
@@ -47,7 +47,7 @@ void drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, flo
         {
             *P = SB_REAL64_NEGONE;
             *D1 = *D2 = *X1 = P[1] = P[2] = P[3] = P[4] = SB_REAL64_ZERO;
-            return;
+            exit(-1);
         }
         flag = SB_REAL64_ONE;
         h11 = f64_div(p1, p2);

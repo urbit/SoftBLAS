@@ -5,7 +5,7 @@ void srotm(const uint32_t N, float32_t *X, const uint32_t incX, float32_t *Y, co
    const float32_t flag = *P;
    float32_t h11, h21, h12, h22, w, z;
 
-   if f32_eq(flag, SB_REAL32_NEGTWO) return;
+   if f32_eq(flag, SB_REAL32_NEGTWO) exit(-1);
    if (f32_eq(flag, SB_REAL32_NEGONE))
    {
       h11 = P[1]; h21 = P[2]; h12 = P[3]; h22 = P[4];

@@ -15,14 +15,14 @@ void srotmg(float32_t *D1, float32_t *D2, float32_t *X1, const float32_t y1, flo
     {
         *P = SB_REAL32_NEGONE;
         *D1 = *D2 = *X1 = P[1] = P[2] = P[3] = P[4] = SB_REAL32_ZERO;
-        return;
+        exit(-1);
     }
 
     p2 = f32_mul(d2, y1);
     if (f32_eq(p2, SB_REAL32_ZERO))
     {
         *P = SB_REAL32_NEGTWO;
-        return;
+        exit(-1);
     }
 
     p1 = f32_mul(d1, x1);
@@ -47,7 +47,7 @@ void srotmg(float32_t *D1, float32_t *D2, float32_t *X1, const float32_t y1, flo
         {
             *P = SB_REAL32_NEGONE;
             *D1 = *D2 = *X1 = P[1] = P[2] = P[3] = P[4] = SB_REAL32_ZERO;
-            return;
+            exit(-1);
         }
         flag = SB_REAL32_ONE;
         h11 = f32_div(p1, p2);

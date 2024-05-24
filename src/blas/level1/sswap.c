@@ -3,7 +3,7 @@
 void sswap(uint64_t N, float32_t *SX, uint64_t incX, float32_t *SY, uint64_t incY) {
     float32_t stemp;
 
-    if (N == 0) return;
+    if (N == 0) exit(-1);
 
     uint64_t iX = 0;
     uint64_t iY = 0;

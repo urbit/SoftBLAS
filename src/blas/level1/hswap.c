@@ -3,7 +3,7 @@
 void hswap(uint64_t N, float16_t *HX, uint64_t incX, float16_t *HY, uint64_t incY) {
     float16_t htemp;
 
-    if (N == 0) return;
+    if (N == 0) exit(-1);
 
     uint64_t iX = 0;
     uint64_t iY = 0;

@@ -1,17 +1,16 @@
 #include "softblas.h"
-#include <stdio.h>
 
 void sgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float32_t alpha, const float32_t *A, const uint64_t lda, const float32_t *B, const uint64_t ldb, const float32_t beta, float32_t *C, const uint64_t ldc) {
     const float32_t ZERO = {SB_REAL32_ZERO};
 
     if (transA != 'N' && transA != 'n' && transA != 'T' && transA != 't') {
-        printf("Invalid transA parameter\n");
-        return;
+        // Invalid transA parameter
+        exit(-1);
     }
 
     if (transB != 'N' && transB != 'n' && transB != 'T' && transB != 't') {
-        printf("Invalid transB parameter\n");
-        return;
+        // Invalid transB parameter
+        exit(-1);
     }
 
     for (uint64_t i = 0; i < M; i++) {

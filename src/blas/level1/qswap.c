@@ -3,7 +3,7 @@
 void qswap(uint64_t N, float128_t *QX, uint64_t incX, float128_t *QY, uint64_t incY) {
     float128_t qtemp;
 
-    if (N == 0) return;
+    if (N == 0) exit(-1);
 
     uint64_t iX = 0;
     uint64_t iY = 0;

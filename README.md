@@ -6,7 +6,12 @@ A BLAS/LAPACK implementation using [Berkeley SoftFloat](http://www.jhauser.us/ar
 
 Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value.
 
-**Status WIP ~2024.3.5**
+**Status ~2024.5.24:  `REAL`-valued operations are “complete” (BLAS is a pseudo-standard).**
+
+##  Releases
+
+- 1.0.0 (commit `7d05697aea5363dcf5f877a9c8b464e9c352d3d4`).  Basic suite of `REAL`-valued operations suitable for use with half, single, double, and quadruple precision floating-point numbers.
+
 
 - [ ] Complete complex-valued functions (in progress).
 - [ ] Run everything through a linter.

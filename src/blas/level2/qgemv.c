@@ -1,17 +1,16 @@
 #include "softblas.h"
-#include <stdio.h>
 
 void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float128_t alpha, const float128_t *A, const uint64_t lda, const float128_t *X, const int64_t incX, const float128_t beta, float128_t *Y, const uint64_t incY) {
     const float128_t ZERO = { SB_REAL128L_ZERO, SB_REAL128U_ZERO };
 
     if (Layout != 'C' && Layout != 'c' && Layout != 'R' && Layout != 'r') {
-        printf("Invalid order parameter\n");
-        return;
+        // Invalid order parameter
+        exit(-1);
     }
 
     if (Trans != 'N' && Trans != 'n' && Trans != 'T' && Trans != 't') {
-        printf("Invalid trans parameter\n");
-        return;
+        // Invalid trans parameter
+        exit(-1);
     }
 
     if (Layout == 'C' || Layout == 'c') {

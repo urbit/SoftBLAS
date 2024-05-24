@@ -15,14 +15,14 @@ void hrotmg(float16_t *D1, float16_t *D2, float16_t *X1, const float16_t y1, flo
     {
         *P = SB_REAL16_NEGONE;
         *D1 = *D2 = *X1 = P[1] = P[2] = P[3] = P[4] = SB_REAL16_ZERO;
-        return;
+        exit(-1);
     }
 
     p2 = f16_mul(d2, y1);
     if (f16_eq(p2, SB_REAL16_ZERO))
     {
         *P = SB_REAL16_NEGTWO;
-        return;
+        exit(-1);
     }
 
     p1 = f16_mul(d1, x1);
@@ -47,7 +47,7 @@ void hrotmg(float16_t *D1, float16_t *D2, float16_t *X1, const float16_t y1, flo
         {
             *P = SB_REAL16_NEGONE;
             *D1 = *D2 = *X1 = P[1] = P[2] = P[3] = P[4] = SB_REAL16_ZERO;
-            return;
+            exit(-1);
         }
         flag = SB_REAL16_ONE;
         h11 = f16_div(p1, p2);

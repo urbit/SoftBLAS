@@ -5,7 +5,7 @@ void drotm(const uint64_t N, float64_t *X, const uint64_t incX, float64_t *Y, co
    const float64_t flag = *P;
    float64_t h11, h21, h12, h22, w, z;
 
-   if f64_eq(flag, SB_REAL64_NEGTWO) return;
+   if f64_eq(flag, SB_REAL64_NEGTWO) exit(-1);
    if (f64_eq(flag, SB_REAL64_NEGONE))
    {
       h11 = P[1]; h21 = P[2]; h12 = P[3]; h22 = P[4];

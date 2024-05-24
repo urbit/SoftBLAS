@@ -5,7 +5,7 @@ void hrotm(const uint16_t N, float16_t *X, const uint16_t incX, float16_t *Y, co
    const float16_t flag = *P;
    float16_t h11, h21, h12, h22, w, z;
 
-   if (f16_eq(flag, SB_REAL16_NEGTWO)) return;
+   if (f16_eq(flag, SB_REAL16_NEGTWO)) exit(-1);
    if (f16_eq(flag, SB_REAL16_NEGONE))
    {
       h11 = P[1]; h21 = P[2]; h12 = P[3]; h22 = P[4];
