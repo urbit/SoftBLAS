@@ -11,10 +11,12 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 ##  Releases
 
 - 1.0.0 (commit `7d05697aea5363dcf5f877a9c8b464e9c352d3d4`).  Basic suite of `REAL`-valued operations suitable for use with half, single, double, and quadruple precision floating-point numbers.
+- 1.1.0 (commit `f94acbcfd26cebd8e135ad9e8c7caa156fcc4ac9`).  Errors changed to `exit(-1)` instead of `return`.
 
+### Planned work
 
 - [ ] Complete complex-valued functions (in progress).
-- [ ] Run everything through a linter.
+- [ ] Use a linter.
 - [ ] Add (kelvin) versioning, at least on interface.
 
 ##  BLAS
