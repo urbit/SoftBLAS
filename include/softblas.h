@@ -151,6 +151,16 @@ typedef struct {
 #define c64_mag(a)  f64_sqrt( f64_add( f64_mul(a.real, a.real), f64_mul(a.imag, a.imag) ) )
 #define c128_mag(a) f128_sqrt( f128_add( f128_mul(a.real, a.real), f128_mul(a.imag, a.imag) ) )
 
+#define f16_ceil(a) f16_roundToInt( a, softfloat_round_max, false )
+#define f32_ceil(a) f32_roundToInt( a, softfloat_round_max, false )
+#define f64_ceil(a) f64_roundToInt( a, softfloat_round_max, false )
+#define f128M_ceil(a, b) f128M_roundToInt( a, softfloat_round_max, false, b )
+
+#define f16_floor(a) f16_roundToInt( a, softfloat_round_min, false )
+#define f32_floor(a) f32_roundToInt( a, softfloat_round_min, false )
+#define f64_floor(a) f64_roundToInt( a, softfloat_round_min, false )
+#define f128M_floor(a, b) f128M_roundToInt( a, softfloat_round_min, false, b )
+
 #define REAL(a)  (a.real)
 #define IMAG(a)  (a.imag)
 

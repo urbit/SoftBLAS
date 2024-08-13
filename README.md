@@ -325,6 +325,16 @@ These are provided as convenient extensions of SoftFloat definitions.
 - `f64_min(x, y)` → `( f64_gt( (x) , (y) ) ? (y) : (x) )`
 - `f128_min(x, y)` → `( f128_gt( (x) , (y) ) ? (y) : (x) )`
 
+- `f16_ceil(a)` → `f16_roundToInt( a, softfloat_round_max, false )`
+- `f32_ceil(a)` → `f32_roundToInt( a, softfloat_round_max, false )`
+- `f64_ceil(a)` → `f64_roundToInt( a, softfloat_round_max, false )`
+- `f128M_ceil(a, b)` → `f128M_roundToInt( a, softfloat_round_max, false, b )`
+
+- `f16_floor(a)` → `f16_roundToInt( a, softfloat_round_min, false )`
+- `f32_floor(a)` → `f32_roundToInt( a, softfloat_round_min, false )`
+- `f64_floor(a)` → `f64_roundToInt( a, softfloat_round_min, false )`
+- `f128M_floor(a, b)` → `f128M_roundToInt( a, softfloat_round_min, false, b )`
+
 
 ##  References
 
