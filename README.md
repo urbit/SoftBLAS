@@ -48,7 +48,7 @@ Per Wikipedia:
 > $$
 > \boldsymbol{y} \leftarrow \alpha \boldsymbol{x} + \boldsymbol{y}
 > $$
-> 
+>
 > (called `axpy`, "`a` `x` plus `y`") and several other operations.
 >
 > ### Level 2
@@ -57,7 +57,7 @@ Per Wikipedia:
 > $$
 > \boldsymbol{y} \leftarrow \alpha \boldsymbol{A} \boldsymbol{x} + \beta \boldsymbol{y}
 > $$
-> 
+>
 > as well as a solver for $\boldsymbol{x}$ in the linear equation
 >
 > $$
@@ -80,7 +80,7 @@ Per Wikipedia:
 > $$
 > \boldsymbol{B} \leftarrow \alpha \boldsymbol{T}^{-1} \boldsymbol{B}\textrm{,}
 > $$
-> 
+>
 > where $\boldsymbol{T}$ is a triangular matrix, among other functionality.
 
 ![](./img/logo2.jpg)
@@ -351,12 +351,19 @@ The following were found to be particularly helpful in composing these functions
 
 ![](./img/logo4.jpg)
 
-To run the test suite, you need a build of [SoftFloat 3e](http://www.jhauser.us/arithmetic/SoftFloat-3/doc/SoftFloat.html) and [µnit](https://nemequ.github.io/munit/) in the `SoftBLAS/` directory.
+To run the test suite, you need to make sure the SoftFloat and Munit Git submodules are properly fetched.
+```sh
+$ git submodule init
+$ git submodule update
+```
 
-- SoftFloat 3e at `SoftBLAS/SoftFloat/build/Linux-x86_64-GCC/`
-- µnit at `SoftBLAS/munit/`
+Then build the Linux x86_64 SoftFloat version:
+```sh
+$ cd SoftFloat/build/Linux-x86_64-GCC
+$ make
+```
 
-If your setup is different, modify `LDFLAGS` in the Makefile.
+(If your setup is different, build the relevant SoftFloat version and modify `LDFLAGS` in the Makefile.)
 
 ```sh
 $ make tests
