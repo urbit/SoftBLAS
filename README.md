@@ -141,7 +141,7 @@ Per Wikipedia:
 
 #### Pending
 
-- `?gemm3m` accelerated variants which calculate gemm for complex matrices with [25% fewer multiplications](https://eprints.maths.manchester.ac.uk/348/1/0613043.pdf)
+- `?gemm3m` accelerated variants which calculate gemm for complex matrices with [25% fewer multiplications.](https://eprints.maths.manchester.ac.uk/348/1/0613043.pdf)
 
 ![](./img/logo3.jpg)
 
