@@ -1,0 +1,17 @@
+sasum (3.18x Python-Numpy; ):
+-SoftFloat: y=2.29*10^(-6) + 5.08*10^(-9) * n, R = 1.000
+Mean time taken for vector of length 1000: 0.000017 seconds. Std. Dev time taken: 0.000006 seconds.
+Mean time taken for vector of length 5000: 0.000033 seconds. Std. Dev time taken: 0.000008 seconds.
+Mean time taken for vector of length 10000: 0.000052 seconds. Std. Dev time taken: 0.000002 seconds.
+Mean time taken for vector of length 50000: 0.000255 seconds. Std. Dev time taken: 0.000005 seconds.
+Mean time taken for vector of length 100000: 0.000503 seconds. Std. Dev time taken: 0.000013 seconds.
+Mean time taken for vector of length 500000: 0.002531 seconds. Std. Dev time taken: 0.000028 seconds.
+Mean time taken for vector of length 1000000: 0.005090 seconds. Std. Dev time taken: 0.000295 seconds.
+-Python Numpy (fabs().sum()): y=-7.28*10^(-6) + 1.60*10^(-9) * n, R = 0.999
+Mean time taken for vector of length 1000: 2.97846e-06 seconds +- 2.544798056506642e-07 seconds.
+Mean time taken for vector of length 5000: 8.50433e-06 seconds +- 5.355614634194436e-08 seconds.
+Mean time taken for vector of length 10000: 1.51881e-05 seconds +- 2.3599378911318842e-07 seconds.
+Mean time taken for vector of length 50000: 7.574071e-05 seconds +- 1.358049309435781e-06 seconds.
+Mean time taken for vector of length 100000: 0.00015411341 seconds +- 2.8613618537016756e-06 seconds.
+Mean time taken for vector of length 500000: 0.00073953282 seconds +- 1.4874714207710956e-05 seconds.
+Mean time taken for vector of length 1000000: 0.0016231377 seconds +- 3.595995973206174e-05 seconds.
