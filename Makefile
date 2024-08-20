@@ -109,3 +109,6 @@ clean:
 
 allclean:
 	rm -f $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TEST_ALL_OBJ) $(TEST_TARGET)
+
+benchmark: $(BLAS_OBJS) benchmarking/benchmark_sasum.c
+	$(CC) $(CFLAGS) benchmarking/benchmark_sasum.c $(BLAS_OBJS) -o benchmark -lm $(LDFLAGS) $(LIBS)
