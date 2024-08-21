@@ -25,7 +25,7 @@ int main()
             float32_t *SX = svec(vector, length);
             struct timespec begin, end;
             clock_gettime(CLOCK_MONOTONIC_RAW, &begin);
-            volatile float32_t dummy = sasum(length, SX, 1);
+            volatile uint64_t dummy = isamax(length, SX, 1);
             clock_gettime(CLOCK_MONOTONIC_RAW, &end);
             double time_taken = (end.tv_nsec - begin.tv_nsec) / 1000000000.0 + (end.tv_sec - begin.tv_sec);
             total_time += time_taken;

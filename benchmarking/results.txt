@@ -1,4 +1,4 @@
-sasum (3.18x Python-Numpy; ):
+sasum (3.18x slower than Python-Numpy; 12.3x slower than OpenBlas):
 -SoftFloat: y=2.29*10^(-6) + 5.08*10^(-9) * n, R = 1.000
 Mean time taken for vector of length 1000: 0.000017 seconds. Std. Dev time taken: 0.000006 seconds.
 Mean time taken for vector of length 5000: 0.000033 seconds. Std. Dev time taken: 0.000008 seconds.
@@ -15,3 +15,115 @@ Mean time taken for vector of length 50000: 7.574071e-05 seconds +- 1.3580493094
 Mean time taken for vector of length 100000: 0.00015411341 seconds +- 2.8613618537016756e-06 seconds.
 Mean time taken for vector of length 500000: 0.00073953282 seconds +- 1.4874714207710956e-05 seconds.
 Mean time taken for vector of length 1000000: 0.0016231377 seconds +- 3.595995973206174e-05 seconds.
+-OpenBlas y=1.53*10^(-6) + 4.13*10^(-10) * n, R = 0.933
+Mean time taken for vector of length 1000: 0.0000001608 seconds +- 0.0000000620 seconds.
+Mean time taken for vector of length 5000: 0.0000002718 seconds +- 0.0000000146 seconds.
+Mean time taken for vector of length 10000: 0.0000002739 seconds +- 0.0000000022 seconds.
+Mean time taken for vector of length 50000: 0.0000024308 seconds +- 0.0000002457 seconds.
+Mean time taken for vector of length 100000: 0.0000040110 seconds +- 0.0000001663 seconds.
+Mean time taken for vector of length 500000: 0.0003363333 seconds +- 0.0000079680 seconds.
+Mean time taken for vector of length 1000000: 0.0003554502 seconds +- 0.0000080786 seconds.
+
+saxpy (19.5x slower than Python-Numpy; 64.5x slower than OpenBlas):
+-SoftFloat y=-2.65*10^(-5) + 2.16*10^(-8) * n, R = 1.000
+Mean time taken for vector of length 1000: 0.000059 seconds +- 0.000002 seconds.
+Mean time taken for vector of length 5000: 0.000110 seconds +- 0.000001 seconds.
+Mean time taken for vector of length 10000: 0.000268 seconds +- 0.000008 seconds.
+Mean time taken for vector of length 50000: 0.001015 seconds +- 0.000012 seconds.
+Mean time taken for vector of length 100000: 0.002070 seconds +- 0.000020 seconds.
+Mean time taken for vector of length 500000: 0.010661 seconds +- 0.000090 seconds.
+Mean time taken for vector of length 1000000: 0.021700 seconds +- 0.000185 seconds.
+-Python Numpy y=3.41*10^(-6) + 1.11*10^(-9) * n, R = 1.000
+Mean time taken for vector of length 1000: 1.71788e-06 seconds +- 1.385593665401224e-07 seconds.
+Mean time taken for vector of length 5000: 2.6074e-06 seconds +- 1.9092473019491205e-07 seconds.
+Mean time taken for vector of length 10000: 3.90269e-06 seconds +- 1.0803867520013339e-07 seconds.
+Mean time taken for vector of length 50000: 7.874731e-05 seconds +- 1.8771714438321818e-06 seconds.
+Mean time taken for vector of length 100000: 0.00011318038 seconds +- 3.141332497572575e-05 seconds.
+Mean time taken for vector of length 500000: 0.00056174326 seconds +- 2.187147124533514e-05 seconds.
+Mean time taken for vector of length 1000000: 0.00111086964 seconds +- 5.142424272657499e-05 seconds.
+-OpenBlas y=9.43*10(-5) + 3.35*10^(-10) * n, R = 0.758
+Mean time taken for vector of length 1000: 0.0000001396 seconds +- 0.0000000321 seconds.
+Mean time taken for vector of length 5000: 0.0000004644 seconds +- 0.0000000127 seconds.
+Mean time taken for vector of length 10000: 0.0000007766 seconds +- 0.0000000135 seconds.
+Mean time taken for vector of length 50000: 0.0002388848 seconds +- 0.0000059832 seconds.
+Mean time taken for vector of length 100000: 0.0002685398 seconds +- 0.0000050774 seconds.
+Mean time taken for vector of length 500000: 0.0003362371 seconds +- 0.0000058803 seconds.
+Mean time taken for vector of length 1000000: 0.0003734338 seconds +- 0.0000102457 seconds.
+
+sdot (32.1x slower than Python-Numpy, 135x slower than OpenBlas)
+-SoftFloat y=1.33*10^(-5) + 1.69*10^(-8) * n, R = 1.000
+Mean time taken for vector of length 1000: 0.000041 seconds +- 0.000002 seconds.
+Mean time taken for vector of length 5000: 0.000094 seconds +- 0.000001 seconds.
+Mean time taken for vector of length 10000: 0.000179 seconds +- 0.000001 seconds.
+Mean time taken for vector of length 50000: 0.000856 seconds +- 0.000001 seconds.
+Mean time taken for vector of length 100000: 0.001706 seconds +- 0.000002 seconds.
+Mean time taken for vector of length 500000: 0.008490 seconds +- 0.000007 seconds.
+Mean time taken for vector of length 1000000: 0.016954 seconds +- 0.000014 seconds.
+-Python Numpy y=-3.35*10^(-6) + 5.27*10^(-10) * n, R = 0.998
+Mean time taken for vector of length 1000: 7.3776e-07 seconds +- 5.057927069462347e-08 seconds.
+Mean time taken for vector of length 5000: 1.04522e-06 seconds +- 8.467344093634735e-09 seconds.
+Mean time taken for vector of length 10000: 1.37376e-06 seconds +- 2.1567707898615858e-08 seconds.
+Mean time taken for vector of length 50000: 1.583557e-05 seconds +- 1.0027322819431916e-06 seconds.
+Mean time taken for vector of length 100000: 3.913373e-05 seconds +- 2.524403793051147e-06 seconds.
+Mean time taken for vector of length 500000: 0.00028346274 seconds +- 1.4330818397506964e-05 seconds.
+Mean time taken for vector of length 1000000: 0.00051390007 seconds +- 2.3934684228889457e-05 seconds.
+-OpenBlas y=-1.30*10^(-6) + 1.25*10^(-10) * n, R = 0.999
+Mean time taken for vector of length 1000: 0.0000002080 seconds +- 0.0000000794 seconds.
+Mean time taken for vector of length 5000: 0.0000003223 seconds +- 0.0000000075 seconds.
+Mean time taken for vector of length 10000: 0.0000006690 seconds +- 0.0000000054 seconds.
+Mean time taken for vector of length 50000: 0.0000030673 seconds +- 0.0000000178 seconds.
+Mean time taken for vector of length 100000: 0.0000082182 seconds +- 0.0000001053 seconds.
+Mean time taken for vector of length 500000: 0.0000635898 seconds +- 0.0000011663 seconds.
+Mean time taken for vector of length 1000000: 0.0001223498 seconds +- 0.0000011720 seconds.
+
+snrm2 (65.9x slower than Python-Numpy; 106x slower than OpenBlas)
+-SoftFloat y=1.43*10^(-6) + 2.22*10^(-8) * n, R = 1.000
+Mean time taken for vector of length 1000: 0.000082 seconds +- 0.000004 seconds.
+Mean time taken for vector of length 5000: 0.000137 seconds +- 0.000007 seconds.
+Mean time taken for vector of length 10000: 0.000223 seconds +- 0.000001 seconds.
+Mean time taken for vector of length 50000: 0.001100 seconds +- 0.000001 seconds.
+Mean time taken for vector of length 100000: 0.002194 seconds +- 0.000002 seconds.
+Mean time taken for vector of length 500000: 0.011046 seconds +- 0.000008 seconds.
+Mean time taken for vector of length 1000000: 0.022292 seconds +- 0.000022 seconds.
+-Python Numpy y=-2.43*10^(-8) + 3.37*10^(-10) * n, R = 0.999
+Mean time taken for vector of length 1000: 1.54354e-06 seconds +- 1.0184599198790286e-07 seconds.
+Mean time taken for vector of length 5000: 1.70208e-06 seconds +- 1.9425543390082728e-08 seconds.
+Mean time taken for vector of length 10000: 2.48561e-06 seconds +- 2.557611467346047e-07 seconds.
+Mean time taken for vector of length 50000: 1.305142e-05 seconds +- 8.83190416974731e-07 seconds.
+Mean time taken for vector of length 100000: 2.968666e-05 seconds +- 1.656556142255374e-06 seconds.
+Mean time taken for vector of length 500000: 0.00018228683 seconds +- 9.414380079973989e-06 seconds.
+Mean time taken for vector of length 1000000: 0.00033071913 seconds +- 1.3812717886814733e-05 seconds.
+-OpenBlas y=-1.45*10^(-6) + 2.10*10^(-10) * n, R = 1.000
+Mean time taken for vector of length 1000: 0.0000002990 seconds +- 0.0000000320 seconds.
+Mean time taken for vector of length 5000: 0.0000009773 seconds +- 0.0000000114 seconds.
+Mean time taken for vector of length 10000: 0.0000016210 seconds +- 0.0000000059 seconds.
+Mean time taken for vector of length 50000: 0.0000078213 seconds +- 0.0000000143 seconds.
+Mean time taken for vector of length 100000: 0.0000158895 seconds +- 0.0000001315 seconds.
+Mean time taken for vector of length 500000: 0.0001043594 seconds +- 0.0000031050 seconds.
+Mean time taken for vector of length 1000000: 0.0002080304 seconds +- 0.0000064633 seconds.
+
+ismax (As fast as Python-Numpy; 8.61x slower than OpenBlas)
+-SoftFloat y=3.74*10^(-5) + 1.42*10^(-9) * n, R = 0.994
+Mean time taken for vector of length 1000: 0.000007 seconds +- 0.000000 seconds.
+Mean time taken for vector of length 5000: 0.000015 seconds +- 0.000000 seconds.
+Mean time taken for vector of length 10000: 0.000018 seconds +- 0.000001 seconds.
+Mean time taken for vector of length 50000: 0.000074 seconds +- 0.000001 seconds.
+Mean time taken for vector of length 100000: 0.000151 seconds +- 0.000001 seconds.
+Mean time taken for vector of length 500000: 0.000733 seconds +- 0.000004 seconds.
+Mean time taken for vector of length 1000000: 0.001469 seconds +- 0.000009 seconds.
+-Python Numpy y=-1.37*10^(-6) + 1.44*10^(-9) * n, R = 1.000
+Mean time taken for vector of length 1000: 2.85898e-06 seconds +- 1.5009094041946677e-07 seconds.
+Mean time taken for vector of length 5000: 8.45764e-06 seconds +- 3.430697362111676e-07 seconds.
+Mean time taken for vector of length 10000: 1.446094e-05 seconds +- 8.763144506397118e-08 seconds.
+Mean time taken for vector of length 50000: 7.120035e-05 seconds +- 1.2675611908207774e-06 seconds.
+Mean time taken for vector of length 100000: 0.00013979736 seconds +- 2.1659094995645057e-06 seconds.
+Mean time taken for vector of length 500000: 0.00070500327 seconds +- 1.5701185832610612e-05 seconds.
+Mean time taken for vector of length 1000000: 0.00143625138 seconds +- 2.5050758879198433e-05 seconds.
+-OpenBlas y=-3.13*10^(-6) + 1.65*10^(-10) * n, R = 0.998
+Mean time taken for vector of length 1000: 0.0000002661 seconds +- 0.0000000478 seconds.
+Mean time taken for vector of length 5000: 0.0000005448 seconds +- 0.0000000625 seconds.
+Mean time taken for vector of length 10000: 0.0000009202 seconds +- 0.0000000118 seconds.
+Mean time taken for vector of length 50000: 0.0000042191 seconds +- 0.0000000608 seconds.
+Mean time taken for vector of length 100000: 0.0000087406 seconds +- 0.0000001334 seconds.
+Mean time taken for vector of length 500000: 0.0000726603 seconds +- 0.0000037285 seconds.
+Mean time taken for vector of length 1000000: 0.0001658408 seconds +- 0.0000079248 seconds.

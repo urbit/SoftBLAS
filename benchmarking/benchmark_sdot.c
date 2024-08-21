@@ -17,20 +17,24 @@ int main()
         double total_time_squared = 0.0;
         for (int loop_num = 0; loop_num < num_loops_per_length; loop_num++)
         {
-            float vector[length];
+            float vector1[length];
+            float vector2[length];
             for (int vector_index = 0; vector_index < length; vector_index++)
             {
-                vector[vector_index] = 2.0 * rand() / RAND_MAX - 1.0;
+                vector1[vector_index] = 2.0 * rand() / RAND_MAX - 1.0;
+                vector2[vector_index] = 2.0 * rand() / RAND_MAX - 1.0;
             }
-            float32_t *SX = svec(vector, length);
+            float32_t *SX = svec(vector1, length);
+            float32_t *SY = svec(vector2, length);
             struct timespec begin, end;
             clock_gettime(CLOCK_MONOTONIC_RAW, &begin);
-            volatile float32_t dummy = sasum(length, SX, 1);
+            volatile float32_t dummy = sdot(length, SX, 1, SY, 1);
             clock_gettime(CLOCK_MONOTONIC_RAW, &end);
             double time_taken = (end.tv_nsec - begin.tv_nsec) / 1000000000.0 + (end.tv_sec - begin.tv_sec);
             total_time += time_taken;
             total_time_squared += time_taken * time_taken;
             free(SX);
+            free(SY);
         }
         printf(
             "Mean time taken for vector of length %d: %f seconds +- %f seconds.\n",
