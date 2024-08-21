@@ -129,7 +129,7 @@ Per Wikipedia:
 
 ### Level 2 Functions
 
-- `gemv` - A**x**+b**y**, where b is a scalar, **x**, **y** are vectors and A is matrix (possibly transposed)
+- `gemv` - **y** ← A**x**+b**y**, where b is a scalar, **x**, **y** are vectors and A is matrix (possibly transposed)
     - Implemented: `h`, `s`, `d`, `q`
     - Yet to implement: `i`, `c`, `z`, `v`
 
