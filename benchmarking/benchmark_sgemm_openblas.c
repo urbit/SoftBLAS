@@ -47,7 +47,7 @@ int main()
             free(C);
         }
         printf(
-            "Mean time taken for vector of length %d: %.10f seconds +- %.10f seconds.\n",
+            "Mean time taken for matrix of length %d: %.10f seconds +- %.10f seconds.\n",
             length, 
             total_time / num_loops_per_length, 
             sqrt(total_time_squared / num_loops_per_length - (total_time / num_loops_per_length) * (total_time / num_loops_per_length)) / sqrt(num_loops_per_length)

@@ -141,21 +141,21 @@ Mean time taken for matrix of length 200: 0.000822 seconds +- 0.000002 seconds.
 Mean time taken for matrix of length 500: 0.004980 seconds +- 0.000010 seconds.
 Mean time taken for matrix of length 1000: 0.019582 seconds +- 0.000023 seconds.
 -Python Numpy y=-2.28*10^(-5) + 1.03*10^(-9) * n^2, R = 0.991
-Mean time taken for vector of length 10: 2.29744e-06 seconds +- 2.237025294090345e-07 seconds.
-Mean time taken for vector of length 20: 2.30225e-06 seconds +- 3.5541979052944805e-08 seconds.
-Mean time taken for vector of length 50: 2.78857e-06 seconds +- 9.886799912509605e-08 seconds.
-Mean time taken for vector of length 100: 4.13453e-06 seconds +- 1.938694702396437e-07 seconds.
-Mean time taken for vector of length 200: 1.626597e-05 seconds +- 8.158529710009031e-07 seconds.
-Mean time taken for vector of length 500: 0.00012022541 seconds +- 6.358436047552826e-06 seconds.
-Mean time taken for vector of length 1000: 0.00104470212 seconds +- 6.859940126589044e-05 seconds.
+Mean time taken for matrix of length 10: 2.29744e-06 seconds +- 2.237025294090345e-07 seconds.
+Mean time taken for matrix of length 20: 2.30225e-06 seconds +- 3.5541979052944805e-08 seconds.
+Mean time taken for matrix of length 50: 2.78857e-06 seconds +- 9.886799912509605e-08 seconds.
+Mean time taken for matrix of length 100: 4.13453e-06 seconds +- 1.938694702396437e-07 seconds.
+Mean time taken for matrix of length 200: 1.626597e-05 seconds +- 8.158529710009031e-07 seconds.
+Mean time taken for matrix of length 500: 0.00012022541 seconds +- 6.358436047552826e-06 seconds.
+Mean time taken for matrix of length 1000: 0.00104470212 seconds +- 6.859940126589044e-05 seconds.
 -OpenBlas y=2.27*10^(-6) + 1.09*10^(-10) * n^2, R = 0.987 
-Mean time taken for vector of length 10: 0.0000019042 seconds +- 0.0000000242 seconds.
-Mean time taken for vector of length 20: 0.0000049814 seconds +- 0.0000000228 seconds.
-Mean time taken for vector of length 50: 0.0000087230 seconds +- 0.0000001173 seconds.
-Mean time taken for vector of length 100: 0.0000055051 seconds +- 0.0000000151 seconds. (!!)
-Mean time taken for vector of length 200: 0.0000067245 seconds +- 0.0000000216 seconds.
-Mean time taken for vector of length 500: 0.0000153333 seconds +- 0.0000004930 seconds.
-Mean time taken for vector of length 1000: 0.0001149902 seconds +- 0.0000087543 seconds.
+Mean time taken for matrix of length 10: 0.0000019042 seconds +- 0.0000000242 seconds.
+Mean time taken for matrix of length 20: 0.0000049814 seconds +- 0.0000000228 seconds.
+Mean time taken for matrix of length 50: 0.0000087230 seconds +- 0.0000001173 seconds.
+Mean time taken for matrix of length 100: 0.0000055051 seconds +- 0.0000000151 seconds. (!!)
+Mean time taken for matrix of length 200: 0.0000067245 seconds +- 0.0000000216 seconds.
+Mean time taken for matrix of length 500: 0.0000153333 seconds +- 0.0000004930 seconds.
+Mean time taken for matrix of length 1000: 0.0001149902 seconds +- 0.0000087543 seconds.
 
 --LEVEL 3--
 sgemm (1970x slower than Python Numpy; 517x slower than OpenBlas)
@@ -168,22 +168,22 @@ Mean time taken for matrix of length 50: 0.002730 seconds +- 0.000004 seconds.
 Mean time taken for matrix of length 75: 0.008994 seconds +- 0.000020 seconds.
 Mean time taken for matrix of length 100: 0.021128 seconds +- 0.000024 seconds.
 Python Numpy y=8.62*10^(-5) + 1.07*10^(-11) * n^3, R = 0.950
-Mean time taken for vector of length 10: 3.481935e-06 seconds +- 1.2380537091353802e-06 seconds.
-Mean time taken for vector of length 20: 2.865865e-06 seconds +- 6.270766487340288e-08 seconds.
-Mean time taken for vector of length 30: 9.805415e-06 seconds +- 6.055271319386726e-07 seconds.
-Mean time taken for vector of length 40: 4.41995e-06 seconds +- 6.326916853808046e-08 seconds.
-Mean time taken for vector of length 50: 6.07582e-06 seconds +- 5.494660806637555e-08 seconds.
-Mean time taken for vector of length 75: 1.3411105e-05 seconds +- 1.4461245337064137e-07 seconds.
-Mean time taken for vector of length 100: 0.000314174785 seconds +- 6.231136483880322e-06 seconds.
-Mean time taken for vector of length 200: 0.00045889317 seconds +- 1.3997337943089558e-05 seconds.
-Mean time taken for vector of length 500: 0.001409384785 seconds +- 3.862580211834045e-05 seconds.
+Mean time taken for matrix of length 10: 3.481935e-06 seconds +- 1.2380537091353802e-06 seconds.
+Mean time taken for matrix of length 20: 2.865865e-06 seconds +- 6.270766487340288e-08 seconds.
+Mean time taken for matrix of length 30: 9.805415e-06 seconds +- 6.055271319386726e-07 seconds.
+Mean time taken for matrix of length 40: 4.41995e-06 seconds +- 6.326916853808046e-08 seconds.
+Mean time taken for matrix of length 50: 6.07582e-06 seconds +- 5.494660806637555e-08 seconds.
+Mean time taken for matrix of length 75: 1.3411105e-05 seconds +- 1.4461245337064137e-07 seconds.
+Mean time taken for matrix of length 100: 0.000314174785 seconds +- 6.231136483880322e-06 seconds.
+Mean time taken for matrix of length 200: 0.00045889317 seconds +- 1.3997337943089558e-05 seconds.
+Mean time taken for matrix of length 500: 0.001409384785 seconds +- 3.862580211834045e-05 seconds.
 OpenBlas y=2.30*10^(-4) + 4.08*10^(-11) * n^3, R = 0.964
-Mean time taken for vector of length 10: 0.0000099806 seconds +- 0.0000007148 seconds.
-Mean time taken for vector of length 20: 0.0000241834 seconds +- 0.0000006523 seconds.
-Mean time taken for vector of length 30: 0.0000337751 seconds +- 0.0000001160 seconds.
-Mean time taken for vector of length 40: 0.0000234942 seconds +- 0.0000000507 seconds.
-Mean time taken for vector of length 50: 0.0000326250 seconds +- 0.0000000605 seconds.
-Mean time taken for vector of length 75: 0.0000258802 seconds +- 0.0000000334 seconds.
-Mean time taken for vector of length 100: 0.0004120244 seconds +- 0.0000196624 seconds.
-Mean time taken for vector of length 200: 0.0017511675 seconds +- 0.0000110427 seconds.
-Mean time taken for vector of length 500: 0.0052489612 seconds +- 0.0000380033 seconds.
+Mean time taken for matrix of length 10: 0.0000099806 seconds +- 0.0000007148 seconds.
+Mean time taken for matrix of length 20: 0.0000241834 seconds +- 0.0000006523 seconds.
+Mean time taken for matrix of length 30: 0.0000337751 seconds +- 0.0000001160 seconds.
+Mean time taken for matrix of length 40: 0.0000234942 seconds +- 0.0000000507 seconds.
+Mean time taken for matrix of length 50: 0.0000326250 seconds +- 0.0000000605 seconds.
+Mean time taken for matrix of length 75: 0.0000258802 seconds +- 0.0000000334 seconds.
+Mean time taken for matrix of length 100: 0.0004120244 seconds +- 0.0000196624 seconds.
+Mean time taken for matrix of length 200: 0.0017511675 seconds +- 0.0000110427 seconds.
+Mean time taken for matrix of length 500: 0.0052489612 seconds +- 0.0000380033 seconds.

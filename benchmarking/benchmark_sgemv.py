@@ -22,6 +22,6 @@ for length in lengths:
         total_time += (end - start) / 10 ** 9
         total_time_squared += (end - start) ** 2 / 10 ** 18
     print(
-            f"Mean time taken for vector of length {length}: {total_time / num_loops_per_length} seconds "
+            f"Mean time taken for matrix of length {length}: {total_time / num_loops_per_length} seconds "
             f"+- {sqrt(total_time_squared / num_loops_per_length - (total_time / num_loops_per_length) * (total_time / num_loops_per_length)) / sqrt(num_loops_per_length)} seconds."
     )
