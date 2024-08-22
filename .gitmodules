@@ -1,0 +1,6 @@
+[submodule "munit"]
+	path = munit
+	url = https://github.com/nemequ/munit.git
+[submodule "SoftFloat"]
+	path = SoftFloat
+	url = git@github.com:urbit/berkeley-softfloat-3.git
