@@ -4,7 +4,7 @@ A BLAS/LAPACK implementation using [Berkeley SoftFloat](http://www.jhauser.us/ar
 
 ![](./img/logo.jpg)
 
-Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value.
+Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value. For relevant extra-reading on floating point arithmetic and information about how SoftBLAS is useful to Urbit, check out [~lagrev-nocfep's USTJ Volume 1 article.](https://urbitsystems.tech/article/v01-i01/the-desert-of-the-reals-floating-point-arithmetic-on-deterministic-systems). If you're interested in finding out more / contributing, join the Numerics Tlon group: `~mopfel-winrux/numeric-computation-and-machine-learning`.
 
 **Status ~2024.5.24:  `REAL`-valued operations are “complete” (BLAS is a pseudo-standard).**
 
@@ -87,202 +87,60 @@ Per Wikipedia:
 
 ### Level 1 Functions
 
-#### `s` 32-Bit Single Precision
+- `asum` - ||**x**||₁, where **x** is a vector (sum of absolute values)
+    - Implemented: `h`, `s`, `d`, `q`, `c`
+    - Yet to implement: `i`, `z`, `v`
+- `axpy` - **y** ← a**x** + **y**, where a is a scalar and **x**, **y** are vectors
+    - Implemented: `h`, `s`, `d`, `q`, `c`
+    - Yet to implement: `i`, `z`, `v`
+- `copy` - **y** ← **x**, where **x**, **y** are vectors
+    - Implemented: `h`, `s`, `d`, `q`, `c`
+    - Yet to implement: `i`, `z`, `v`
+- `dot` - **x**•**y**, where **x**, **y** are vectors
+    - Implemented: `h`, `s`, `d`, `q`
+    - Yet to implement: `i`, `c`, `z`, `v`
+- `dotc` - <**x**, **y**> = **x***•**y**, where **x**, **y** are complex vectors (complex inner product)
+    - Implemented: `c`
+    - Yet to implement: `i`, `z`, `v`
+- `nrm2` - ||**x**||₂, where **x** is a vector (Pythagorean distance)
+    - Implemented: `h`, `s`, `d`, `q`, `c`
+    - Yet to implement: `i`, `z`, `v`
+- `scal` - **x** ← a**x**, where a is a scalar and **x** is a vector
+    - Implemented: `h`, `s`, `d`, `q`
+    - Yet to implement: `i`, `c`, `z`, `v`
+- `swap` - (**x**, **y**) ← (**y**, **x**), where **x** and **y** are vectors
+    - Implemented: `h`, `s`, `d`, `q`
+    - Yet to implement: `i`, `c`, `z`, `v`
+- `iamax` - argmaxᵢ(|**x**ᵢ|), where **x** is a real vector (index of max absolute value)
+    - Implemented: `h`, `s`, `d`, `q`
 
-- `sasum` - sum of absolute values
-- `saxpy` - y = a*x + y
-- `scopy` - copy x into y
-- `sdot` - dot product
-- ~~`sdsdot` - dot product with extended precision accumulation (returns `float64_t`)~~
-- `snrm2` - Euclidean norm
-- ~~`srot` - apply Givens rotation~~
-- ~~`srotg` - set up Givens rotation~~
-- ~~`srotm` - apply modified Givens rotation~~
-- ~~`srotmg` - set up modified Givens rotation~~
-- `sscal` - x = a*x
-- `sswap` - swap x and y
-- `isamax` - index of max abs value
-
-#### `d` 64-Bit Double Precision
-
-- `dasum` - sum of absolute values
-- `daxpy` - y = a*x + y
-- `dcopy` - copy x into y
-- `ddot` - dot product
-- ~~`dsdot` - dot product with extended precision accumulation (returns `float64_t`)~~
-- `dnrm2` - Euclidean norm
-- ~~`drot` - apply Givens rotation~~
-- ~~`drotg` - set up Givens rotation~~
-- ~~`drotm` - apply modified Givens rotation~~
-- ~~`drotmg` - set up modified Givens rotation~~
-- `dscal` - x = a*x
-- `dswap` - swap x and y
-- `idamax` - index of max abs value
-
-#### `h` 16-Bit Half Precision
-
-- `hasum` - sum of absolute values
-- `haxpy` - y = a*x + y
-- `hcopy` - copy x into y
-- `hdot` - dot product
-- `hnrm2` - Euclidean norm
-- ~~`hrot` - apply Givens rotation~~
-- ~~`hrotg` - set up Givens rotation~~
-- ~~`hrotm` - apply modified Givens rotation~~
-- ~~`hrotmg` - set up modified Givens rotation~~
-- `hscal` - x = a*x
-- `hswap` - swap x and y
-- `ihamax` - index of max abs value
-
-#### `q` 128-Bit Quadruple Precision
-
-- `qasum` - sum of absolute values
-- `qaxpy` - y = a*x + y
-- `qcopy` - copy x into y
-- `qdot` - dot product
-- `qnrm2` - Euclidean norm
-- ~~`qrot` - apply Givens rotation~~
-- ~~`qrotg` - set up Givens rotation~~
-- ~~`qrotm` - apply modified Givens rotation~~
-- ~~`qrotmg` - set up modified Givens rotation~~
-- `qscal` - x = a*x
-- `qswap` - swap x and y
-- `iqamax` - index of max abs value
-
-#### `c` 32-Bit Single Precision (Complex)
-
-- `casum` - sum of absolute values
-- `caxpy` - y = a*x + y
-- `ccopy` - copy x into y
-- `cdot` - dot product
-- ~~`cdsdot` - dot product with extended precision accumulation (returns `float64_t`)~~
-- `cnrm2` - Euclidean norm
-- ~~`crot` - apply Givens rotation~~
-- ~~`crotg` - set up Givens rotation~~
-- ~~`crotm` - apply modified Givens rotation~~
-- ~~`crotmg` - set up modified Givens rotation~~
-- `cscal` - x = a*x
-- `cswap` - swap x and y
-
-#### `z` 64-Bit Double Precision (Complex)
-
-- `zasum` - sum of absolute values
-- `zaxpy` - y = a*x + y
-- `zcopy` - copy x into y
-- `zdot` - dot product
-- ~~`zsdot` - dot product with extended precision accumulation (returns `float64_t`)~~
-- `znrm2` - Euclidean norm
-- ~~`zrot` - apply Givens rotation~~
-- ~~`zrotg` - set up Givens rotation~~
-- ~~`zrotm` - apply modified Givens rotation~~
-- ~~`zrotmg` - set up modified Givens rotation~~
-- `zscal` - x = a*x
-- `zswap` - swap x and y
-
-#### `i` 16-Bit Half Precision (Complex)
-
-- `iasum` - sum of absolute values
-- `iaxpy` - y = a*x + y
-- `icopy` - copy x into y
-- `idot` - dot product
-- `inrm2` - Euclidean norm
-- ~~`irot` - apply Givens rotation~~
-- ~~`irotg` - set up Givens rotation~~
-- ~~`irotm` - apply modified Givens rotation~~
-- ~~`irotmg` - set up modified Givens rotation~~
-- `iscal` - x = a*x
-- `iswap` - swap x and y
-
-#### `v` 128-Bit Quadruple Precision (Complex)
-
-- `vasum` - sum of absolute values
-- `vaxpy` - y = a*x + y
-- `vcopy` - copy x into y
-- `vdot` - dot product
-- `vnrm2` - Euclidean norm
-- ~~`vrot` - apply Givens rotation~~
-- ~~`vrotg` - set up Givens rotation~~
-- ~~`vrotm` - apply modified Givens rotation~~
-- ~~`vrotmg` - set up modified Givens rotation~~
-- `vscal` - x = a*x
-- `vswap` - swap x and y
-
-#### Pending
-
-- `?rot??` Givens rotation functions in Level 1
-- Various OpenBLAS extended functions like `i?amin`
+#### Extras:
+- `sdot` - a+**x**•**y**, where a is a scalar and **x**, **y** are vectors and intermediate calculations use a higher precision float
+    - Implemented: `h`, `s`
+- `rot` - (**x**ᵢ // **y**ᵢ) ← R(**x**ᵢ // **y**ᵢ), where R is a rotation matrix (c s // -s c), and **x**, **y** are vectors
+    - Implemented: `h`, `s`, `d`, `c`
+- `rotg` - Finds the Rotation matrix R (among other things), such that R(x // y) = (r // 0), where x, y are scalars
+    - Implemented: `h`, `s`, `d`
+- `rotm` - Performs a modified Givens rotation
+    - Implemented: `h`, `s`, `d`
+- `rotmg` - Set up a modified Givens rotation
+    - Implemented: `h`, `s`, `d`
 
 ### Level 2 Functions
 
-#### `s` 32-Bit Single Precision
-
-- `sgemv` - computes a matrix-vector product using a general matrix
-
-#### `d` 64-Bit Single Precision
-
-- `dgemv` - computes a matrix-vector product using a general matrix
-
-#### `h` 16-Bit Single Precision
-
-- `hgemv` - computes a matrix-vector product using a general matrix
-
-#### `q` 128-Bit Single Precision
-
-- `qgemv` - computes a matrix-vector product using a general matrix
-
-#### `s` 32-Bit Single Precision (Complex)
-
-- `cgemv` - computes a matrix-vector product using a general matrix
-
-#### `d` 64-Bit Single Precision (Complex)
-
-- `zgemv` - computes a matrix-vector product using a general matrix
-
-#### `h` 16-Bit Single Precision (Complex)
-
-- `igemv` - computes a matrix-vector product using a general matrix
-
-#### `q` 128-Bit Single Precision (Complex)
-
-- `vgemv` - computes a matrix-vector product using a general matrix
+- `gemv` - **y** ← A**x**+b**y**, where b is a scalar, **x**, **y** are vectors and A is matrix (possibly transposed)
+    - Implemented: `h`, `s`, `d`, `q`
+    - Yet to implement: `i`, `c`, `z`, `v`
 
 ### Level 3 Functions
 
-#### `s` 32-Bit Single Precision
-
-- `sgemm` - computes a matrix-matrix product using a general matrix
-
-#### `d` 64-Bit Single Precision
-
-- `dgemm` - computes a matrix-matrix product using a general matrix
-
-#### `h` 16-Bit Single Precision
-
-- `hgemm` - computes a matrix-matrix product using a general matrix
-
-#### `h` 128-Bit Single Precision
-
-- `qgemm` - computes a matrix-matrix product using a general matrix
-
-#### `s` 32-Bit Single Precision (Complex)
-
-- `cgemm` - computes a matrix-matrix product using a general matrix
-
-#### `d` 64-Bit Single Precision (Complex)
-
-- `zgemm` - computes a matrix-matrix product using a general matrix
-
-#### `h` 16-Bit Single Precision (Complex)
-
-- `igemm` - computes a matrix-matrix product using a general matrix
-
-#### `h` 128-Bit Single Precision (Complex)
-
-- `vgemm` - computes a matrix-matrix product using a general matrix
+- `gemm` - C ← aAB+bC, where a, b are scalars, and A, B, C are matrices (possibly transposed).
+    - Implemented: `h`, `s`, `d`, `q`
+    - Yet to implement: `i`, `c`, `z`, `v`
 
 #### Pending
 
-- `?gemm3m` accelerated variants
+- `?gemm3m` accelerated variants which calculate gemm for complex matrices with [25% fewer multiplications.](https://eprints.maths.manchester.ac.uk/348/1/0613043.pdf)
 
 ![](./img/logo3.jpg)
 
