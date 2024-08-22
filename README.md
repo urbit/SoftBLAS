@@ -135,7 +135,7 @@ Per Wikipedia:
 
 ### Level 3 Functions
 
-- `gemm` - aAB+bC, where a, b are scalars, and A, B, C are matrices (possibly transposed).
+- `gemm` - C ← aAB+bC, where a, b are scalars, and A, B, C are matrices (possibly transposed).
     - Implemented: `h`, `s`, `d`, `q`
     - Yet to implement: `i`, `c`, `z`, `v`
 
