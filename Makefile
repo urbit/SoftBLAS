@@ -110,8 +110,8 @@ clean:
 allclean:
 	rm -f $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TEST_ALL_OBJ) $(TEST_TARGET)
 
-benchmark: $(BLAS_OBJS) benchmarking/benchmark_isamax.c
-	$(CC) $(CFLAGS) benchmarking/benchmark_isamax.c $(BLAS_OBJS) -o benchmark -lm $(LDFLAGS) $(LIBS)
+benchmark: $(BLAS_OBJS) benchmarking/benchmark_sgemm.c
+	$(CC) $(CFLAGS) benchmarking/benchmark_sgemm.c $(BLAS_OBJS) -o benchmark -lm $(LDFLAGS) $(LIBS)
 
-benchmark_openblas: benchmarking/benchmark_isamax_openblas.c
-	$(CC) -I/usr/include/openblas benchmarking/benchmark_isamax_openblas.c -o benchmark_openblas -lm -lopenblas
+benchmark_openblas: benchmarking/benchmark_sgemm_openblas.c
+	$(CC) -I/usr/include/openblas benchmarking/benchmark_sgemm_openblas.c -o benchmark_openblas -lm -lopenblas
