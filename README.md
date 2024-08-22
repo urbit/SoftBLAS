@@ -15,7 +15,6 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 
 ### Planned work
 
-- [ ] Add Benchmarking and comparisons (in progress).
 - [ ] Complete complex-valued functions (in progress).
 - [ ] Use a linter.
 - [ ] Add (kelvin) versioning, at least on interface.
