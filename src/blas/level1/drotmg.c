@@ -42,29 +42,31 @@ void drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, flo
                 flag = NEGONE;
                 d1 = ZERO; d2 = ZERO; x1 = ZERO;
                 h11 = ZERO; h21 = ZERO; h12 = ZERO; h22 = ZERO;
-                goto store;
+            } else {
+                flag = ZERO;
+                d1 = f64_div(d1, u);
+                d2 = f64_div(d2, u);
+                x1 = f64_mul(x1, u);
             }
-            flag = ZERO;
-            d1 = f64_div(d1, u);
-            d2 = f64_div(d2, u);
-            x1 = f64_mul(x1, u);
         } else {
-            if (f64_lt(q2, ZERO)) {
+            if (f64_lt(q2, ZERO)) {      // singular -> zero result
                 flag = NEGONE;
                 d1 = ZERO; d2 = ZERO; x1 = ZERO;
                 h11 = ZERO; h21 = ZERO; h12 = ZERO; h22 = ZERO;
-                goto store;
+            } else {
+                flag = ONE;
+                h11 = f64_div(p1, p2);
+                h22 = f64_div(x1, y1);
+                float64_t u = f64_add(ONE, f64_mul(h11, h22));
+                float64_t tmp = f64_div(d2, u);
+                d2 = f64_div(d1, u);
+                d1 = tmp;
+                x1 = f64_mul(y1, u);
             }
-            flag = ONE;
-            h11 = f64_div(p1, p2);
-            h22 = f64_div(x1, y1);
-            float64_t u = f64_add(ONE, f64_mul(h11, h22));
-            float64_t tmp = f64_div(d2, u);
-            d2 = f64_div(d1, u);
-            d1 = tmp;
-            x1 = f64_mul(y1, u);
         }
 
+        //  Rescale D1, D2 into [1/gamsq, gamsq]. A singular case above leaves
+        //  d1 = d2 = 0, for which these loops are no-ops.
         //  Rescale D1 into [1/gamsq, gamsq].
         while (f64_ne(d1, ZERO) && f64_le(d1, rgamsq)) {
             if (f64_eq(flag, ZERO)) { flag = NEGONE; h11 = ONE; h22 = ONE; }
@@ -100,7 +102,6 @@ void drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, flo
         }
     }
 
-store:
     *D1 = d1;
     *D2 = d2;
     *X1 = x1;

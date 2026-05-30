@@ -63,6 +63,7 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_srotmg_basic", test_srotmg_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_srotmg_flag_neg2", test_srotmg_flag_neg2, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_drotmg_basic", test_drotmg_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_srotmg_singular", test_srotmg_singular, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             
             {"/test_dasum_0", test_dasum_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dasum_12345", test_dasum_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
