@@ -477,4 +477,15 @@ MunitResult test_hsdot_basic(const MunitParameter params[], void* u);
 
 MunitResult test_srotmg_singular(const MunitParameter params[], void* u);
 
+
+//  Fast (Anderson) nrm2 (test_nrm2_B.c)
+MunitResult test_snrm2_B_med(const MunitParameter params[], void* u);
+MunitResult test_snrm2_B_big(const MunitParameter params[], void* u);
+MunitResult test_snrm2_B_small(const MunitParameter params[], void* u);
+MunitResult test_dnrm2_B_med(const MunitParameter params[], void* u);
+MunitResult test_dnrm2_B_big(const MunitParameter params[], void* u);
+MunitResult test_hnrm2_B_med(const MunitParameter params[], void* u);
+MunitResult test_hnrm2_B_big(const MunitParameter params[], void* u);
+MunitResult test_qnrm2_B_med(const MunitParameter params[], void* u);
+
 #endif // TEST_H
