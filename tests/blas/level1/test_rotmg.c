@@ -35,3 +35,18 @@ MunitResult test_drotmg_basic(const MunitParameter params[], void* u) {
     assert_ullong(P[0].v, ==, 0x3ff0000000000000ull);  // flag = 1
     return MUNIT_OK;
 }
+
+//  Singular case (q2 < 0): zeroes the result and sets flag = -1. This is the
+//  path that previously used `goto store`; it must still produce all zeros.
+MunitResult test_srotmg_singular(const MunitParameter params[], void* u) {
+    float32_t d1 = { 0x3f800000 }, d2 = { 0xbf800000 }, x1 = { 0x3f800000 };  // 1, -1, 1
+    const float32_t y1 = { 0x3f800000 };
+    float32_t P[5] = {{0},{0},{0},{0},{0}};
+    srotmg(&d1, &d2, &x1, y1, P, 'n');
+    assert_ulong(P[0].v, ==, 0xbf800000u);  // flag = -1
+    assert_ulong(d1.v, ==, 0x00000000u);
+    assert_ulong(d2.v, ==, 0x00000000u);
+    assert_ulong(x1.v, ==, 0x00000000u);
+    for (int i = 1; i <= 4; i++) assert_ulong(P[i].v, ==, 0x00000000u);
+    return MUNIT_OK;
+}
