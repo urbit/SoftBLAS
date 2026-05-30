@@ -254,3 +254,32 @@ MunitResult test_sgemv_badlayout(const MunitParameter params[],
     free(A); free(X); free(Y); free(RY);
     return MUNIT_OK;
 }
+
+//  Transpose path (Trans='T'): y = A^T x. A is 2x3 row-major [[1,2,3],[4,5,6]],
+//  x=[1,1] (len M=2), so y = [1+4, 2+5, 3+6] = [5,7,9] (len N=3). No gemv test
+//  exercised the transpose branch before.
+MunitResult test_sgemv_trans(const MunitParameter params[], void *user_data) {
+    const float32_t alpha = { SB_REAL32_ONE }, beta = { SB_REAL32_ZERO };
+    float32_t* A = svec((float[]){1.0f,2.0f,3.0f, 4.0f,5.0f,6.0f}, 6);
+    float32_t* X = svec((float[]){1.0f, 1.0f}, 2);
+    float32_t* Y = svec((float[]){0.0f, 0.0f, 0.0f}, 3);
+    sgemv('R', 'T', 2, 3, alpha, A, 3, X, 1, beta, Y, 1, 'n');
+    float32_t* RY = svec((float[]){5.0f, 7.0f, 9.0f}, 3);
+    for (uint64_t i = 0; i < 3; i++) assert_ulong(Y[i].v, ==, RY[i].v);
+    free(A); free(X); free(Y); free(RY);
+    return MUNIT_OK;
+}
+
+//  Padded leading dimension: A is logically 2x2 [[1,2],[3,4]] but stored with
+//  lda=3 (a trailing pad column). y = A*[1,1] = [3,7]; the pad must be skipped.
+MunitResult test_sgemv_padlda(const MunitParameter params[], void *user_data) {
+    const float32_t alpha = { SB_REAL32_ONE }, beta = { SB_REAL32_ZERO };
+    float32_t* A = svec((float[]){1.0f,2.0f,99.0f, 3.0f,4.0f,99.0f}, 6);
+    float32_t* X = svec((float[]){1.0f, 1.0f}, 2);
+    float32_t* Y = svec((float[]){0.0f, 0.0f}, 2);
+    sgemv('R', 'N', 2, 2, alpha, A, 3, X, 1, beta, Y, 1, 'n');
+    float32_t* RY = svec((float[]){3.0f, 7.0f}, 2);
+    for (uint64_t i = 0; i < 2; i++) assert_ulong(Y[i].v, ==, RY[i].v);
+    free(A); free(X); free(Y); free(RY);
+    return MUNIT_OK;
+}
