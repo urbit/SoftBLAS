@@ -460,5 +460,10 @@ MunitResult test_cdotc_conj(const MunitParameter params[], void* u);
 MunitResult test_scasum_basic(const MunitParameter params[], void* u);
 MunitResult test_scnrm2_basic(const MunitParameter params[], void* u);
 MunitResult test_csrot_basic(const MunitParameter params[], void* u);
+//  Rotation (test_rot.c)
+MunitResult test_srot_basic(const MunitParameter params[], void* u);
+MunitResult test_srotg_basic(const MunitParameter params[], void* u);
+MunitResult test_srotg_345(const MunitParameter params[], void* u);
+MunitResult test_srotm_basic(const MunitParameter params[], void* u);
 
 #endif // TEST_H

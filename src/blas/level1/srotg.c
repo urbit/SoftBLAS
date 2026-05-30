@@ -1,45 +1,35 @@
 #include "softblas.h"
 
-// *** XXX WIP XXX ***
-
-//  Given a vertical matrix containing a and b, computes the values of cos θ and
-//  sin θ that zero the lower value (b).  Returns the value of sin θ in s, the
-//  value of cos θ in c, and the upper value (r) in a.
-void srotg(float32_t *A, float32_t *B, float32_t *C, float32_t *S, const uint_fast8_t rndMode) {
+//  Construct a Givens rotation that zeroes b: returns c, s, and overwrites
+//  a with r = +/-sqrt(a^2+b^2) and b with the reconstruction scalar z.
+//  (The SoftFloat comparison/abs macros do not parenthesize their argument,
+//  so every operand here is first loaded into a plain local.)
+void srotg(float32_t *a, float32_t *b, float32_t *c, float32_t *s, const uint_fast8_t rndMode) {
     _set_rounding(rndMode);
-   const float32_t SZERO = { SB_REAL32_ZERO };
-   const float32_t SONE = { SB_REAL32_ONE };
-   float32_t roe, scale, R, Z;
+    const float32_t ZERO = { SB_REAL32_ZERO };
+    const float32_t ONE  = { SB_REAL32_ONE };
+    const float32_t NEG  = { SB_REAL32_NEGONE };
 
-   if (f32_gt(f32M_abs(A), f32M_abs(B))) {
-      roe = *A;
-   } else {
-      roe = *B;
-   }
-   scale = f32_add(f32M_abs(A), f32M_abs(B));
+    float32_t A = *a, B = *b;
+    float32_t absA = f32_abs(A), absB = f32_abs(B);
+    float32_t roe   = f32_gt(absA, absB) ? A : B;
+    float32_t scale = f32_add(absA, absB);
+    float32_t r, z;
 
-   if (f32_eq(scale, SZERO)) {
-      C = &((float32_t){ SB_REAL32_ONE });
-      S = &((float32_t){ SB_REAL32_ZERO });
-      R = (float32_t){ SB_REAL32_ZERO };
-      Z = (float32_t){ SB_REAL32_ZERO };
-      A = &R;
-      B = &Z;
-   } else {
-      R = f32_mul(scale, f32_sqrt(f32_add(f32_mul(f32_div(*A, scale), f32_div(*A, scale)), f32_mul(f32_div(*B, scale), f32_div(*B, scale)))));
-      R = f32_mul(f32_abs(roe), R);
-
-      *C = f32_div(*A, R);
-      *S = f32_div(*B, R);
-      Z = SONE;
-      if (f32_gt(f32M_abs(*A), f32M_abs(*B))) {
-         Z = *S;
-      }
-      if (f32_ge(f32M_abs(*B), f32M_abs(*A)) && f32_ne(*C, SZERO)) {
-         Z = f32_div(SONE, *C);
-      }
-   }
-
-   *A = R;
-   *B = Z;
+    if (f32_eq(scale, ZERO)) {
+        *c = ONE; *s = ZERO; r = ZERO; z = ZERO;
+    } else {
+        float32_t as = f32_div(A, scale);
+        float32_t bs = f32_div(B, scale);
+        r = f32_mul(scale, f32_sqrt(f32_add(f32_mul(as, as), f32_mul(bs, bs))));
+        r = f32_mul(f32_lt(roe, ZERO) ? NEG : ONE, r);   // sign(roe) * |r|
+        *c = f32_div(A, r);
+        *s = f32_div(B, r);
+        float32_t C = *c, S = *s;
+        z = ONE;
+        if (f32_gt(absA, absB)) z = S;
+        if (f32_ge(absB, absA) && f32_ne(C, ZERO)) z = f32_div(ONE, C);
+    }
+    *a = r;
+    *b = z;
 }
