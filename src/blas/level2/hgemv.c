@@ -23,7 +23,7 @@ void hgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
                 for (uint64_t j = 0; j < N; ++j) {
                     dotProduct = f16_add(dotProduct, f16_mul(A[i + j * lda], X[j * incX]));
                 }
-                Y[i * incY] = f16_add(f16_mul(alpha, dotProduct), f16_mul(beta, Y[i * incY]));
+                Y[i * incY] = nan_unify_h(f16_add(f16_mul(alpha, dotProduct), f16_mul(beta, Y[i * incY])));
             }
         } else if (Trans == 'T' || Trans == 't') {
             // Transpose
@@ -32,7 +32,7 @@ void hgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
                 for (uint64_t j = 0; j < M; ++j) {
                     dotProduct = f16_add(dotProduct, f16_mul(A[j + i * lda], X[j * incX]));
                 }
-                Y[i * incY] = f16_add(f16_mul(alpha, dotProduct), f16_mul(beta, Y[i * incY]));
+                Y[i * incY] = nan_unify_h(f16_add(f16_mul(alpha, dotProduct), f16_mul(beta, Y[i * incY])));
             }
         }
     } else if (Layout == 'R' || Layout == 'r') {
@@ -44,7 +44,7 @@ void hgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
                 for (uint64_t j = 0; j < N; ++j) {
                     dotProduct = f16_add(dotProduct, f16_mul(A[i * lda + j], X[j * incX]));
                 }
-                Y[i * incY] = f16_add(f16_mul(alpha, dotProduct), f16_mul(beta, Y[i * incY]));
+                Y[i * incY] = nan_unify_h(f16_add(f16_mul(alpha, dotProduct), f16_mul(beta, Y[i * incY])));
             }
         } else if (Trans == 'T' || Trans == 't') {
             // Transpose
@@ -53,7 +53,7 @@ void hgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
                 for (uint64_t j = 0; j < M; ++j) {
                     dotProduct = f16_add(dotProduct, f16_mul(A[j * lda + i], X[j * incX]));
                 }
-                Y[i * incY] = f16_add(f16_mul(alpha, dotProduct), f16_mul(beta, Y[i * incY]));
+                Y[i * incY] = nan_unify_h(f16_add(f16_mul(alpha, dotProduct), f16_mul(beta, Y[i * incY])));
             }
         } 
     }

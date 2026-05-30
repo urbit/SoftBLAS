@@ -14,5 +14,5 @@ float32_t sdot(const uint64_t N, const float32_t *X, const int64_t incX, const f
         iY += incY;
     }
 
-    return sdot;
+    return nan_unify_s(sdot);
 }

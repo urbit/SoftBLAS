@@ -13,7 +13,9 @@ void qswap(uint64_t N, float128_t *QX, int64_t incX, float128_t *QY, int64_t inc
     for (uint64_t i = 0; i < N; i++) {
         qtemp = QX[iX];
         QX[iX] = QY[iY];
+        nan_unify_q(&(QX[iX]));
         QY[iY] = qtemp;
+        nan_unify_q(&(QY[iY]));
         iX += incX;
         iY += incY;
     }

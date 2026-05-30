@@ -5,10 +5,10 @@ float32_t snrm2(uint64_t N, const float32_t *X, uint64_t incX, const uint_fast8_
     float32_t norm = { SB_REAL32_ZERO };
     
     if (N < 1 || incX < 1) {
-        return norm;
+        return nan_unify_s(norm);
     } else if (N == 1) {
         norm = f32_abs(X[0]);
-        return norm;
+        return nan_unify_s(norm);
     } else {
         float32_t scale = { SB_REAL32_ZERO };
         float32_t ssq = { SB_REAL32_ONE };
@@ -28,6 +28,6 @@ float32_t snrm2(uint64_t N, const float32_t *X, uint64_t incX, const uint_fast8_
 
         norm = f32_mul(scale, f32_sqrt(ssq));
 
-        return norm;
+        return nan_unify_s(norm);
     }
 }

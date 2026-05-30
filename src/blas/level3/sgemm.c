@@ -24,7 +24,7 @@ void sgemm(const char transA, const char transB, const uint64_t M, const uint64_
                 float32_t b = B[indexB];
                 dotProduct = f32_add(dotProduct, f32_mul(a, b));
             }
-            C[j + i * ldc] = f32_add(f32_mul(alpha, dotProduct), f32_mul(beta, C[j + i * ldc]));
+            C[j + i * ldc] = nan_unify_s(f32_add(f32_mul(alpha, dotProduct), f32_mul(beta, C[j + i * ldc])));
         }
     }
 }

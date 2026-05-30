@@ -7,7 +7,7 @@ void dcopy(uint64_t N, const float64_t *DX, int64_t incX, float64_t *DY, int64_t
     if (incX < 0) iX = (-N + 1) * incX;
     if (incY < 0) iY = (-N + 1) * incY;
     for (uint64_t i = 0; i < N; i++) {
-        DY[iY] = DX[iX];
+        DY[iY] = nan_unify_d(DX[iX]);
         iX += incX;
         iY += incY;
     }

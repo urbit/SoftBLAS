@@ -14,5 +14,5 @@ float64_t ddot(const uint64_t N, const float64_t *X, const int64_t incX, const f
         iY += incY;
     }
 
-    return ddot;
+    return nan_unify_d(ddot);
 }

@@ -7,7 +7,7 @@ void hcopy(uint64_t N, const float16_t *HX, int64_t incX, float16_t *HY, int64_t
     if (incX < 0) iX = (-N + 1) * incX;
     if (incY < 0) iY = (-N + 1) * incY;
     for (uint64_t i = 0; i < N; i++) {
-        HY[iY] = HX[iX];
+        HY[iY] = nan_unify_h(HX[iX]);
         iX += incX;
         iY += incY;
     }

@@ -5,10 +5,10 @@ float64_t dnrm2(uint64_t N, const float64_t *X, uint64_t incX, const uint_fast8_
     float64_t norm = { SB_REAL64_ZERO };
     
     if (N < 1 || incX < 1) {
-        return norm;
+        return nan_unify_d(norm);
     } else if (N == 1) {
         norm = f64_abs(X[0]);
-        return norm;
+        return nan_unify_d(norm);
     } else {
         float64_t scale = { SB_REAL64_ZERO };
         float64_t ssq = { SB_REAL64_ONE };
@@ -28,6 +28,6 @@ float64_t dnrm2(uint64_t N, const float64_t *X, uint64_t incX, const uint_fast8_
 
         norm = f64_mul(scale, f64_sqrt(ssq));
 
-        return norm;
+        return nan_unify_d(norm);
     }
 }

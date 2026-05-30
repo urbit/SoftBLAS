@@ -23,7 +23,7 @@ void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
                 for (uint64_t j = 0; j < N; ++j) {
                     dotProduct = f64_add(dotProduct, f64_mul(A[i + j * lda], X[j * incX]));
                 }
-                Y[i * incY] = f64_add(f64_mul(alpha, dotProduct), f64_mul(beta, Y[i * incY]));
+                Y[i * incY] = nan_unify_d(f64_add(f64_mul(alpha, dotProduct), f64_mul(beta, Y[i * incY])));
             }
         } else if (Trans == 'T' || Trans == 't') {
             // Transpose
@@ -32,7 +32,7 @@ void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
                 for (uint64_t j = 0; j < M; ++j) {
                     dotProduct = f64_add(dotProduct, f64_mul(A[j + i * lda], X[j * incX]));
                 }
-                Y[i * incY] = f64_add(f64_mul(alpha, dotProduct), f64_mul(beta, Y[i * incY]));
+                Y[i * incY] = nan_unify_d(f64_add(f64_mul(alpha, dotProduct), f64_mul(beta, Y[i * incY])));
             }
         }
     } else if (Layout == 'R' || Layout == 'r') {
@@ -44,7 +44,7 @@ void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
                 for (uint64_t j = 0; j < N; ++j) {
                     dotProduct = f64_add(dotProduct, f64_mul(A[i * lda + j], X[j * incX]));
                 }
-                Y[i * incY] = f64_add(f64_mul(alpha, dotProduct), f64_mul(beta, Y[i * incY]));
+                Y[i * incY] = nan_unify_d(f64_add(f64_mul(alpha, dotProduct), f64_mul(beta, Y[i * incY])));
             }
         } else if (Trans == 'T' || Trans == 't') {
             // Transpose
@@ -53,7 +53,7 @@ void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
                 for (uint64_t j = 0; j < M; ++j) {
                     dotProduct = f64_add(dotProduct, f64_mul(A[j * lda + i], X[j * incX]));
                 }
-                Y[i * incY] = f64_add(f64_mul(alpha, dotProduct), f64_mul(beta, Y[i * incY]));
+                Y[i * incY] = nan_unify_d(f64_add(f64_mul(alpha, dotProduct), f64_mul(beta, Y[i * incY])));
             }
         } 
     }

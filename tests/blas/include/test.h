@@ -420,4 +420,17 @@ MunitResult test_qgemm_3x2x1_0(const MunitParameter params[],
 MunitResult test_qgemm_5x4x3(const MunitParameter params[],
                              void* user_data_or_fixture);
 
+
+//  NaN canonicalization (test_nan.c)
+MunitResult test_saxpy_nan(const MunitParameter params[], void* u);
+MunitResult test_sdot_nan(const MunitParameter params[], void* u);
+MunitResult test_snrm2_nan(const MunitParameter params[], void* u);
+MunitResult test_sscal_nan(const MunitParameter params[], void* u);
+MunitResult test_scopy_nan(const MunitParameter params[], void* u);
+MunitResult test_sswap_nan(const MunitParameter params[], void* u);
+MunitResult test_sgemv_nan(const MunitParameter params[], void* u);
+MunitResult test_sgemm_nan(const MunitParameter params[], void* u);
+MunitResult test_daxpy_nan(const MunitParameter params[], void* u);
+MunitResult test_haxpy_nan(const MunitParameter params[], void* u);
+
 #endif // TEST_H

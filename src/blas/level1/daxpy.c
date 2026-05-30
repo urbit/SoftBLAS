@@ -7,7 +7,7 @@ void daxpy(uint64_t N, float64_t DA, float64_t *DX, int64_t incX, float64_t *DY,
     if (incX < 0) iX = (-N + 1) * incX;
     if (incY < 0) iY = (-N + 1) * incY;
     for (uint64_t i = 0; i < N; i++) {
-        DY[iY] = f64_add(DY[iY], f64_mul(DA, DX[iX]));
+        DY[iY] = nan_unify_d(f64_add(DY[iY], f64_mul(DA, DX[iX])));
         iX += incX;
         iY += incY;
     }

@@ -14,5 +14,5 @@ float16_t hdot(const uint64_t N, const float16_t *X, const int64_t incX, const f
         iY += incY;
     }
 
-    return hdot;
+    return nan_unify_h(hdot);
 }
