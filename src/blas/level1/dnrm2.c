@@ -14,7 +14,7 @@ float64_t dnrm2(uint64_t N, const float64_t *X, uint64_t incX, const uint_fast8_
         float64_t ssq = { SB_REAL64_ONE };
         float64_t absXI;
 
-        for (uint64_t ix = 0; ix < 1 + (N - 1) * incX; ix += incX) {
+        for (uint64_t k = 0, ix = 0; k < N; k++, ix += incX) {
             if (f64_ne(X[ix], (float64_t){ SB_REAL64_ZERO })) {
                 absXI = f64_abs(X[ix]);
                 if (f64_lt(scale, absXI)) {

@@ -165,3 +165,29 @@ MunitResult test_qaxpy_neg_stride(const MunitParameter params[], void *user_data
 }
 
 
+
+//  qaxpy must canonicalize NaNs in EVERY written element, not just QY[0].
+//  QX[1] is a non-canonical NaN whose (quieted) payload SoftFloat propagates;
+//  without a per-element nan_unify_q, QY[1] escapes non-canonical and breaks
+//  the determinism guarantee.
+MunitResult test_qaxpy_nan_unify(const MunitParameter params[],
+                                 void* user_data_or_fixture) {
+    float128_t QA = {{ 0x0000000000000000, 0x3fff000000000000 }};  // 1.0
+    float128_t* QX = qvec((float128_pair_t[]){
+            {.hi = 0x3fff000000000000, .lo = 0x0000000000000000},   // 1.0
+            {.hi = 0x7fff000000000001, .lo = 0x00000000deadbeef}},  // non-canonical NaN
+        2);
+    float128_t* QY = qvec((float128_pair_t[]){
+            {.hi = 0x0000000000000000, .lo = 0x0000000000000000},
+            {.hi = 0x0000000000000000, .lo = 0x0000000000000000}},
+        2);
+
+    qaxpy(2, QA, QX, 1, QY, 1, 'n');
+
+    //  QY[1] = 1*NaN + 0 -> canonical QUADNAN with zeroed low word.
+    assert_ullong(QY[1].v[1], ==, QUADNAN);
+    assert_ullong(QY[1].v[0], ==, 0x0000000000000000);
+
+    free(QX); free(QY);
+    return MUNIT_OK;
+}

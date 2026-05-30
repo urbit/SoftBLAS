@@ -14,7 +14,7 @@ float16_t hnrm2(uint64_t N, const float16_t *X, uint64_t incX, const uint_fast8_
         float16_t ssq = { SB_REAL16_ONE };
         float16_t absXI;
 
-        for (uint64_t ix = 0; ix < 1 + (N - 1) * incX; ix += incX) {
+        for (uint64_t k = 0, ix = 0; k < N; k++, ix += incX) {
             if (f16_ne(X[ix], (float16_t){ SB_REAL16_ZERO })) {
                 absXI = f16_abs(X[ix]);
                 if (f16_lt(scale, absXI)) {

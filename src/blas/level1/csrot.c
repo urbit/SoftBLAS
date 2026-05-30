@@ -1,6 +1,6 @@
 #include "softblas.h"
 
-void csrot(const uint64_t N, complex32_t *CX, const uint64_t incX, complex32_t *CY, const uint64_t incY, const complex32_t c, const complex32_t s, const uint_fast8_t rndMode) {
+void csrot(const uint64_t N, complex32_t *CX, const int64_t incX, complex32_t *CY, const int64_t incY, const complex32_t c, const complex32_t s, const uint_fast8_t rndMode) {
     _set_rounding(rndMode);
     complex32_t temp;
     int64_t ix = 0;
