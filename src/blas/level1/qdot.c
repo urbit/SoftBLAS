@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-float128_t qdot(const uint64_t N, const float128_t *X, const int64_t incX, const float128_t *Y, const int64_t incY) {
+float128_t qdot(const uint64_t N, const float128_t *X, const int64_t incX, const float128_t *Y, const int64_t incY, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     // XXX note that 0,1 is lo,hi
     float128_t qdot = { SB_REAL128L_ZERO, SB_REAL128U_ZERO };
 

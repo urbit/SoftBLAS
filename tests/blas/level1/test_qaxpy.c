@@ -25,7 +25,7 @@ MunitResult test_qaxpy_0(const MunitParameter params[], void *user_data) {
             {.hi = 0x4004900000000000, .lo = 0x0000000000000000}},
         5);
 
-    qaxpy(5, QA, QX, 1, QY, 1);
+    qaxpy(5, QA, QX, 1, QY, 1, 'n');
 
     for (uint64_t i = 0; i < 5; i++) {
         assert_ullong(QY[i].v[0], ==, RY[i].v[0]);
@@ -64,7 +64,7 @@ MunitResult test_qaxpy_sum(const MunitParameter params[], void *user_data) {
             {.hi = 0x4004e00000000000, .lo = 0x0000000000000000}},
         5);
 
-    qaxpy(5, QA, QX, 1, QY, 1);
+    qaxpy(5, QA, QX, 1, QY, 1, 'n');
 
     for (uint64_t i = 0; i < 5; i++) {
         assert_ullong(QY[i].v[0], ==, RY[i].v[0]);
@@ -111,7 +111,7 @@ MunitResult test_qaxpy_stride(const MunitParameter params[], void *user_data) {
             {.hi = 0x4002600000000000, .lo = 0x0000000000000000}},
         9);
 
-    qaxpy(5, QA, QX, 1, QY, 2);
+    qaxpy(5, QA, QX, 1, QY, 2, 'n');
 
     for (uint64_t i = 0; i < 5; i++) {
         assert_ullong(QY[i].v[0], ==, RY[i].v[0]);
@@ -150,7 +150,7 @@ MunitResult test_qaxpy_neg_stride(const MunitParameter params[], void *user_data
             {.hi = 0x4000800000000000, .lo = 0x0000000000000000}},
         5);
 
-    qaxpy(5, QA, QX, 1, QY, -1);
+    qaxpy(5, QA, QX, 1, QY, -1, 'n');
 
     for (uint64_t i = 0; i < 5; i++) {
         assert_ullong(QY[i].v[0], ==, RY[i].v[0]);

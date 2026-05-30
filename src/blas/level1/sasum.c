@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-float32_t sasum(uint64_t N, const float32_t *SX, uint64_t incX) {
+float32_t sasum(uint64_t N, const float32_t *SX, uint64_t incX, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     float32_t stemp = { SB_REAL32_ZERO };
     
     for (uint64_t i = 0; i < N; i++) {

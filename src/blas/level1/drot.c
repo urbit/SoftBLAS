@@ -1,4 +1,5 @@
-void drot(const uint64_t N, float64_t *X, const uint64_t  incX, float64_t *Y, const uint64_t incY, const float64_t c, const float64_t s) {
+void drot(const uint64_t N, float64_t *X, const uint64_t  incX, float64_t *Y, const uint64_t incY, const float64_t c, const float64_t s, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     float64_t tmp;
 
     if (c != SB_REAL64_ONE || s != SB_REAL64_ZERO) {

@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-complex32_t cdotc(uint64_t N, const complex32_t *CX, int64_t incX, const complex32_t *CY, int64_t incY) {
+complex32_t cdotc(uint64_t N, const complex32_t *CX, int64_t incX, const complex32_t *CY, int64_t incY, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     complex32_t cdotc = SB_COMPLEX32_ZERO;
 
     int64_t ix = 0;

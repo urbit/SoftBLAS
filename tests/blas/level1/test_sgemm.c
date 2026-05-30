@@ -33,7 +33,7 @@ MunitResult test_sgemm_0_row(const MunitParameter params[],
     const uint64_t ldc = P;
 
     // Call sgemm
-    sgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    sgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float32_t* R = svec((float[]){19.0f, 22.0f, 43.0f, 50.0f}, M*P);
 
@@ -81,7 +81,7 @@ MunitResult test_sgemm_0_col(const MunitParameter params[],
     const uint64_t ldc = P;
 
     // Call sgemm
-    sgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    sgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float32_t* R = svec((float[]){19.0f, 22.0f, 43.0f, 50.0f}, M*P);
 
@@ -131,7 +131,7 @@ MunitResult test_sgemm_3x2x1_0(const MunitParameter params[],
     const uint64_t ldc = P;
 
     // Call sgemm
-    sgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    sgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float32_t* R = svec((float[]){ 5.0f,
                                    11.0f,
@@ -190,7 +190,7 @@ MunitResult test_sgemm_5x4x3(const MunitParameter params[],
     const uint64_t ldc = P;
 
     // Call sgemm
-    sgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    sgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float32_t* R = svec((float[]){11.5f,  0.5f,  49.5f,
                                   91.0f, -2.5f, 101.5f,

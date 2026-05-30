@@ -1,7 +1,8 @@
 #include "softblas.h"
 #include <stdio.h>
 
-void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *X, const int64_t incX, const float64_t beta, float64_t *Y, const uint64_t incY) {
+void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *X, const int64_t incX, const float64_t beta, float64_t *Y, const uint64_t incY, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     const float64_t ZERO = { SB_REAL64_ZERO };
 
     if (Layout != 'C' && Layout != 'c' && Layout != 'R' && Layout != 'r') {

@@ -1,7 +1,8 @@
 #include "softblas.h"
 #include <stdio.h>
 
-void dgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc) {
+void dgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     const float64_t ZERO = {SB_REAL64_ZERO};
 
     if (transA != 'N' && transA != 'n' && transA != 'T' && transA != 't') {

@@ -48,7 +48,7 @@ MunitResult test_qgemm_0_row(const MunitParameter params[],
     const uint64_t ldc = P;
 
     // Call qgemm
-    qgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    qgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float128_t* R = qvec((float128_pair_t[]){
             {.hi = 0x4003300000000000, .lo = 0x0000000000000000},
@@ -117,7 +117,7 @@ MunitResult test_qgemm_0_col(const MunitParameter params[],
     const uint64_t ldc = P;
 
     // Call qgemm
-    qgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    qgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float128_t* R = qvec((float128_pair_t[]){
             {.hi = 0x4003300000000000, .lo = 0x0000000000000000},
@@ -179,7 +179,7 @@ MunitResult test_qgemm_3x2x1_0(const MunitParameter params[],
     const uint64_t ldc = P;
 
     // Call qgemm
-    qgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    qgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float128_t* R = qvec((float128_pair_t[]){
             {.hi = 0x4001400000000000, .lo = 0x0000000000000000},
@@ -287,7 +287,7 @@ MunitResult test_qgemm_5x4x3(const MunitParameter params[],
     const uint64_t ldc = P;
 
     // Call qgemm
-    qgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    qgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float128_t* R = qvec((float128_pair_t[]){
             {.hi = 0x4002700000000000, .lo = 0x0000000000000000},

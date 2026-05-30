@@ -5,7 +5,7 @@ MunitResult test_hswap_two(const MunitParameter params[],
     float16_t* HX = hvec((uint16_t[]){0x3c00 , 0xc000 , 0x4200 , 0xc400 , 0x4500 }, 5);
     float16_t* HY = hvec((uint16_t[]){0x0 , 0x0 , 0x0 , 0x0 , 0x0 }, 5);
 
-    hswap(5, HX, 1, HY, 1);
+    hswap(5, HX, 1, HY, 1, 'n');
 
     float16_t* RX = hvec((uint16_t[]){0x0 , 0x0 , 0x0 , 0x0 , 0x0 }, 5);
     float16_t* RY = hvec((uint16_t[]){0x3c00 , 0xc000 , 0x4200 , 0xc400 , 0x4500 }, 5);
@@ -28,7 +28,7 @@ MunitResult test_hswap_stride(const MunitParameter params[],
     float16_t* HX = hvec((uint16_t[]){0x3c00 , 0xc000 , 0x4200 , 0xc400 , 0x4500 }, 5);
     float16_t* HY = hvec((uint16_t[]){0x0 , 0x0 , 0x0 , 0x0 , 0x0 , 0x0 , 0x0 , 0x0 , 0x0 }, 9);
 
-    hswap(5, HX, 1, HY, 2);
+    hswap(5, HX, 1, HY, 2, 'n');
 
     float16_t* RX = hvec((uint16_t[]){0x0 , 0x0 , 0x0 , 0x0 , 0x0 }, 5);
     float16_t* RY = hvec((uint16_t[]){0x3c00 , 0x0 , 0xc000 , 0x0 , 0x4200 , 0x0 , 0xc400 , 0x0 , 0x4500 }, 9);

@@ -10,7 +10,7 @@ MunitResult test_qscal_0(const MunitParameter params[], void *user_data) {
             {.hi = 0x4001400000000000, .lo = 0x0000000000000000}},
         5);
 
-    qscal(5, QA, QX, 1);
+    qscal(5, QA, QX, 1, 'n');
 
     float128_t* RX = qvec((float128_pair_t[]){
             {.hi = 0x0000000000000000, .lo = 0x0000000000000000},
@@ -42,7 +42,7 @@ MunitResult test_qscal_12345(const MunitParameter params[],
             {.hi = 0x4001400000000000, .lo = 0x0000000000000000}},
         5);
 
-    qscal(5, QA, QX, 1);
+    qscal(5, QA, QX, 1, 'n');
 
     float128_t* RX = qvec((float128_pair_t[]){
             {.hi = 0x4002500000000000, .lo = 0x0000000000000000},
@@ -78,7 +78,7 @@ MunitResult test_qscal_stride(const MunitParameter params[],
             {.hi = 0x3fff000000000000, .lo = 0x0000000000000000}},
         9);
 
-    qscal(5, QA, QX, 2);
+    qscal(5, QA, QX, 2, 'n');
 
     float128_t* RX = qvec((float128_pair_t[]){
             {.hi = 0x4000400000000000, .lo = 0x0000000000000000},

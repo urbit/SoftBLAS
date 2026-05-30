@@ -4,7 +4,7 @@ MunitResult test_sscal_0(const MunitParameter params[], void *user_data) {
     const float32_t SA = {*(uint32_t*)&(float){0.0f}};
     float32_t* SX = svec((float[]){1.0f, -2.0f, 3.0f, -4.0f, 5.0f}, 5);
 
-    sscal(5, SA, SX, 1);
+    sscal(5, SA, SX, 1, 'n');
 
     float32_t* RX = svec((float[]){0.0f, -0.0f, 0.0f, -0.0f, 0.0f}, 5);
 
@@ -23,7 +23,7 @@ MunitResult test_sscal_12345(const MunitParameter params[],
     const float32_t SA = {*(uint32_t*)&(float){10.5f}};
     float32_t* SX = svec((float[]){1.0f, -2.0f, 3.0f, -4.0f, 5.0f}, 5);
 
-    sscal(5, SA, SX, 1);
+    sscal(5, SA, SX, 1, 'n');
 
     float32_t* RX = svec((float[]){10.5f, -21.0f, 31.5f, -42.0f, 52.5f}, 5);
 
@@ -42,7 +42,7 @@ MunitResult test_sscal_stride(const MunitParameter params[],
     const float32_t SA = {*(uint32_t*)&(float){2.5f}};
     float32_t* SX = svec((float[]){1.0f, 2.0f, 1.0f, 2.0f, 1.0f, 2.0f, 1.0f, 2.0f, 1.0f}, 9);
 
-    sscal(5, SA, SX, 2);
+    sscal(5, SA, SX, 2, 'n');
 
     float32_t* RX = svec((float[]){2.5f, 2.0f, 2.5f, 2.0f, 2.5f, 2.0f, 2.5f, 2.0f, 2.5f}, 9);
 

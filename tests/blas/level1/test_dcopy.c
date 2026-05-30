@@ -6,7 +6,7 @@ MunitResult test_dcopy_all(const MunitParameter params[],
     float64_t* DX = dvec((double[]){1.0, -2.0, 3.0, -4.0, 5.0}, N);
     float64_t* DY = dvec((double[]){0.0, 0.0, 0.0, 0.0, 0.0}, N);
 
-    dcopy(N, (float64_t*)DX, 1, DY, 1);
+    dcopy(N, (float64_t*)DX, 1, DY, 1, 'n');
 
     float64_t RY[] = {
         {*(uint64_t*)&(double){1.0}},
@@ -31,7 +31,7 @@ MunitResult test_dcopy_stride(const MunitParameter params[],
     float64_t* DX = dvec((double[]){1.0, 2.0, 1.0, 2.0, 1.0, 2.0, 1.0, 2.0, 1.0}, 9);
     float64_t* DY = dvec((double[]){0.0, 0.0, 0.0, 0.0, 0.0}, 5);
 
-    dcopy(5, (float64_t*)DX, 2, DY, 1);
+    dcopy(5, (float64_t*)DX, 2, DY, 1, 'n');
 
     float64_t RY[] = {
         {*(uint64_t*)&(double){1.0}},

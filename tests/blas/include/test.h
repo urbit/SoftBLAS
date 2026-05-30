@@ -22,6 +22,8 @@ MunitResult test_saxpy_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 MunitResult test_saxpy_neg_stride(const MunitParameter params[],
                                   void* user_data_or_fixture);
+MunitResult test_saxpy_rounding(const MunitParameter params[],
+                                void* user_data_or_fixture);
 MunitResult test_scopy_all(const MunitParameter params[],
                            void* user_data_or_fixture);
 MunitResult test_scopy_stride(const MunitParameter params[],

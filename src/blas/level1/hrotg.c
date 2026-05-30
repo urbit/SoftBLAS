@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-void hrotg(float16_t *a, float16_t *b, float16_t *c, float16_t *s) {
+void hrotg(float16_t *a, float16_t *b, float16_t *c, float16_t *s, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
    float16_t roe, scal, r, z, aa, ab, t0, t1;
 
    aa = f16_abs(*a);

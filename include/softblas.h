@@ -395,7 +395,7 @@ static inline float128_t* qvec(float128_pair_t pairs[], uint64_t size) {
     switch ( a )
     {
     default:
-      exit(1);
+      //  Unknown mode: leave SoftFloat's current rounding mode unchanged.
       break;
     case 'n':
       softfloat_roundingMode = softfloat_round_near_even;
@@ -408,6 +408,9 @@ static inline float128_t* qvec(float128_pair_t pairs[], uint64_t size) {
       break;
     case 'd':
       softfloat_roundingMode = softfloat_round_min;
+      break;
+    case 'a':
+      softfloat_roundingMode = softfloat_round_near_maxMag;
       break;
     }
   }

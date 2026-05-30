@@ -32,7 +32,7 @@ MunitResult test_dgemv_0_row(const MunitParameter params[],
     const uint64_t lda = N;
 
     // Call dgemv
-    dgemv(Layout, Trans, M, N, alpha, A, lda, DX, incX, beta, DY, incY);
+    dgemv(Layout, Trans, M, N, alpha, A, lda, DX, incX, beta, DY, incY, 'n');
 
     float64_t* RY = dvec((double[]){5.0, 11.0}, 2);
 
@@ -80,7 +80,7 @@ MunitResult test_dgemv_0_col(const MunitParameter params[],
     const uint64_t lda = M;
 
     // Call dgemv
-    dgemv(Layout, Trans, M, N, alpha, A, lda, DX, incX, beta, DY, incY);
+    dgemv(Layout, Trans, M, N, alpha, A, lda, DX, incX, beta, DY, incY, 'n');
 
     float64_t* RY = dvec((double[]){5.0, 11.0}, 2);
 
@@ -128,7 +128,7 @@ MunitResult test_dgemv_12345(const MunitParameter params[],
     const uint64_t lda = N;
 
     // Call dgemv
-    dgemv(Layout, Trans, M, N, alpha, A, lda, DX, incX, beta, DY, incY);
+    dgemv(Layout, Trans, M, N, alpha, A, lda, DX, incX, beta, DY, incY, 'n');
 
     float64_t* RY = dvec((double[]){75.5, 41.0, 67.5, 124.0}, 4);
 
@@ -179,7 +179,7 @@ MunitResult test_dgemv_stride(const MunitParameter params[],
     const uint64_t lda = N;
 
     // Call dgemv
-    dgemv(Layout, Trans, 4, 5, alpha, A, lda, DX, incX, beta, DY, incY);
+    dgemv(Layout, Trans, 4, 5, alpha, A, lda, DX, incX, beta, DY, incY, 'n');
 
     float64_t* RY = dvec((double[]){75.5, 0.0, 41.0, 0.0, 67.5, 0.0, 124.0}, 7);
 

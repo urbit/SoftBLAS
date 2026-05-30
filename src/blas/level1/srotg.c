@@ -5,7 +5,8 @@
 //  Given a vertical matrix containing a and b, computes the values of cos θ and
 //  sin θ that zero the lower value (b).  Returns the value of sin θ in s, the
 //  value of cos θ in c, and the upper value (r) in a.
-void srotg(float32_t *A, float32_t *B, float32_t *C, float32_t *S) {
+void srotg(float32_t *A, float32_t *B, float32_t *C, float32_t *S, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
    const float32_t SZERO = { SB_REAL32_ZERO };
    const float32_t SONE = { SB_REAL32_ONE };
    float32_t roe, scale, R, Z;
