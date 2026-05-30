@@ -131,6 +131,13 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_iqamax_12345", test_iqamax_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_iqamax_stride", test_iqamax_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_iqamax_13542", test_iqamax_13542, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+
+            {"/test_caxpy_basic", test_caxpy_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_ccopy_basic", test_ccopy_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_cdotc_conj", test_cdotc_conj, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_scasum_basic", test_scasum_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_scnrm2_basic", test_scnrm2_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_csrot_basic", test_csrot_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             
             {"/test_sgemv_0_row", test_sgemv_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sgemv_0_col", test_sgemv_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},

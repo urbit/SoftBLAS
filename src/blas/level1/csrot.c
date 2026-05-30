@@ -9,8 +9,8 @@ void csrot(const uint64_t N, complex32_t *CX, const int64_t incX, complex32_t *C
     if (incY < 0) iy = (-N + 1) * incY;
     for (uint64_t i = 0; i < N; i++) {
         temp = c32_add(c32_mul(c, CX[ix]), c32_mul(s, CY[iy]));
-        CY[iy] = c32_sub(c32_mul(c, CY[iy]), c32_mul(s, CX[ix]));
-        CX[ix] = temp;
+        CY[iy] = nan_unify_c(c32_sub(c32_mul(c, CY[iy]), c32_mul(s, CX[ix])));
+        CX[ix] = nan_unify_c(temp);
         ix += incX;
         iy += incY;
     }
