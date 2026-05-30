@@ -103,6 +103,18 @@ static inline float128_t* qvec(float128_pair_t pairs[], uint64_t size) {
     return result;
 }
 
+//  Build an array of complex32_t from interleaved (re, im) float literals;
+//  size is the number of complex elements.
+static inline complex32_t* cvec(float vals[], uint64_t size) {
+    complex32_t* result = malloc(size * sizeof(complex32_t));
+    if (result == NULL) abort();
+    for (uint64_t i = 0; i < size; i++) {
+        result[i].real.v = *(uint32_t*)&vals[2*i];
+        result[i].imag.v = *(uint32_t*)&vals[2*i+1];
+    }
+    return result;
+}
+
 //  Test function prototypes for BLAS Level 1
 MunitResult test_sasum_0(const MunitParameter params[],
                          void* user_data_or_fixture);
@@ -440,5 +452,13 @@ MunitResult test_sgemm_transA(const MunitParameter params[], void* u);
 MunitResult test_sgemm_transB(const MunitParameter params[], void* u);
 MunitResult test_hgemm_ldb(const MunitParameter params[], void* u);
 MunitResult test_qgemm_ldb(const MunitParameter params[], void* u);
+
+//  Complex Level-1 (test_complex.c)
+MunitResult test_caxpy_basic(const MunitParameter params[], void* u);
+MunitResult test_ccopy_basic(const MunitParameter params[], void* u);
+MunitResult test_cdotc_conj(const MunitParameter params[], void* u);
+MunitResult test_scasum_basic(const MunitParameter params[], void* u);
+MunitResult test_scnrm2_basic(const MunitParameter params[], void* u);
+MunitResult test_csrot_basic(const MunitParameter params[], void* u);
 
 #endif // TEST_H

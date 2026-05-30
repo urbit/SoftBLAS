@@ -14,5 +14,5 @@ complex32_t cdotc(uint64_t N, const complex32_t *CX, int64_t incX, const complex
         iy += incY;
     }
 
-    return cdotc;
+    return nan_unify_c(cdotc);
 }

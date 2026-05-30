@@ -42,6 +42,12 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR_L1)/idamax.c \
   $(BLAS_SRC_DIR_L1)/ihamax.c \
   $(BLAS_SRC_DIR_L1)/iqamax.c \
+  $(BLAS_SRC_DIR_L1)/scasum.c \
+  $(BLAS_SRC_DIR_L1)/caxpy.c \
+  $(BLAS_SRC_DIR_L1)/ccopy.c \
+  $(BLAS_SRC_DIR_L1)/cdotc.c \
+  $(BLAS_SRC_DIR_L1)/scnrm2.c \
+  $(BLAS_SRC_DIR_L1)/csrot.c \
   $(BLAS_SRC_DIR_L2)/sgemv.c \
   $(BLAS_SRC_DIR_L2)/dgemv.c \
   $(BLAS_SRC_DIR_L2)/hgemv.c \

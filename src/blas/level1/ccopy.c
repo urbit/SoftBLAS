@@ -7,8 +7,8 @@ void ccopy(uint64_t N, const complex32_t *CX, int64_t incX, complex32_t *CY, int
     if (incX < 0) ix = (-N + 1) * incX;
     if (incY < 0) iy = (-N + 1) * incY;
     for (uint64_t i = 0; i < N; i++) {
-        CY[iY] = CX[iX];
-        iX += incX;
-        iY += incY;
+        CY[iy] = nan_unify_c(CX[ix]);
+        ix += incX;
+        iy += incY;
     }
 }
