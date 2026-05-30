@@ -168,11 +168,16 @@ typedef struct {
 #define c64_div(a, b) (complex64_t){ f64_div( f64_add( f64_mul(a.real, b.real), f64_mul(a.imag, b.imag) ), f64_add( f64_mul(b.real, b.real), f64_mul(b.imag, b.imag) ) ), f64_div( f64_sub( f64_mul(a.imag, b.real), f64_mul(a.real, b.imag) ), f64_add( f64_mul(b.real, b.real), f64_mul(b.imag, b.imag) ) ) }
 #define c128_div(a, b) (complex128_t){ f128_div( f128_add( f128_mul(a.real, b.real), f128_mul(a.imag, b.imag) ), f128_add( f128_mul(b.real, b.real), f128_mul(b.imag, b.imag) ) ), f128_div( f128_sub( f128_mul(a.imag, b.real), f128_mul(a.real, b.imag) ), f128_add( f128_mul(b.real, b.real), f128_mul(b.imag, b.imag) ) ) }
 
-#define c16_conj(a) (complex16_t){ a.real, FNEG(a.imag) }
-#define c32_conj(a) (complex32_t){ a.real, FNEG(a.imag) }
-#define c64_conj(a) (complex64_t){ a.real, FNEG(a.imag) }
-#define c128_conj(a) (complex128_t){ a.real, FNEG(a.imag) }
-#define FNEG(x) ( x.v ^ (1 << (sizeof(x.v) * 8 - 1)) )
+//  FNEG flips the sign bit of a scalar-valued SoftFloat type (float16/32/64).
+//  The mask must be unsigned and at least as wide as x.v: a plain `1 << 31`
+//  is undefined (signed int overflow) and `1 << 63` does not fit in an int.
+#define FNEG(x) ( (x).v ^ ((uint64_t)1 << (sizeof((x).v) * 8 - 1)) )
+#define c16_conj(a) (complex16_t){ (a).real, FNEG((a).imag) }
+#define c32_conj(a) (complex32_t){ (a).real, FNEG((a).imag) }
+#define c64_conj(a) (complex64_t){ (a).real, FNEG((a).imag) }
+//  float128_t holds its sign bit in the high word v[1]; v is an array, so it
+//  cannot use FNEG (which xors the whole scalar). Flip v[1]'s sign bit only.
+#define c128_conj(a) (complex128_t){ (a).real, (float128_t){ (a).imag.v[0], (a).imag.v[1] ^ ((uint64_t)1 << 63) } }
 
 //  SOFTBLAS PROTOTYPES
 
@@ -188,7 +193,7 @@ void srotg(float32_t *a, float32_t *b, float32_t *c, float32_t *s, const uint_fa
 void srotm(const uint64_t N, float32_t *X, const uint64_t incX, float32_t *Y, const uint64_t incY, const float32_t *P, const uint_fast8_t rndMode);
 void srotmg(float32_t *D1, float32_t *D2, float32_t *X1, const float32_t y1, float32_t *P, const uint_fast8_t rndMode);
 void sscal(uint64_t N, float32_t SA, float32_t *SX, uint64_t incX, const uint_fast8_t rndMode);
-void sswap(uint64_t N, float32_t *SX, uint64_t incX, float32_t *SY, uint64_t incY, const uint_fast8_t rndMode);
+void sswap(uint64_t N, float32_t *SX, int64_t incX, float32_t *SY, int64_t incY, const uint_fast8_t rndMode);
 uint64_t isamax(uint64_t N, const float32_t *SX, uint64_t incX);
 
 //    Double-precision
@@ -202,7 +207,7 @@ void drotg(float64_t *a, float64_t *b, float64_t *c, float64_t *s, const uint_fa
 void drotm(const uint64_t N, float64_t *X, const uint64_t incX, float64_t *Y, const uint64_t incY, const float64_t *P, const uint_fast8_t rndMode);
 void drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, float64_t *P, const uint_fast8_t rndMode);
 void dscal(uint64_t N, float64_t DA, float64_t *DX, uint64_t incX, const uint_fast8_t rndMode);
-void dswap(uint64_t N, float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY, const uint_fast8_t rndMode);
+void dswap(uint64_t N, float64_t *DX, int64_t incX, float64_t *DY, int64_t incY, const uint_fast8_t rndMode);
 uint64_t idamax(uint64_t N, const float64_t *DX, uint64_t incX);
 
 //    Half-precision
@@ -216,7 +221,7 @@ void hrotg(float16_t *a, float16_t *b, float16_t *c, float16_t *s, const uint_fa
 void hrotm(const uint64_t N, float16_t *X, const uint64_t incX, float16_t *Y, const uint64_t incY, const float16_t *P, const uint_fast8_t rndMode);
 void hrotmg(float16_t *D1, float16_t *D2, float16_t *X1, const float16_t y1, float16_t *P, const uint_fast8_t rndMode);
 void hscal(uint64_t N, float16_t HA, float16_t *HX, uint64_t incX, const uint_fast8_t rndMode);
-void hswap(uint64_t N, float16_t *HX, uint64_t incX, float16_t *HY, uint64_t incY, const uint_fast8_t rndMode);
+void hswap(uint64_t N, float16_t *HX, int64_t incX, float16_t *HY, int64_t incY, const uint_fast8_t rndMode);
 uint64_t ihamax(uint64_t N, const float16_t *HX, uint64_t incX);
 
 //    Quad-precision
@@ -230,7 +235,7 @@ void qrotg(float128_t *a, float128_t *b, float128_t *c, float128_t *s, const uin
 void qrotm(const uint64_t N, float128_t *X, const uint64_t incX, float128_t *Y, const uint64_t incY, const float128_t *P, const uint_fast8_t rndMode);
 void qrotmg(float128_t *D1, float128_t *D2, float128_t *X1, const float128_t y1, float128_t *P, const uint_fast8_t rndMode);
 void qscal(uint64_t N, float128_t QA, float128_t *QX, uint64_t incX, const uint_fast8_t rndMode);
-void qswap(uint64_t N, float128_t *QX, uint64_t incX, float128_t *QY, uint64_t incY, const uint_fast8_t rndMode);
+void qswap(uint64_t N, float128_t *QX, int64_t incX, float128_t *QY, int64_t incY, const uint_fast8_t rndMode);
 uint64_t iqamax(uint64_t N, const float128_t *QX, uint64_t incX);
 
 //    Complex single-precision
@@ -239,7 +244,7 @@ void caxpy(uint64_t N, complex32_t CA, complex32_t *CX, int64_t incX, complex32_
 void ccopy(uint64_t N, const complex32_t *CX, int64_t incX, complex32_t *CY, int64_t incY, const uint_fast8_t rndMode);
 complex32_t cdotc(uint64_t N, const complex32_t *CX, int64_t incX, const complex32_t *CY, int64_t incY, const uint_fast8_t rndMode);
 float32_t scnrm2(uint64_t N, const complex32_t *CX, uint64_t incX, const uint_fast8_t rndMode);
-void csrot(const uint64_t N, complex32_t *CX, const uint64_t incX, complex32_t *CY, const uint64_t incY, const complex32_t c, const complex32_t s, const uint_fast8_t rndMode);
+void csrot(const uint64_t N, complex32_t *CX, const int64_t incX, complex32_t *CY, const int64_t incY, const complex32_t c, const complex32_t s, const uint_fast8_t rndMode);
 
 void cscal(uint64_t N, complex32_t CA, complex32_t *CX, uint64_t incX, const uint_fast8_t rndMode);
 void cswap(uint64_t N, complex32_t *CX, uint64_t incX, complex32_t *CY, uint64_t incY, const uint_fast8_t rndMode);

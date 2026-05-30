@@ -54,6 +54,8 @@ MunitResult test_sswap_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 MunitResult test_sswap_zero(const MunitParameter params[],
                             void* user_data_or_fixture);
+MunitResult test_sswap_negstride(const MunitParameter params[],
+                                 void* user_data_or_fixture);
 MunitResult test_isamax_0(const MunitParameter params[],
                           void* user_data_or_fixture);
 MunitResult test_isamax_12345(const MunitParameter params[],
@@ -62,6 +64,8 @@ MunitResult test_isamax_stride(const MunitParameter params[],
                                void* user_data_or_fixture);
 MunitResult test_isamax_13542(const MunitParameter params[],
                               void* user_data_or_fixture);
+MunitResult test_isamax_one(const MunitParameter params[],
+                            void* user_data_or_fixture);
 
 MunitResult test_dasum_0(const MunitParameter params[],
                        void* user_data_or_fixture);
@@ -181,6 +185,8 @@ MunitResult test_qaxpy_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 MunitResult test_qaxpy_neg_stride(const MunitParameter params[],
                                   void* user_data_or_fixture);
+MunitResult test_qaxpy_nan_unify(const MunitParameter params[],
+                                 void* user_data_or_fixture);
 MunitResult test_qcopy_all(const MunitParameter params[],
                               void* user_data_or_fixture);
 MunitResult test_qcopy_stride(const MunitParameter params[],

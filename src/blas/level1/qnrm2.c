@@ -17,7 +17,7 @@ float128_t qnrm2(uint64_t N, const float128_t *X, uint64_t incX, const uint_fast
         const float128_t QZERO = { SB_REAL128L_ZERO, SB_REAL128U_ZERO };
         const float128_t QONE  = { SB_REAL128L_ONE,  SB_REAL128U_ONE };
 
-        for (uint64_t ix = 0; ix < 1 + (N - 1) * incX; ix += incX) {
+        for (uint64_t k = 0, ix = 0; k < N; k++, ix += incX) {
             if (f128M_ne(&(X[ix]), &QZERO)) {
                 absXI = f128_abs(X[ix]);
                 if (f128M_lt(&scale, &absXI)) {

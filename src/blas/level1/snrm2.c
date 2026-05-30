@@ -14,7 +14,7 @@ float32_t snrm2(uint64_t N, const float32_t *X, uint64_t incX, const uint_fast8_
         float32_t ssq = { SB_REAL32_ONE };
         float32_t absXI;
 
-        for (uint64_t ix = 0; ix < 1 + (N - 1) * incX; ix += incX) {
+        for (uint64_t k = 0, ix = 0; k < N; k++, ix += incX) {
             if (f32_ne(X[ix], (float32_t){ SB_REAL32_ZERO })) {
                 absXI = f32_abs(X[ix]);
                 if (f32_lt(scale, absXI)) {

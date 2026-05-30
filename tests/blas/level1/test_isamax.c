@@ -56,3 +56,13 @@ MunitResult test_isamax_13542(const MunitParameter params[],
 
     return MUNIT_OK;
 }
+
+//  N==1: the (only) maximum is at 0-based index 0, not 1.
+MunitResult test_isamax_one(const MunitParameter params[],
+                            void* user_data_or_fixture) {
+    float32_t* SX = svec((float[]){42.0f}, 1);
+    uint64_t I = isamax(1, SX, 1);
+    assert_int(I, ==, 0);
+    free(SX);
+    return MUNIT_OK;
+}
