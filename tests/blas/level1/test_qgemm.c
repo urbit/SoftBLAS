@@ -323,3 +323,27 @@ MunitResult test_qgemm_5x4x3(const MunitParameter params[],
 
     return MUNIT_OK;
 }
+
+//  ldb != ldc: B stored with a pad column (ldb=3), C dense (ldc=2). quad.
+//  A=[[1,2],[3,4]], B=[[5,6],[7,8]] -> C=[[19,22],[43,50]].
+MunitResult test_qgemm_ldb(const MunitParameter params[], void *user_data) {
+    const float128_t alpha = { SB_REAL128L_ONE, SB_REAL128U_ONE };
+    const float128_t beta  = { SB_REAL128L_ZERO, SB_REAL128U_ZERO };
+    float128_t* A = qvec((float128_pair_t[]){
+        {.hi=0x3fff000000000000,.lo=0},{.hi=0x4000000000000000,.lo=0},
+        {.hi=0x4000800000000000,.lo=0},{.hi=0x4001000000000000,.lo=0}}, 4);
+    float128_t* B = qvec((float128_pair_t[]){
+        {.hi=0x4001400000000000,.lo=0},{.hi=0x4001800000000000,.lo=0},{.hi=0,.lo=0},
+        {.hi=0x4001c00000000000,.lo=0},{.hi=0x4002000000000000,.lo=0},{.hi=0,.lo=0}}, 6);
+    float128_t* C = qvec((float128_pair_t[]){{0,0},{0,0},{0,0},{0,0}}, 4);
+    qgemm('N','N', 2,2,2, alpha, A, 2, B, 3, beta, C, 2, 'n');
+    float128_t* R = qvec((float128_pair_t[]){
+        {.hi=0x4003300000000000,.lo=0},{.hi=0x4003600000000000,.lo=0},   // 19,22
+        {.hi=0x4004580000000000,.lo=0},{.hi=0x4004900000000000,.lo=0}}, 4); // 43,50
+    for (uint64_t i = 0; i < 4; i++) {
+        assert_ullong(C[i].v[0], ==, R[i].v[0]);
+        assert_ullong(C[i].v[1], ==, R[i].v[1]);
+    }
+    free(A); free(B); free(C); free(R);
+    return MUNIT_OK;
+}

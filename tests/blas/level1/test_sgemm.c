@@ -248,3 +248,32 @@ MunitResult test_sgemm_ldb(const MunitParameter params[],
     free(A); free(B); free(C); free(R);
     return MUNIT_OK;
 }
+
+//  Mixed transpose A^T * B (transA='T', transB='N'). A stored [[1,3],[2,4]] so
+//  A^T=[[1,2],[3,4]]; B=[[5,6],[7,8]] -> C=[[19,22],[43,50]]. Only 'T','T' and
+//  'N','N' were covered before.
+MunitResult test_sgemm_transA(const MunitParameter params[], void *user_data) {
+    const float32_t alpha = { SB_REAL32_ONE }, beta = { SB_REAL32_ZERO };
+    float32_t* A = svec((float[]){1.0f,3.0f,2.0f,4.0f}, 4);
+    float32_t* B = svec((float[]){5.0f,6.0f,7.0f,8.0f}, 4);
+    float32_t* C = svec((float[]){0.0f,0.0f,0.0f,0.0f}, 4);
+    sgemm('T', 'N', 2, 2, 2, alpha, A, 2, B, 2, beta, C, 2, 'n');
+    float32_t* R = svec((float[]){19.0f,22.0f,43.0f,50.0f}, 4);
+    for (uint64_t i = 0; i < 4; i++) assert_ulong(C[i].v, ==, R[i].v);
+    free(A); free(B); free(C); free(R);
+    return MUNIT_OK;
+}
+
+//  Mixed transpose A * B^T (transA='N', transB='T'). A=[[1,2],[3,4]]; B stored
+//  [[5,7],[6,8]] so B^T=[[5,6],[7,8]] -> C=[[19,22],[43,50]].
+MunitResult test_sgemm_transB(const MunitParameter params[], void *user_data) {
+    const float32_t alpha = { SB_REAL32_ONE }, beta = { SB_REAL32_ZERO };
+    float32_t* A = svec((float[]){1.0f,2.0f,3.0f,4.0f}, 4);
+    float32_t* B = svec((float[]){5.0f,7.0f,6.0f,8.0f}, 4);
+    float32_t* C = svec((float[]){0.0f,0.0f,0.0f,0.0f}, 4);
+    sgemm('N', 'T', 2, 2, 2, alpha, A, 2, B, 2, beta, C, 2, 'n');
+    float32_t* R = svec((float[]){19.0f,22.0f,43.0f,50.0f}, 4);
+    for (uint64_t i = 0; i < 4; i++) assert_ulong(C[i].v, ==, R[i].v);
+    free(A); free(B); free(C); free(R);
+    return MUNIT_OK;
+}

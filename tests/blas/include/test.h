@@ -433,4 +433,12 @@ MunitResult test_sgemm_nan(const MunitParameter params[], void* u);
 MunitResult test_daxpy_nan(const MunitParameter params[], void* u);
 MunitResult test_haxpy_nan(const MunitParameter params[], void* u);
 
+//  Transpose & padding coverage (C4/C5)
+MunitResult test_sgemv_trans(const MunitParameter params[], void* u);
+MunitResult test_sgemv_padlda(const MunitParameter params[], void* u);
+MunitResult test_sgemm_transA(const MunitParameter params[], void* u);
+MunitResult test_sgemm_transB(const MunitParameter params[], void* u);
+MunitResult test_hgemm_ldb(const MunitParameter params[], void* u);
+MunitResult test_qgemm_ldb(const MunitParameter params[], void* u);
+
 #endif // TEST_H

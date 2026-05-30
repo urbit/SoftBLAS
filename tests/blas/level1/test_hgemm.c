@@ -210,3 +210,16 @@ MunitResult test_hgemm_5x4x3(const MunitParameter params[],
 
     return MUNIT_OK;
 }
+//  ldb != ldc: B stored with a pad column (ldb=3), C dense (ldc=2). half.
+//  A=[[1,2],[3,4]], B=[[5,6],[7,8]] -> C=[[19,22],[43,50]].
+MunitResult test_hgemm_ldb(const MunitParameter params[], void *user_data) {
+    const float16_t alpha = { SB_REAL16_ONE }, beta = { SB_REAL16_ZERO };
+    float16_t* A = hvec((uint16_t[]){0x3c00,0x4000,0x4200,0x4400}, 4);
+    float16_t* B = hvec((uint16_t[]){0x4500,0x4600,0x0, 0x4700,0x4800,0x0}, 6);
+    float16_t* C = hvec((uint16_t[]){0x0,0x0,0x0,0x0}, 4);
+    hgemm('N','N', 2,2,2, alpha, A, 2, B, 3, beta, C, 2, 'n');
+    float16_t* R = hvec((uint16_t[]){0x4cc0,0x4d80,0x5160,0x5240}, 4);  // 19,22,43,50
+    for (uint64_t i = 0; i < 4; i++) assert_ushort(C[i].v, ==, R[i].v);
+    free(A); free(B); free(C); free(R);
+    return MUNIT_OK;
+}
