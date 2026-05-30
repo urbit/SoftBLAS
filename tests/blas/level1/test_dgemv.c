@@ -56,8 +56,8 @@ MunitResult test_dgemv_0_col(const MunitParameter params[],
     const float64_t beta = { SB_REAL64_ZERO };  // Dcalar beta
 
     // 2x2 matrix A (column-major order)
-    //   [1.0 3.0]
-    //   [2.0 4.0]
+    //   [1.0 2.0]
+    //   [3.0 4.0]
     const uint64_t M = 2;     // Number of rows in A
     const uint64_t N = 2;     // Number of columns in A
     float64_t* A = dvec((double[]){1.0, 3.0, 2.0, 4.0}, 4);
