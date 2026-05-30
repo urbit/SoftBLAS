@@ -51,6 +51,11 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_isamax_stride", test_isamax_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_isamax_13542", test_isamax_13542, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_isamax_one", test_isamax_one, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+
+            {"/test_srot_basic", test_srot_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_srotg_basic", test_srotg_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_srotg_345", test_srotg_345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_srotm_basic", test_srotm_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             
             {"/test_dasum_0", test_dasum_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dasum_12345", test_dasum_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
