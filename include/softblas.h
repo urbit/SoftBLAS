@@ -220,6 +220,8 @@ float128_t qasum(uint64_t N, const float128_t *QX, uint64_t incX, const uint_fas
 void qaxpy(uint64_t N, float128_t QA, float128_t *QX, int64_t incX, float128_t *QY, int64_t incY, const uint_fast8_t rndMode);
 void qcopy(uint64_t N, const float128_t *QX, int64_t incX, float128_t *QY, int64_t incY, const uint_fast8_t rndMode);
 float128_t qdot(const uint64_t N, const float128_t *X, const int64_t incX, const float128_t *Y, const int64_t incY, const uint_fast8_t rndMode);
+float32_t sdsdot(const uint64_t N, const float32_t alpha, const float32_t *SX, const int64_t incX, const float32_t *SY, const int64_t incY, const uint_fast8_t rndMode);
+float32_t hsdot(const uint64_t N, const float16_t alpha, const float16_t *X, const int64_t incX, const float16_t *Y, const int64_t incY, const uint_fast8_t rndMode);
 float128_t qnrm2(uint64_t N, const float128_t *X, uint64_t incX, const uint_fast8_t rndMode);
 void qrot(const uint64_t N, float16_t *X, const uint64_t  incX, float16_t *Y, const uint64_t incY, const float16_t c, const float16_t s, const uint_fast8_t rndMode);
 void qrotg(float128_t *a, float128_t *b, float128_t *c, float128_t *s, const uint_fast8_t rndMode);

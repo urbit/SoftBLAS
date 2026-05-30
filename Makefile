@@ -26,6 +26,8 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR_L1)/ddot.c \
   $(BLAS_SRC_DIR_L1)/hdot.c \
   $(BLAS_SRC_DIR_L1)/qdot.c \
+  $(BLAS_SRC_DIR_L1)/sdsdot.c \
+  $(BLAS_SRC_DIR_L1)/hsdot.c \
   $(BLAS_SRC_DIR_L1)/snrm2.c \
   $(BLAS_SRC_DIR_L1)/dnrm2.c \
   $(BLAS_SRC_DIR_L1)/hnrm2.c \
