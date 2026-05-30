@@ -231,3 +231,26 @@ MunitResult test_sgemv_incx(const MunitParameter params[],
     free(A); free(SX); free(SY); free(RY);
     return MUNIT_OK;
 }
+
+//  Regression: an invalid Layout must return without modifying Y or killing
+//  the process (these routines previously called exit(-1) on bad arguments).
+MunitResult test_sgemv_badlayout(const MunitParameter params[],
+                                 void *user_data) {
+    const float32_t alpha = { SB_REAL32_ONE };
+    const float32_t beta = { SB_REAL32_ONE };
+    float32_t* A = svec((float[]){1.0f, 2.0f, 3.0f, 4.0f}, 4);
+    float32_t* X = svec((float[]){1.0f, 2.0f}, 2);
+    float32_t* Y = svec((float[]){5.0f, 6.0f}, 2);
+
+    //  'X' is not a valid Layout; the routine must return immediately.
+    sgemv('X', 'N', 2, 2, alpha, A, 2, X, 1, beta, Y, 1);
+
+    //  Y must be untouched.
+    float32_t* RY = svec((float[]){5.0f, 6.0f}, 2);
+    for (uint64_t i = 0; i < 2; i++) {
+        assert_ulong(Y[i].v, ==, RY[i].v);
+    }
+
+    free(A); free(X); free(Y); free(RY);
+    return MUNIT_OK;
+}

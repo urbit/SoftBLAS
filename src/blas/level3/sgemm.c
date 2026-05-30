@@ -5,12 +5,12 @@ void sgemm(const char transA, const char transB, const uint64_t M, const uint64_
 
     if (transA != 'N' && transA != 'n' && transA != 'T' && transA != 't') {
         // Invalid transA parameter
-        exit(-1);
+        return;
     }
 
     if (transB != 'N' && transB != 'n' && transB != 'T' && transB != 't') {
         // Invalid transB parameter
-        exit(-1);
+        return;
     }
 
     for (uint64_t i = 0; i < M; i++) {

@@ -5,12 +5,12 @@ void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
 
     if (Layout != 'C' && Layout != 'c' && Layout != 'R' && Layout != 'r') {
         // Invalid order parameter
-        exit(-1);
+        return;
     }
 
     if (Trans != 'N' && Trans != 'n' && Trans != 'T' && Trans != 't') {
         // Invalid trans parameter
-        exit(-1);
+        return;
     }
 
     if (Layout == 'C' || Layout == 'c') {

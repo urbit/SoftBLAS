@@ -25,6 +25,7 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_sscal_stride", test_sscal_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sswap_two", test_sswap_two, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sswap_stride", test_sswap_two, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sswap_zero", test_sswap_zero, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_isamax_0", test_isamax_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_isamax_12345", test_isamax_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_isamax_stride", test_isamax_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -114,6 +115,7 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_sgemv_12345", test_sgemv_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sgemv_stride", test_sgemv_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sgemv_incx", test_sgemv_incx, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sgemv_badlayout", test_sgemv_badlayout, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
             {"/test_dgemv_0_row", test_dgemv_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dgemv_0_col", test_dgemv_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
