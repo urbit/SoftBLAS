@@ -24,7 +24,7 @@ void hgemm(const char transA, const char transB, const uint64_t M, const uint64_
                 float16_t b = B[indexB];
                 dotProduct = f16_add(dotProduct, f16_mul(a, b));
             }
-            C[j + i * ldc] = f16_add(f16_mul(alpha, dotProduct), f16_mul(beta, C[j + i * ldc]));
+            C[j + i * ldc] = nan_unify_h(f16_add(f16_mul(alpha, dotProduct), f16_mul(beta, C[j + i * ldc])));
         }
     }
 }

@@ -12,8 +12,8 @@ void hswap(uint64_t N, float16_t *HX, int64_t incX, float16_t *HY, int64_t incY,
     if (incY < 0) iY = (-N + 1) * incY;
     for (uint64_t i = 0; i < N; i++) {
         htemp = HX[iX];
-        HX[iX] = HY[iY];
-        HY[iY] = htemp;
+        HX[iX] = nan_unify_h(HY[iY]);
+        HY[iY] = nan_unify_h(htemp);
         iX += incX;
         iY += incY;
     }

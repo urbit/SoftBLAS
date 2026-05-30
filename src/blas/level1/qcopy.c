@@ -8,6 +8,7 @@ void qcopy(uint64_t N, const float128_t *QX, int64_t incX, float128_t *QY, int64
     if (incY < 0) iY = (-N + 1) * incY;
     for (uint64_t i = 0; i < N; i++) {
         QY[iY] = QX[iX];
+        nan_unify_q(&(QY[iY]));
         iX += incX;
         iY += incY;
     }

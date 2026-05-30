@@ -17,5 +17,6 @@ float128_t qdot(const uint64_t N, const float128_t *X, const int64_t incX, const
         iY += incY;
     }
 
+    nan_unify_q(&qdot);
     return qdot;
 }

@@ -29,6 +29,7 @@ void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
                 f128M_mul(&alpha, &dotProduct, &qtemp);
                 f128M_mul(&beta, &(Y[i * incY]), &qtemp2);
                 f128M_add(&qtemp, &qtemp2, &(Y[i * incY]));
+                nan_unify_q(&(Y[i * incY]));
             }
         } else if (Trans == 'T' || Trans == 't') {
             // Transpose
@@ -43,6 +44,7 @@ void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
                 f128M_mul(&alpha, &dotProduct, &qtemp);
                 f128M_mul(&beta, &(Y[i * incY]), &qtemp2);
                 f128M_add(&qtemp, &qtemp2, &(Y[i * incY]));
+                nan_unify_q(&(Y[i * incY]));
             }
         }
     } else if (Layout == 'R' || Layout == 'r') {
@@ -60,6 +62,7 @@ void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
                 f128M_mul(&alpha, &dotProduct, &qtemp);
                 f128M_mul(&beta, &(Y[i * incY]), &qtemp2);
                 f128M_add(&qtemp, &qtemp2, &(Y[i * incY]));
+                nan_unify_q(&(Y[i * incY]));
             }
         } else if (Trans == 'T' || Trans == 't') {
             // Transpose
@@ -74,6 +77,7 @@ void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
                 f128M_mul(&alpha, &dotProduct, &qtemp);
                 f128M_mul(&beta, &(Y[i * incY]), &qtemp2);
                 f128M_add(&qtemp, &qtemp2, &(Y[i * incY]));
+                nan_unify_q(&(Y[i * incY]));
             }
         } 
     }

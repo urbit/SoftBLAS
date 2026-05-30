@@ -30,6 +30,7 @@ void qgemm(const char transA, const char transB, const uint64_t M, const uint64_
             f128M_mul(&alpha, &dotProduct, &qtemp);
             f128M_mul(&beta, &C[j + i * ldc], &qtemp2);
             f128M_add(&qtemp, &qtemp2, &(C[j + i * ldc]));
+            nan_unify_q(&(C[j + i * ldc]));
         }
     }
 }

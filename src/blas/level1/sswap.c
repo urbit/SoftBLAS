@@ -12,8 +12,8 @@ void sswap(uint64_t N, float32_t *SX, int64_t incX, float32_t *SY, int64_t incY,
     if (incY < 0) iY = (-N + 1) * incY;
     for (uint64_t i = 0; i < N; i++) {
         stemp = SX[iX];
-        SX[iX] = SY[iY];
-        SY[iY] = stemp;
+        SX[iX] = nan_unify_s(SY[iY]);
+        SY[iY] = nan_unify_s(stemp);
         iX += incX;
         iY += incY;
     }

@@ -5,10 +5,10 @@ float16_t hnrm2(uint64_t N, const float16_t *X, uint64_t incX, const uint_fast8_
     float16_t norm = { SB_REAL16_ZERO };
     
     if (N < 1 || incX < 1) {
-        return norm;
+        return nan_unify_h(norm);
     } else if (N == 1) {
         norm = f16_abs(X[0]);
-        return norm;
+        return nan_unify_h(norm);
     } else {
         float16_t scale = { SB_REAL16_ZERO };
         float16_t ssq = { SB_REAL16_ONE };
@@ -28,6 +28,6 @@ float16_t hnrm2(uint64_t N, const float16_t *X, uint64_t incX, const uint_fast8_
 
         norm = f16_mul(scale, f16_sqrt(ssq));
 
-        return norm;
+        return nan_unify_h(norm);
     }
 }

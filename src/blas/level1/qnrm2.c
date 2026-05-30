@@ -5,9 +5,11 @@ float128_t qnrm2(uint64_t N, const float128_t *X, uint64_t incX, const uint_fast
     float128_t norm = { SB_REAL128L_ZERO, SB_REAL128U_ZERO };
     
     if (N < 1 || incX < 1) {
+        nan_unify_q(&norm);
         return norm;
     } else if (N == 1) {
         norm = f128_abs(X[0]);
+        nan_unify_q(&norm);
         return norm;
     } else {
         float128_t scale = { SB_REAL128L_ZERO, SB_REAL128U_ZERO };
@@ -39,6 +41,7 @@ float128_t qnrm2(uint64_t N, const float128_t *X, uint64_t incX, const uint_fast
         f128M_sqrt(&ssq, &QY);
         f128M_mul(&scale, &QY, &norm);
 
+        nan_unify_q(&norm);
         return norm;
     }
 }
