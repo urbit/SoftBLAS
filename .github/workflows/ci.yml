@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+jobs:
+  test:
+    name: Build and run the munit test suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # The SoftFloat submodule is declared with an SSH URL; fetch
+          # submodules manually below over HTTPS so no deploy key is needed.
+          submodules: false
+
+      - name: Fetch submodules over HTTPS
+        run: |
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
+          git submodule update --init --recursive
+
+      - name: Build SoftFloat
+        run: make -C SoftFloat/build/Linux-x86_64-GCC
+
+      - name: Build test suite
+        run: make tests
+
+      - name: Run tests
+        run: ./test_all
