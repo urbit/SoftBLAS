@@ -50,6 +50,8 @@ MunitResult test_sswap_two(const MunitParameter params[],
                            void* user_data_or_fixture);
 MunitResult test_sswap_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
+MunitResult test_sswap_zero(const MunitParameter params[],
+                            void* user_data_or_fixture);
 MunitResult test_isamax_0(const MunitParameter params[],
                           void* user_data_or_fixture);
 MunitResult test_isamax_12345(const MunitParameter params[],
@@ -225,6 +227,8 @@ MunitResult test_sgemv_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
 MunitResult test_sgemv_incx(const MunitParameter params[],
                             void* user_data_or_fixture);
+MunitResult test_sgemv_badlayout(const MunitParameter params[],
+                                 void* user_data_or_fixture);
 
 MunitResult test_dgemv_0_row(const MunitParameter params[],
                              void* user_data_or_fixture);
