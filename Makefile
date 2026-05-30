@@ -73,8 +73,12 @@ BLAS_SRCS = \
 #   $(BLAS_SRC_DIR_L1)/srotg.c
 BLAS_OBJS = $(BLAS_SRCS:.c=.o)
 
-TEST_SRC_DIR = ./tests/blas/level1
-TEST_SRCS = $(wildcard $(TEST_SRC_DIR)/*.c)
+TEST_SRC_DIR_L1 = ./tests/blas/level1
+TEST_SRC_DIR_L2 = ./tests/blas/level2
+TEST_SRC_DIR_L3 = ./tests/blas/level3
+TEST_SRCS = $(wildcard $(TEST_SRC_DIR_L1)/*.c) \
+            $(wildcard $(TEST_SRC_DIR_L2)/*.c) \
+            $(wildcard $(TEST_SRC_DIR_L3)/*.c)
 TEST_OBJS = $(TEST_SRCS:.c=.o)
 
 TEST_ALL_SRC = ./tests/test_all.c
@@ -96,7 +100,13 @@ $(TARGET): $(BLAS_OBJS)
 $(TEST_TARGET): $(TEST_OBJS) $(BLAS_OBJS) $(MUNIT_OBJ) $(TEST_ALL_OBJ)
 	$(CC) $(LDFLAGS) $^ -o $@ $(LIBS)
 
-$(TEST_OBJS): $(TEST_SRC_DIR)/%.o: $(TEST_SRC_DIR)/%.c
+$(TEST_OBJS): $(TEST_SRC_DIR_L1)/%.o: $(TEST_SRC_DIR_L1)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(TEST_OBJS): $(TEST_SRC_DIR_L2)/%.o: $(TEST_SRC_DIR_L2)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(TEST_OBJS): $(TEST_SRC_DIR_L3)/%.o: $(TEST_SRC_DIR_L3)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TEST_ALL_OBJ): $(TEST_ALL_SRC)
