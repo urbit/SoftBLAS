@@ -1,9 +1,17 @@
 #include "softblas.h"
 
-float32_t hsdot(const uint16_t N, const float16_t alpha, const float16_t *X, const uint16_t incX, const float16_t *Y, const uint16_t incY) {
-    float32_t dot = alpha;
-    for (uint64_t i = N; i; i--, X += incX, Y += incY) {
-        dot = f32_add(dot, f32_mul(f16_to_f32(*X), f16_to_f32(*Y)));
+//  hsdot: dot product of half-precision vectors accumulated in single
+//  precision, plus the single-precision bias (alpha widened from half).
+float32_t hsdot(const uint64_t N, const float16_t alpha, const float16_t *X, const int64_t incX, const float16_t *Y, const int64_t incY, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
+    float32_t dot = f16_to_f32(alpha);
+    int64_t ix = 0, iy = 0;
+    if (incX < 0) ix = (-N + 1) * incX;
+    if (incY < 0) iy = (-N + 1) * incY;
+    for (uint64_t i = 0; i < N; i++) {
+        dot = f32_add(dot, f32_mul(f16_to_f32(X[ix]), f16_to_f32(Y[iy])));
+        ix += incX;
+        iy += incY;
     }
-    return(dot);
+    return nan_unify_s(dot);
 }

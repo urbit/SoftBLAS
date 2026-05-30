@@ -36,6 +36,9 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_sdot_12345", test_sdot_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sdot_stride", test_sdot_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sdot_neg_stride", test_sdot_neg_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+
+            {"/test_sdsdot_basic", test_sdsdot_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_hsdot_basic", test_hsdot_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_snrm2_0", test_snrm2_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_snrm2_12345", test_snrm2_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_snrm2_stride", test_snrm2_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},

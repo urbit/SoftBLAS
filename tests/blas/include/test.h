@@ -471,5 +471,8 @@ MunitResult test_srotm_basic(const MunitParameter params[], void* u);
 MunitResult test_srotmg_basic(const MunitParameter params[], void* u);
 MunitResult test_srotmg_flag_neg2(const MunitParameter params[], void* u);
 MunitResult test_drotmg_basic(const MunitParameter params[], void* u);
+//  Extended-precision dot (test_sdsdot.c)
+MunitResult test_sdsdot_basic(const MunitParameter params[], void* u);
+MunitResult test_hsdot_basic(const MunitParameter params[], void* u);
 
 #endif // TEST_H
