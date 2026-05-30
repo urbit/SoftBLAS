@@ -32,6 +32,10 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR_L1)/dnrm2.c \
   $(BLAS_SRC_DIR_L1)/hnrm2.c \
   $(BLAS_SRC_DIR_L1)/qnrm2.c \
+  $(BLAS_SRC_DIR_L1)/snrm2_B.c \
+  $(BLAS_SRC_DIR_L1)/dnrm2_B.c \
+  $(BLAS_SRC_DIR_L1)/hnrm2_B.c \
+  $(BLAS_SRC_DIR_L1)/qnrm2_B.c \
   $(BLAS_SRC_DIR_L1)/sscal.c \
   $(BLAS_SRC_DIR_L1)/dscal.c \
   $(BLAS_SRC_DIR_L1)/hscal.c \
