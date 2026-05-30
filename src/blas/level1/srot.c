@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-void srot(const uint32_t N, float32_t *X, const uint32_t  incX, float32_t *Y, const uint32_t incY, const float32_t c, const float32_t s) {
+void srot(const uint32_t N, float32_t *X, const uint32_t  incX, float32_t *Y, const uint32_t incY, const float32_t c, const float32_t s, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     float32_t tmp;
 
     if (c != SB_REAL32_ONE || s != SB_REAL32_ZERO) {

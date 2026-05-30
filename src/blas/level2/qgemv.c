@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float128_t alpha, const float128_t *A, const uint64_t lda, const float128_t *X, const int64_t incX, const float128_t beta, float128_t *Y, const uint64_t incY) {
+void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float128_t alpha, const float128_t *A, const uint64_t lda, const float128_t *X, const int64_t incX, const float128_t beta, float128_t *Y, const uint64_t incY, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     const float128_t ZERO = { SB_REAL128L_ZERO, SB_REAL128U_ZERO };
 
     if (Layout != 'C' && Layout != 'c' && Layout != 'R' && Layout != 'r') {

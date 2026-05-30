@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-void drotg(float64_t *a, float64_t *b, float64_t *c, float64_t *s) {
+void drotg(float64_t *a, float64_t *b, float64_t *c, float64_t *s, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
    float64_t roe, scal, r, z, aa, ab, t0, t1;
 
    aa = f64_abs(*a);

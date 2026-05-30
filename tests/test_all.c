@@ -11,6 +11,7 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_saxpy_sum", test_saxpy_sum, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_saxpy_stride", test_saxpy_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_saxpy_neg_stride", test_saxpy_neg_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_saxpy_rounding", test_saxpy_rounding, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_scopy_all", test_scopy_all, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_scopy_stride", test_scopy_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sdot_0", test_sdot_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},

@@ -5,7 +5,7 @@ MunitResult test_scopy_all(const MunitParameter params[],
     float32_t* SX = svec((float[]){1.0f, -2.0f, 3.0f, -4.0f, 5.0f}, 5);
     float32_t* SY = svec((float[]){0.0f, 0.0f, 0.0f, 0.0f, 0.0f}, 5);
 
-    scopy(5, (float32_t*)SX, 1, SY, 1);
+    scopy(5, (float32_t*)SX, 1, SY, 1, 'n');
 
     float32_t RY[] = {
         {*(uint32_t*)&(float){1.0f}},
@@ -30,7 +30,7 @@ MunitResult test_scopy_stride(const MunitParameter params[],
     float32_t* SX = svec((float[]){1.0f, 2.0f, 1.0f, 2.0f, 1.0f, 2.0f, 1.0f, 2.0f, 1.0f}, 9);
     float32_t* SY = svec((float[]){0.0f, 0.0f, 0.0f, 0.0f, 0.0f}, 5);
 
-    scopy(5, (float32_t*)SX, 2, SY, 1);
+    scopy(5, (float32_t*)SX, 2, SY, 1, 'n');
 
     float32_t RY[] = {
         {*(uint32_t*)&(float){1.0f}},

@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-void hgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *X, const int64_t incX, const float16_t beta, float16_t *Y, const uint64_t incY) {
+void hgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t N, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *X, const int64_t incX, const float16_t beta, float16_t *Y, const uint64_t incY, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     const float16_t ZERO = { SB_REAL16_ZERO };
 
     if (Layout != 'C' && Layout != 'c' && Layout != 'R' && Layout != 'r') {

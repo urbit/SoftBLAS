@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-void qswap(uint64_t N, float128_t *QX, uint64_t incX, float128_t *QY, uint64_t incY) {
+void qswap(uint64_t N, float128_t *QX, uint64_t incX, float128_t *QY, uint64_t incY, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     float128_t qtemp;
 
     if (N == 0) return;

@@ -32,7 +32,7 @@ MunitResult test_hgemv_0_row(const MunitParameter params[],
     const uint64_t lda = N;
 
     // Call hgemv
-    hgemv(Layout, Trans, M, N, alpha, A, lda, HX, incX, beta, HY, incY);
+    hgemv(Layout, Trans, M, N, alpha, A, lda, HX, incX, beta, HY, incY, 'n');
 
     float16_t* RY = hvec((uint16_t[]){0x4500 , 0x4980 }, 2);
 
@@ -80,7 +80,7 @@ MunitResult test_hgemv_0_col(const MunitParameter params[],
     const uint64_t lda = M;
 
     // Call hgemv
-    hgemv(Layout, Trans, M, N, alpha, A, lda, HX, incX, beta, HY, incY);
+    hgemv(Layout, Trans, M, N, alpha, A, lda, HX, incX, beta, HY, incY, 'n');
 
     float16_t* RY = hvec((uint16_t[]){0x4500 , 0x4980 }, 2);
 
@@ -128,7 +128,7 @@ MunitResult test_hgemv_12345(const MunitParameter params[],
     const uint64_t lda = N;
 
     // Call hgemv
-    hgemv(Layout, Trans, M, N, alpha, A, lda, HX, incX, beta, HY, incY);
+    hgemv(Layout, Trans, M, N, alpha, A, lda, HX, incX, beta, HY, incY, 'n');
 
     float16_t* RY = hvec((uint16_t[]){0x54b8, 0x5120 , 0x5438, 0x57c0 }, 4);
 
@@ -177,7 +177,7 @@ MunitResult test_hgemv_stride(const MunitParameter params[],
     const uint64_t lda = N;
 
     // Call hgemv
-    hgemv(Layout, Trans, 4, 5, alpha, A, lda, HX, incX, beta, HY, incY);
+    hgemv(Layout, Trans, 4, 5, alpha, A, lda, HX, incX, beta, HY, incY, 'n');
 
     float16_t* RY = hvec((uint16_t[]){0x54b8, 0x0 , 0x5120 , 0x0 , 0x5438, 0x0 , 0x57c0 }, 7);
 

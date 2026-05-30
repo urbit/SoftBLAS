@@ -1,17 +1,14 @@
 #include "softblas.h"
 
-float32_t scnrm2(uint64_t N, const complex32_t *X, uint64_t incX) {
-    float32_t norm = { SB_REAL32_ZERO };
-    
-    if (N < 1 || incX < 1) {
-        return norm;
-    } else if (N == 1) {
-        norm = f32_abs(X[0]);
-        return norm;
-    } else {
-        float32_t scale = { SB_REAL32_ZERO };
-        float32_t ssq = { SB_REAL32_ONE };
-        float32_t absXI;
+float32_t scnrm2(uint64_t N, const complex32_t *CX, uint64_t incX, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
+      float32_t norm, scale, ssq, temp;
+      
+      if (N < 1 || incX < 1) {
+            norm = SB_REAL32_ZERO;
+      } else {
+            scale = SB_REAL32_ZERO;
+            ssq = SB_REAL32_ONE;
 
         for (uint64_t ix = 0; ix < 1 + (N - 1) * incX; ix += incX) {
             if (f32_ne(X[ix], (complex32_t){ SB_REAL32_ZERO })) {

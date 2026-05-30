@@ -6,7 +6,7 @@ MunitResult test_qasum_0(const MunitParameter params[],
             {.hi = SB_REAL128U_ZERO, .lo = SB_REAL128L_ZERO},
             {.hi = SB_REAL128U_ZERO, .lo = SB_REAL128L_ZERO}},
         2);
-    float128_t Q = (float128_t) qasum(2, (float128_t*)QX, 1);
+    float128_t Q = (float128_t) qasum(2, (float128_t*)QX, 1, 'n');
     float128_t R = {SB_REAL128L_ZERO, SB_REAL128U_ZERO};
 
     assert_ullong(Q.v[0], ==, R.v[0]);
@@ -27,7 +27,7 @@ MunitResult test_qasum_12345(const MunitParameter params[],
             {.hi = 0x4001400000000000, .lo = 0x0000000000000000}},
         5);
 
-    float128_t Q = (float128_t) qasum(5, (float128_t*)QX, 1);
+    float128_t Q = (float128_t) qasum(5, (float128_t*)QX, 1, 'n');
     float128_t R = {0x0000000000000000, 0x4002e00000000000};  // 15.0q
 
     assert_ullong(Q.v[0], ==, R.v[0]);
@@ -52,7 +52,7 @@ MunitResult test_qasum_stride(const MunitParameter params[],
             {.hi = 0x3fff000000000000, .lo = 0x0000000000000000}},
         9);
 
-    float128_t Q = (float128_t) qasum(5, (float128_t*)QX, 2);
+    float128_t Q = (float128_t) qasum(5, (float128_t*)QX, 2, 'n');
     float128_t R = {0x0000000000000000, 0x4001400000000000};  // 5.0q
 
     assert_ullong(Q.v[0], ==, R.v[0]);
@@ -73,7 +73,7 @@ MunitResult test_qasum_negpi(const MunitParameter params[],
             {.hi = 0xc000921fb54442d1, .lo = 0x8469898cc51701b8}},
         1);
 
-    float128_t Q = (float128_t) qasum(1, (float128_t*)QX, 1);
+    float128_t Q = (float128_t) qasum(1, (float128_t*)QX, 1, 'n');
 
     // +pi: v[0] = low word (sign-bit untouched), v[1] = high word.
     float128_t R = {0x8469898cc51701b8, 0x4000921fb54442d1};

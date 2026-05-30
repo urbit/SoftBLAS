@@ -17,7 +17,7 @@ MunitResult test_qswap_two(const MunitParameter params[],
             {.hi = 0x0000000000000000, .lo = 0x0000000000000000}},
         5);
 
-    qswap(5, QX, 1, QY, 1);
+    qswap(5, QX, 1, QY, 1, 'n');
 
     float128_t* RX = qvec((float128_pair_t[]){
             {.hi = 0x0000000000000000, .lo = 0x0000000000000000},
@@ -70,7 +70,7 @@ MunitResult test_qswap_stride(const MunitParameter params[],
             {.hi = 0x0000000000000000, .lo = 0x0000000000000000}},
         9);
 
-    qswap(5, QX, 1, QY, 2);
+    qswap(5, QX, 1, QY, 2, 'n');
 
     float128_t* RX = qvec((float128_pair_t[]){
             {.hi = 0x0000000000000000, .lo = 0x0000000000000000},

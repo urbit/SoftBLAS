@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-float32_t sdot(const uint64_t N, const float32_t *X, const int64_t incX, const float32_t *Y, const int64_t incY) {
+float32_t sdot(const uint64_t N, const float32_t *X, const int64_t incX, const float32_t *Y, const int64_t incY, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     float32_t sdot = { SB_REAL32_ZERO };
 
     int64_t iX = 0;

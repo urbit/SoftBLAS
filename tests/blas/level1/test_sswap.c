@@ -5,7 +5,7 @@ MunitResult test_sswap_two(const MunitParameter params[],
     float32_t* SX = svec((float[]){1.0f, -2.0f, 3.0f, -4.0f, 5.0f}, 5);
     float32_t* SY = svec((float[]){0.0f, 0.0f, 0.0f, 0.0f, 0.0f}, 5);
 
-    sswap(5, SX, 1, SY, 1);
+    sswap(5, SX, 1, SY, 1, 'n');
 
     float32_t* RX = svec((float[]){0.0f, 0.0f, 0.0f, 0.0f, 0.0f}, 5);
     float32_t* RY = svec((float[]){1.0f, -2.0f, 3.0f, -4.0f, 5.0f}, 5);
@@ -28,7 +28,7 @@ MunitResult test_sswap_stride(const MunitParameter params[],
     float32_t* SX = svec((float[]){1.0f, -2.0f, 3.0f, -4.0f, 5.0f}, 5);
     float32_t* SY = svec((float[]){0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}, 9);
 
-    sswap(5, SX, 1, SY, 2);
+    sswap(5, SX, 1, SY, 2, 'n');
 
     float32_t* RX = svec((float[]){0.0f, 0.0f, 0.0f, 0.0f, 0.0f}, 5);
     float32_t* RY = svec((float[]){1.0f, 0.0f, -2.0f, 0.0f, 3.0f, 0.0f, -4.0f, 0.0f, 5.0f}, 9);
@@ -54,7 +54,7 @@ MunitResult test_sswap_zero(const MunitParameter params[],
     float32_t* SX = svec((float[]){1.0f, 2.0f}, 2);
     float32_t* SY = svec((float[]){3.0f, 4.0f}, 2);
 
-    sswap(0, SX, 1, SY, 1);   // no-op: must not crash or modify the vectors
+    sswap(0, SX, 1, SY, 1, 'n');   // no-op: must not crash or modify the vectors
 
     float32_t* RX = svec((float[]){1.0f, 2.0f}, 2);
     float32_t* RY = svec((float[]){3.0f, 4.0f}, 2);

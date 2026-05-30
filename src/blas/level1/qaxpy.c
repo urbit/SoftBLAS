@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-void qaxpy(uint64_t N, float128_t QA, float128_t *QX, int64_t incX, float128_t *QY, int64_t incY) {
+void qaxpy(uint64_t N, float128_t QA, float128_t *QX, int64_t incX, float128_t *QY, int64_t incY, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     int64_t iX = 0;
     int64_t iY = 0;
     float128_t QT;

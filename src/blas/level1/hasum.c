@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-float16_t hasum(uint64_t N, const float16_t *HX, uint64_t incX) {
+float16_t hasum(uint64_t N, const float16_t *HX, uint64_t incX, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     float16_t htemp = { SB_REAL16_ZERO };
     
     for (uint64_t i = 0; i < N; i++) {

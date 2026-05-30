@@ -5,7 +5,7 @@ MunitResult test_dswap_two(const MunitParameter params[],
     float64_t* DX = dvec((double[]){1.0, -2.0, 3.0, -4.0, 5.0}, 5);
     float64_t* DY = dvec((double[]){0.0, 0.0, 0.0, 0.0, 0.0}, 5);
 
-    dswap(5, DX, 1, DY, 1);
+    dswap(5, DX, 1, DY, 1, 'n');
 
     float64_t* RX = dvec((double[]){0.0, 0.0, 0.0, 0.0, 0.0}, 5);
     float64_t* RY = dvec((double[]){1.0, -2.0, 3.0, -4.0, 5.0}, 5);
@@ -28,7 +28,7 @@ MunitResult test_dswap_stride(const MunitParameter params[],
     float64_t* DX = dvec((double[]){1.0, -2.0, 3.0, -4.0, 5.0}, 5);
     float64_t* DY = dvec((double[]){0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}, 9);
 
-    dswap(5, DX, 1, DY, 2);
+    dswap(5, DX, 1, DY, 2, 'n');
 
     float64_t* RX = dvec((double[]){0.0, 0.0, 0.0, 0.0, 0.0}, 5);
     float64_t* RY = dvec((double[]){1.0, 0.0, -2.0, 0.0, 3.0, 0.0, -4.0, 0.0, 5.0}, 9);

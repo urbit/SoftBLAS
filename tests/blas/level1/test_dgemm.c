@@ -33,7 +33,7 @@ MunitResult test_dgemm_0_row(const MunitParameter params[],
     const uint64_t ldc = P;
 
     // Call dgemm
-    dgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    dgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float64_t* R = dvec((double[]){19.0, 22.0, 43.0, 50.0}, M*P);
 
@@ -81,7 +81,7 @@ MunitResult test_dgemm_0_col(const MunitParameter params[],
     const uint64_t ldc = P;
 
     // Call dgemm
-    dgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    dgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float64_t* R = dvec((double[]){19.0, 22.0, 43.0, 50.0}, M*P);
 
@@ -131,7 +131,7 @@ MunitResult test_dgemm_3x2x1_0(const MunitParameter params[],
     const uint64_t ldc = P;
 
     // Call dgemm
-    dgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    dgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float64_t* R = dvec((double[]){ 5.0,
                                    11.0,
@@ -191,7 +191,7 @@ MunitResult test_dgemm_5x4x3(const MunitParameter params[],
     const uint64_t ldc = P;
 
     // Call dgemm
-    dgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    dgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float64_t* R = dvec((double[]){11.5,  0.5,  49.5,
                                   91.0, -2.5, 101.5,
@@ -233,7 +233,7 @@ MunitResult test_dgemm_ldb(const MunitParameter params[],
     const uint64_t ldb = 3;
     const uint64_t ldc = P;
 
-    dgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc);
+    dgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
 
     float64_t* R = dvec((double[]){19.0, 22.0, 43.0, 50.0}, M*P);
 

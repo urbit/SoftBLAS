@@ -1,6 +1,7 @@
 #include "softblas.h"
 
-void dswap(uint64_t N, float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY) {
+void dswap(uint64_t N, float64_t *DX, uint64_t incX, float64_t *DY, uint64_t incY, const uint_fast8_t rndMode) {
+    _set_rounding(rndMode);
     float64_t dtemp;
 
     if (N == 0) return;
