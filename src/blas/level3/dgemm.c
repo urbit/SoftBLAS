@@ -1,17 +1,16 @@
 #include "softblas.h"
-#include <stdio.h>
 
 void dgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc, const uint_fast8_t rndMode) {
     _set_rounding(rndMode);
     const float64_t ZERO = {SB_REAL64_ZERO};
 
     if (transA != 'N' && transA != 'n' && transA != 'T' && transA != 't') {
-        printf("Invalid transA parameter\n");
+        // Invalid transA parameter
         return;
     }
 
     if (transB != 'N' && transB != 'n' && transB != 'T' && transB != 't') {
-        printf("Invalid transB parameter\n");
+        // Invalid transB parameter
         return;
     }
 
@@ -20,7 +19,7 @@ void dgemm(const char transA, const char transB, const uint64_t M, const uint64_
             float64_t dotProduct = ZERO;
             for (uint64_t k = 0; k < N; k++) {
                 uint64_t indexA = (transA == 'N' || transA == 'n') ? k + i * lda : i + k * lda;
-                uint64_t indexB = (transB == 'N' || transB == 'n') ? j + k * ldc : k + j * ldc;
+                uint64_t indexB = (transB == 'N' || transB == 'n') ? j + k * ldb : k + j * ldb;
                 float64_t a = A[indexA];
                 float64_t b = B[indexB];
                 dotProduct = f64_add(dotProduct, f64_mul(a, b));

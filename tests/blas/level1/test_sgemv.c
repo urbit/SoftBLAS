@@ -151,15 +151,13 @@ MunitResult test_sgemv_stride(const MunitParameter params[],
     const float32_t alpha = {*(uint32_t*)&(float){2.5f}};
     const float32_t beta = {*(uint32_t*)&(float){-1.0f}};
 
-    // 5x4 matrix A (row-major order)
-    const uint64_t M = 7;     // Number of rows in A
+    // 4x5 matrix A (row-major order); only vector Y is strided (incY=2),
+    // so A is stored densely with no padding rows.
+    const uint64_t M = 4;     // Number of rows in A
     const uint64_t N = 5;     // Number of columns in A
     float32_t* A = svec((float[]){ 2.0f, -1.0f,  3.0f,  0.0f,  4.0f,
-                                   0.0f,  0.0f,  0.0f,  0.0f,  0.0f,
                                    1.0f,  0.0f,  2.0f, -1.0f,  3.0f,
-                                   0.0f,  0.0f,  0.0f,  0.0f,  0.0f,
                                    4.0f,  5.0f,  1.0f,  2.0f,  0.0f,
-                                   0.0f,  0.0f,  0.0f,  0.0f,  0.0f,
                                    3.0f,  2.0f,  4.0f,  2.0f,  5.0f},
                        M*N);
 
@@ -192,5 +190,67 @@ MunitResult test_sgemv_stride(const MunitParameter params[],
     free(SY);
     free(RY);
 
+    return MUNIT_OK;
+}
+
+//  Regression for the gemv stride bug: X is strided (incX=2) while the matrix
+//  A is dense. The old code folded incX into the A index and gave wrong results
+//  (and could read out of bounds) for any incX != 1.
+MunitResult test_sgemv_incx(const MunitParameter params[],
+                            void *user_data) {
+    const char Layout = 'R';  // Row-major
+    const char Trans = 'N';   // No transpose
+    const float32_t alpha = { SB_REAL32_ONE };
+    const float32_t beta = { SB_REAL32_ZERO };
+
+    const uint64_t M = 4;
+    const uint64_t N = 5;
+    float32_t* A = svec((float[]){ 2.0f, -1.0f,  3.0f,  0.0f,  4.0f,
+                                   1.0f,  0.0f,  2.0f, -1.0f,  3.0f,
+                                   4.0f,  5.0f,  1.0f,  2.0f,  0.0f,
+                                   3.0f,  2.0f,  4.0f,  2.0f,  5.0f},
+                        M*N);
+
+    // X = [1 2 3 4 5] stored with stride 2 (padding entries are never read).
+    float32_t* SX = svec((float[]){1.0f, 99.0f, 2.0f, 99.0f, 3.0f,
+                                   99.0f, 4.0f, 99.0f, 5.0f}, 9);
+    float32_t* SY = svec((float[]){0.0f, 0.0f, 0.0f, 0.0f}, 4);
+
+    const int64_t incX = 2;
+    const int64_t incY = 1;
+    const uint64_t lda = N;
+
+    sgemv(Layout, Trans, M, N, alpha, A, lda, SX, incX, beta, SY, incY, 'n');
+
+    float32_t* RY = svec((float[]){29.0f, 18.0f, 25.0f, 52.0f}, 4);
+
+    for (uint64_t i = 0; i < 4; i++) {
+        assert_ulong(SY[i].v, ==, RY[i].v);
+    }
+
+    free(A); free(SX); free(SY); free(RY);
+    return MUNIT_OK;
+}
+
+//  Regression: an invalid Layout must return without modifying Y or killing
+//  the process (these routines previously called exit(-1) on bad arguments).
+MunitResult test_sgemv_badlayout(const MunitParameter params[],
+                                 void *user_data) {
+    const float32_t alpha = { SB_REAL32_ONE };
+    const float32_t beta = { SB_REAL32_ONE };
+    float32_t* A = svec((float[]){1.0f, 2.0f, 3.0f, 4.0f}, 4);
+    float32_t* X = svec((float[]){1.0f, 2.0f}, 2);
+    float32_t* Y = svec((float[]){5.0f, 6.0f}, 2);
+
+    //  'X' is not a valid Layout; the routine must return immediately.
+    sgemv('X', 'N', 2, 2, alpha, A, 2, X, 1, beta, Y, 1, 'n');
+
+    //  Y must be untouched.
+    float32_t* RY = svec((float[]){5.0f, 6.0f}, 2);
+    for (uint64_t i = 0; i < 2; i++) {
+        assert_ulong(Y[i].v, ==, RY[i].v);
+    }
+
+    free(A); free(X); free(Y); free(RY);
     return MUNIT_OK;
 }

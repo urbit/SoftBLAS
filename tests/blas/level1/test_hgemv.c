@@ -151,15 +151,13 @@ MunitResult test_hgemv_stride(const MunitParameter params[],
     const float16_t alpha = {*(uint16_t*)&(uint16_t){0x4100}};
     const float16_t beta = {*(uint16_t*)&(uint16_t){0xbc00 }};
 
-    // 5x4 matrix A (row-major order)
-    const uint64_t M = 7;     // Number of rows in A
+    // 4x5 matrix A (row-major order); only vector Y is strided (incY=2),
+    // so A is stored densely with no padding rows.
+    const uint64_t M = 4;     // Number of rows in A
     const uint64_t N = 5;     // Number of columns in A
     float16_t* A = hvec((uint16_t[]){ 0x4000 , 0xbc00 ,  0x4200 ,  0x0 ,  0x4400 ,
-                                   0x0 ,  0x0 ,  0x0 ,  0x0 ,  0x0 ,
                                    0x3c00 ,  0x0 ,  0x4000 , 0xbc00 ,  0x4200 ,
-                                   0x0 ,  0x0 ,  0x0 ,  0x0 ,  0x0 ,
                                    0x4400 ,  0x4500 ,  0x3c00 ,  0x4000 ,  0x0 ,
-                                   0x0 ,  0x0 ,  0x0 ,  0x0 ,  0x0 ,
                                    0x4200 ,  0x4000 ,  0x4400 ,  0x4000 ,  0x4500 },
                        M*N);
 

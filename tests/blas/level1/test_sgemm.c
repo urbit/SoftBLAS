@@ -210,3 +210,41 @@ MunitResult test_sgemm_5x4x3(const MunitParameter params[],
 
     return MUNIT_OK;
 }
+
+//  Regression for the ldb/ldc bug: B is stored with padding so ldb != ldc.
+//  Under the old code (which indexed B with ldc) this produced wrong results.
+MunitResult test_sgemm_ldb(const MunitParameter params[],
+                           void *user_data) {
+    const char transA = 'N';
+    const char transB = 'N';
+    const float32_t alpha = { SB_REAL32_ONE };
+    const float32_t beta = { SB_REAL32_ZERO };
+
+    const uint64_t M = 2;
+    const uint64_t N = 2;
+    const uint64_t P = 2;
+
+    // 2x2 A: [1 2; 3 4]
+    float32_t* A = svec((float[]){1.0f, 2.0f, 3.0f, 4.0f}, M*N);
+
+    // Logical 2x2 B = [5 6; 7 8], but stored with a padding column (ldb = 3).
+    float32_t* B = svec((float[]){5.0f, 6.0f, 99.0f,
+                                  7.0f, 8.0f, 99.0f}, N*3);
+
+    float32_t* C = svec((float[]){0.0f, 0.0f, 0.0f, 0.0f}, M*P);
+
+    const uint64_t lda = N;   // 2
+    const uint64_t ldb = 3;   // padded, deliberately != ldc
+    const uint64_t ldc = P;   // 2
+
+    sgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
+
+    float32_t* R = svec((float[]){19.0f, 22.0f, 43.0f, 50.0f}, M*P);
+
+    for (uint64_t i = 0; i < 4; i++) {
+        assert_ulong(C[i].v, ==, R[i].v);
+    }
+
+    free(A); free(B); free(C); free(R);
+    return MUNIT_OK;
+}

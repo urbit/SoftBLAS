@@ -1,6 +1,5 @@
-SoftFloat/
-munit/
 ctest/
+.vscode/
 # Urbit
 zod/
 bud/
@@ -60,4 +59,3 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-

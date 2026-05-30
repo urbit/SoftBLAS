@@ -211,3 +211,36 @@ MunitResult test_dgemm_5x4x3(const MunitParameter params[],
 
     return MUNIT_OK;
 }
+
+//  Regression for the ldb/ldc bug: B is stored with padding so ldb != ldc.
+MunitResult test_dgemm_ldb(const MunitParameter params[],
+                           void *user_data) {
+    const char transA = 'N';
+    const char transB = 'N';
+    const float64_t alpha = { SB_REAL64_ONE };
+    const float64_t beta = { SB_REAL64_ZERO };
+
+    const uint64_t M = 2;
+    const uint64_t N = 2;
+    const uint64_t P = 2;
+
+    float64_t* A = dvec((double[]){1.0, 2.0, 3.0, 4.0}, M*N);
+    float64_t* B = dvec((double[]){5.0, 6.0, 99.0,
+                                   7.0, 8.0, 99.0}, N*3);
+    float64_t* C = dvec((double[]){0.0, 0.0, 0.0, 0.0}, M*P);
+
+    const uint64_t lda = N;
+    const uint64_t ldb = 3;
+    const uint64_t ldc = P;
+
+    dgemm(transA, transB, M, N, P, alpha, A, lda, B, ldb, beta, C, ldc, 'n');
+
+    float64_t* R = dvec((double[]){19.0, 22.0, 43.0, 50.0}, M*P);
+
+    for (uint64_t i = 0; i < 4; i++) {
+        assert_ullong(C[i].v, ==, R[i].v);
+    }
+
+    free(A); free(B); free(C); free(R);
+    return MUNIT_OK;
+}
