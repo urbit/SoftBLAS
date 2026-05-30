@@ -116,3 +116,52 @@ MunitResult test_saxpy_rounding(const MunitParameter params[],
     free(SXu); free(SYu); free(SXn); free(SYn);
     return MUNIT_OK;
 }
+
+//  Exercises all five rounding modes on a positive and a negative half-ULP
+//  tie (1.0 +/- 2^-24 via saxpy). Distinguishes every mode: round-up vs
+//  round-down differ by sign, round-toward-zero vs round-down differ on the
+//  negative operand, and 'a' (ties-away) rounds outward on both ties while
+//  'n' (ties-even) stays (1.0 has an even mantissa).
+MunitResult test_saxpy_rounding_modes(const MunitParameter params[],
+                                      void* user_data_or_fixture) {
+    const float32_t SA = { SB_REAL32_ONE };
+    const float eps = 5.9604644775390625e-8f;   // 2^-24
+    const uint32_t ONE = 0x3f800000, UP = 0x3f800001;          // 1.0, next-above
+    const uint32_t NEG_ONE = 0xbf800000, NEG_UP = 0xbf800001;  // -1.0, next-below
+
+    //  positive tie: 1.0 + 2^-24
+    struct { char m; uint32_t want; } pos[] = {
+        {'n', ONE}, {'z', ONE}, {'d', ONE}, {'u', UP}, {'a', UP} };
+    for (uint64_t k = 0; k < 5; k++) {
+        float32_t* X = svec((float[]){eps}, 1);
+        float32_t* Y = svec((float[]){1.0f}, 1);
+        saxpy(1, SA, X, 1, Y, 1, pos[k].m);
+        assert_ulong(Y[0].v, ==, pos[k].want);
+        free(X); free(Y);
+    }
+
+    //  negative tie: -1.0 - 2^-24
+    struct { char m; uint32_t want; } neg[] = {
+        {'n', NEG_ONE}, {'z', NEG_ONE}, {'u', NEG_ONE}, {'d', NEG_UP}, {'a', NEG_UP} };
+    for (uint64_t k = 0; k < 5; k++) {
+        float32_t* X = svec((float[]){-eps}, 1);
+        float32_t* Y = svec((float[]){-1.0f}, 1);
+        saxpy(1, SA, X, 1, Y, 1, neg[k].m);
+        assert_ulong(Y[0].v, ==, neg[k].want);
+        free(X); free(Y);
+    }
+    return MUNIT_OK;
+}
+
+//  N==0 is a no-op: Y is left untouched.
+MunitResult test_saxpy_zero(const MunitParameter params[],
+                            void* user_data_or_fixture) {
+    const float32_t SA = { SB_REAL32_ONE };
+    float32_t* SX = svec((float[]){42.0f}, 1);
+    float32_t* SY = svec((float[]){7.0f}, 1);
+    saxpy(0, SA, SX, 1, SY, 1, 'n');
+    float32_t* RY = svec((float[]){7.0f}, 1);
+    assert_ulong(SY[0].v, ==, RY[0].v);
+    free(SX); free(SY); free(RY);
+    return MUNIT_OK;
+}

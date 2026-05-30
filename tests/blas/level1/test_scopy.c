@@ -49,3 +49,15 @@ MunitResult test_scopy_stride(const MunitParameter params[],
 
     return MUNIT_OK;
 }
+
+//  N==0 is a no-op: Y is left untouched.
+MunitResult test_scopy_zero(const MunitParameter params[],
+                            void* user_data_or_fixture) {
+    float32_t* SX = svec((float[]){42.0f}, 1);
+    float32_t* SY = svec((float[]){7.0f}, 1);
+    scopy(0, SX, 1, SY, 1, 'n');
+    float32_t* RY = svec((float[]){7.0f}, 1);
+    assert_ulong(SY[0].v, ==, RY[0].v);
+    free(SX); free(SY); free(RY);
+    return MUNIT_OK;
+}

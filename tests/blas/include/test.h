@@ -24,6 +24,22 @@ MunitResult test_saxpy_neg_stride(const MunitParameter params[],
                                   void* user_data_or_fixture);
 MunitResult test_saxpy_rounding(const MunitParameter params[],
                                 void* user_data_or_fixture);
+MunitResult test_sasum_zero(const MunitParameter params[],
+                 void* user_data_or_fixture);
+MunitResult test_sdot_zero(const MunitParameter params[],
+                 void* user_data_or_fixture);
+MunitResult test_snrm2_zero(const MunitParameter params[],
+                 void* user_data_or_fixture);
+MunitResult test_saxpy_zero(const MunitParameter params[],
+                 void* user_data_or_fixture);
+MunitResult test_scopy_zero(const MunitParameter params[],
+                 void* user_data_or_fixture);
+MunitResult test_sscal_zero(const MunitParameter params[],
+                 void* user_data_or_fixture);
+MunitResult test_saxpy_rounding_modes(const MunitParameter params[],
+                 void* user_data_or_fixture);
+MunitResult test_qasum_layout(const MunitParameter params[],
+                 void* user_data_or_fixture);
 MunitResult test_scopy_all(const MunitParameter params[],
                            void* user_data_or_fixture);
 MunitResult test_scopy_stride(const MunitParameter params[],
