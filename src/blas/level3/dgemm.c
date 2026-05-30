@@ -18,7 +18,7 @@ void dgemm(const char transA, const char transB, const uint64_t M, const uint64_
             float64_t dotProduct = ZERO;
             for (uint64_t k = 0; k < N; k++) {
                 uint64_t indexA = (transA == 'N' || transA == 'n') ? k + i * lda : i + k * lda;
-                uint64_t indexB = (transB == 'N' || transB == 'n') ? j + k * ldc : k + j * ldc;
+                uint64_t indexB = (transB == 'N' || transB == 'n') ? j + k * ldb : k + j * ldb;
                 float64_t a = A[indexA];
                 float64_t b = B[indexB];
                 dotProduct = f64_add(dotProduct, f64_mul(a, b));

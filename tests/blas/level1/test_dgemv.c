@@ -151,15 +151,13 @@ MunitResult test_dgemv_stride(const MunitParameter params[],
     const float64_t alpha = {*(uint64_t*)&(double){2.5f}};
     const float64_t beta = {*(uint64_t*)&(double){-1.0}};
 
-    // 5x4 matrix A (row-major order)
-    const uint64_t M = 7;     // Number of rows in A
+    // 4x5 matrix A (row-major order); only vector Y is strided (incY=2),
+    // so A is stored densely with no padding rows.
+    const uint64_t M = 4;     // Number of rows in A
     const uint64_t N = 5;     // Number of columns in A
     float64_t* A = dvec((double[]){ 2.0, -1.0,  3.0,  0.0,  4.0,
-                                   0.0,  0.0,  0.0,  0.0,  0.0,
                                    1.0,  0.0,  2.0, -1.0,  3.0,
-                                   0.0,  0.0,  0.0,  0.0,  0.0,
                                    4.0,  5.0,  1.0,  2.0,  0.0,
-                                   0.0,  0.0,  0.0,  0.0,  0.0,
                                    3.0,  2.0,  4.0,  2.0,  5.0},
                        M*N);
 
@@ -192,5 +190,41 @@ MunitResult test_dgemv_stride(const MunitParameter params[],
     free(DY);
     free(RY);
 
+    return MUNIT_OK;
+}
+
+//  Regression for the gemv stride bug: X is strided (incX=2), A is dense.
+MunitResult test_dgemv_incx(const MunitParameter params[],
+                            void *user_data) {
+    const char Layout = 'R';
+    const char Trans = 'N';
+    const float64_t alpha = { SB_REAL64_ONE };
+    const float64_t beta = { SB_REAL64_ZERO };
+
+    const uint64_t M = 4;
+    const uint64_t N = 5;
+    float64_t* A = dvec((double[]){ 2.0, -1.0,  3.0,  0.0,  4.0,
+                                    1.0,  0.0,  2.0, -1.0,  3.0,
+                                    4.0,  5.0,  1.0,  2.0,  0.0,
+                                    3.0,  2.0,  4.0,  2.0,  5.0},
+                        M*N);
+
+    float64_t* DX = dvec((double[]){1.0, 99.0, 2.0, 99.0, 3.0,
+                                    99.0, 4.0, 99.0, 5.0}, 9);
+    float64_t* DY = dvec((double[]){0.0, 0.0, 0.0, 0.0}, 4);
+
+    const int64_t incX = 2;
+    const int64_t incY = 1;
+    const uint64_t lda = N;
+
+    dgemv(Layout, Trans, M, N, alpha, A, lda, DX, incX, beta, DY, incY);
+
+    float64_t* RY = dvec((double[]){29.0, 18.0, 25.0, 52.0}, 4);
+
+    for (uint64_t i = 0; i < 4; i++) {
+        assert_ullong(DY[i].v, ==, RY[i].v);
+    }
+
+    free(A); free(DX); free(DY); free(RY);
     return MUNIT_OK;
 }

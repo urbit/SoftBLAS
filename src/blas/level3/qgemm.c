@@ -20,7 +20,7 @@ void qgemm(const char transA, const char transB, const uint64_t M, const uint64_
             float128_t dotProduct = ZERO;
             for (uint64_t k = 0; k < N; k++) {
                 uint64_t indexA = (transA == 'N' || transA == 'n') ? k + i * lda : i + k * lda;
-                uint64_t indexB = (transB == 'N' || transB == 'n') ? j + k * ldc : k + j * ldc;
+                uint64_t indexB = (transB == 'N' || transB == 'n') ? j + k * ldb : k + j * ldb;
                 float128_t a = A[indexA];
                 float128_t b = B[indexB];
                 f128M_mul(&a, &b, &qtemp);

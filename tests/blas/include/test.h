@@ -167,6 +167,8 @@ MunitResult test_qasum_12345(const MunitParameter params[],
                        void* user_data_or_fixture);
 MunitResult test_qasum_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
+MunitResult test_qasum_negpi(const MunitParameter params[],
+                             void* user_data_or_fixture);
 MunitResult test_qaxpy_0(const MunitParameter params[],
                          void* user_data_or_fixture);
 MunitResult test_qaxpy_sum(const MunitParameter params[],
@@ -221,6 +223,8 @@ MunitResult test_sgemv_12345(const MunitParameter params[],
                              void* user_data_or_fixture);
 MunitResult test_sgemv_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
+MunitResult test_sgemv_incx(const MunitParameter params[],
+                            void* user_data_or_fixture);
 
 MunitResult test_dgemv_0_row(const MunitParameter params[],
                              void* user_data_or_fixture);
@@ -230,6 +234,8 @@ MunitResult test_dgemv_12345(const MunitParameter params[],
                              void* user_data_or_fixture);
 MunitResult test_dgemv_stride(const MunitParameter params[],
                               void* user_data_or_fixture);
+MunitResult test_dgemv_incx(const MunitParameter params[],
+                            void* user_data_or_fixture);
 
 MunitResult test_hgemv_0_row(const MunitParameter params[],
                              void* user_data_or_fixture);
@@ -258,6 +264,8 @@ MunitResult test_sgemm_3x2x1_0(const MunitParameter params[],
                                void* user_data_or_fixture);
 MunitResult test_sgemm_5x4x3(const MunitParameter params[],
                              void* user_data_or_fixture);
+MunitResult test_sgemm_ldb(const MunitParameter params[],
+                           void* user_data_or_fixture);
 
 MunitResult test_dgemm_0_row(const MunitParameter params[],
                              void* user_data_or_fixture);
@@ -267,6 +275,8 @@ MunitResult test_dgemm_3x2x1_0(const MunitParameter params[],
                                void* user_data_or_fixture);
 MunitResult test_dgemm_5x4x3(const MunitParameter params[],
                              void* user_data_or_fixture);
+MunitResult test_dgemm_ldb(const MunitParameter params[],
+                           void* user_data_or_fixture);
 
 MunitResult test_hgemm_0_row(const MunitParameter params[],
                              void* user_data_or_fixture);

@@ -62,3 +62,25 @@ MunitResult test_qasum_stride(const MunitParameter params[],
 
     return MUNIT_OK;
 }
+
+//  Regression for the f128_abs bug. -pi has bit 63 set in its low word; the
+//  old macro cleared that bit (it masked both 64-bit words instead of only the
+//  sign word v[1]), silently corrupting the mantissa. |-pi| must equal +pi.
+MunitResult test_qasum_negpi(const MunitParameter params[],
+                             void* user_data_or_fixture) {
+    // -pi in IEEE binary128: sign bit set in the high word; low word unchanged.
+    float128_t* QX = qvec((float128_pair_t[]){
+            {.hi = 0xc000921fb54442d1, .lo = 0x8469898cc51701b8}},
+        1);
+
+    float128_t Q = (float128_t) qasum(1, (float128_t*)QX, 1);
+
+    // +pi: v[0] = low word (sign-bit untouched), v[1] = high word.
+    float128_t R = {0x8469898cc51701b8, 0x4000921fb54442d1};
+
+    assert_ullong(Q.v[0], ==, R.v[0]);
+    assert_ullong(Q.v[1], ==, R.v[1]);
+
+    free(QX);
+    return MUNIT_OK;
+}
