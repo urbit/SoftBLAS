@@ -119,11 +119,12 @@ typedef struct {
 #define f16_abs(x) (float16_t){ ( (uint16_t)(x.v) & 0x7fff ) }
 #define f32_abs(x) (float32_t){ ( (uint32_t)(x.v) & 0x7fffffff ) }
 #define f64_abs(x) (float64_t){ ( (uint64_t)(x.v) & 0x7fffffffffffffff ) }
-#define f128_abs(x) (float128_t){ ( (uint64_t)(x.v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x.v[1]) & 0x7fffffffffffffff ) }
+//  NB: float128_t stores the sign bit only in the high word v[1]; v[0] is mantissa.
+#define f128_abs(x) (float128_t){ ( (uint64_t)(x.v[0]) ), ( (uint64_t)(x.v[1]) & 0x7fffffffffffffff ) }
 #define f16M_abs(x) (float16_t*){ ( (uint16_t)(x->v) & 0x7fff ) }
 #define f32M_abs(x) (float32_t*){ ( (uint32_t)(x->v) & 0x7fffffff ) }
 #define f64M_abs(x) (float64_t*){ ( (uint64_t)(x->v) & 0x7fffffffffffffff ) }
-#define f128M_abs(x) (float128_t*){ ( (uint64_t)(x->v[0]) & 0x7fffffffffffffff ), ( (uint64_t)(x->v[1]) & 0x7fffffffffffffff ) }
+#define f128M_abs(x) (float128_t*){ ( (uint64_t)(x->v[0]) ), ( (uint64_t)(x->v[1]) & 0x7fffffffffffffff ) }
 
 #define MAX(x, y) ( (x) > (y) ? (x) : (y) )
 #define f16_max(x, y) ( f16_gt( (x) , (y) ) ? (x) : (y) )

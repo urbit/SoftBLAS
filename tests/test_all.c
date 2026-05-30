@@ -85,6 +85,7 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_qasum_0", test_qasum_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qasum_12345", test_qasum_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qasum_stride", test_qasum_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_qasum_negpi", test_qasum_negpi, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qaxpy_0", test_qaxpy_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qaxpy_sum", test_qaxpy_sum, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_qaxpy_stride", test_qaxpy_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -112,11 +113,13 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_sgemv_0_col", test_sgemv_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sgemv_12345", test_sgemv_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sgemv_stride", test_sgemv_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sgemv_incx", test_sgemv_incx, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
             {"/test_dgemv_0_row", test_dgemv_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dgemv_0_col", test_dgemv_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dgemv_12345", test_dgemv_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dgemv_stride", test_dgemv_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_dgemv_incx", test_dgemv_incx, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
             {"/test_hgemv_0_row", test_hgemv_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_hgemv_0_col", test_hgemv_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -132,11 +135,13 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
             {"/test_sgemm_0_col", test_sgemm_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sgemm_3x2x1_0", test_sgemm_3x2x1_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_sgemm_5x4x3", test_sgemm_5x4x3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_sgemm_ldb", test_sgemm_ldb, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
             {"/test_dgemm_0_row", test_dgemm_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dgemm_0_col", test_dgemm_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dgemm_3x2x1_0", test_dgemm_3x2x1_0, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_dgemm_5x4x3", test_dgemm_5x4x3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+            {"/test_dgemm_ldb", test_dgemm_ldb, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
 
             {"/test_hgemm_0_row", test_hgemm_0_row, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
             {"/test_hgemm_0_col", test_hgemm_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},

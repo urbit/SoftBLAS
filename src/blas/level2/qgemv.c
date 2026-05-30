@@ -22,7 +22,7 @@ void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
             for (uint64_t i = 0; i < M; ++i) {
                 float128_t dotProduct = ZERO;
                 for (uint64_t j = 0; j < N; ++j) {
-                    f128M_mul(&(A[(i*incY) + (j*incX) * lda]), &(X[j * incX]), &qtemp);
+                    f128M_mul(&(A[i + j * lda]), &(X[j * incX]), &qtemp);
                     f128M_add(&dotProduct, &qtemp, &dotProduct);
                 }
                 f128M_mul(&alpha, &dotProduct, &qtemp);
@@ -36,7 +36,7 @@ void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
             for (uint64_t i = 0; i < N; ++i) {
                 float128_t dotProduct = ZERO;
                 for (uint64_t j = 0; j < M; ++j) {
-                    f128M_mul(&(A[(j*incX) + (i*incY) * lda]), &(X[j * incX]), &qtemp);
+                    f128M_mul(&(A[j + i * lda]), &(X[j * incX]), &qtemp);
                     f128M_add(&dotProduct, &qtemp, &dotProduct);
                 }
                 f128M_mul(&alpha, &dotProduct, &qtemp);
@@ -53,7 +53,7 @@ void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
             for (uint64_t i = 0; i < M; ++i) {
                 float128_t dotProduct = ZERO;
                 for (uint64_t j = 0; j < N; ++j) {
-                    f128M_mul(&(A[(i*incY) * lda + (j*incX)]), &(X[j * incX]), &qtemp);
+                    f128M_mul(&(A[i * lda + j]), &(X[j * incX]), &qtemp);
                     f128M_add(&dotProduct, &qtemp, &dotProduct);
                 }
                 f128M_mul(&alpha, &dotProduct, &qtemp);
@@ -67,7 +67,7 @@ void qgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
             for (uint64_t i = 0; i < N; ++i) {
                 float128_t dotProduct = ZERO;
                 for (uint64_t j = 0; j < M; ++j) {
-                    f128M_mul(&(A[(j*incX) * lda + (i*incY)]), &(X[j * incX]), &qtemp);
+                    f128M_mul(&(A[j * lda + i]), &(X[j * incX]), &qtemp);
                     f128M_add(&dotProduct, &qtemp, &dotProduct);
                 }
                 f128M_mul(&alpha, &dotProduct, &qtemp);

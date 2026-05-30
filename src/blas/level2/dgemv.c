@@ -20,7 +20,7 @@ void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
             for (uint64_t i = 0; i < M; ++i) {
                 float64_t dotProduct = ZERO;
                 for (uint64_t j = 0; j < N; ++j) {
-                    dotProduct = f64_add(dotProduct, f64_mul(A[(i*incY) + (j*incX) * lda], X[j * incX]));
+                    dotProduct = f64_add(dotProduct, f64_mul(A[i + j * lda], X[j * incX]));
                 }
                 Y[i * incY] = f64_add(f64_mul(alpha, dotProduct), f64_mul(beta, Y[i * incY]));
             }
@@ -29,7 +29,7 @@ void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
             for (uint64_t i = 0; i < N; ++i) {
                 float64_t dotProduct = ZERO;
                 for (uint64_t j = 0; j < M; ++j) {
-                    dotProduct = f64_add(dotProduct, f64_mul(A[(j*incX) + (i*incY) * lda], X[j * incX]));
+                    dotProduct = f64_add(dotProduct, f64_mul(A[j + i * lda], X[j * incX]));
                 }
                 Y[i * incY] = f64_add(f64_mul(alpha, dotProduct), f64_mul(beta, Y[i * incY]));
             }
@@ -41,7 +41,7 @@ void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
             for (uint64_t i = 0; i < M; ++i) {
                 float64_t dotProduct = ZERO;
                 for (uint64_t j = 0; j < N; ++j) {
-                    dotProduct = f64_add(dotProduct, f64_mul(A[(i*incY) * lda + (j*incX)], X[j * incX]));
+                    dotProduct = f64_add(dotProduct, f64_mul(A[i * lda + j], X[j * incX]));
                 }
                 Y[i * incY] = f64_add(f64_mul(alpha, dotProduct), f64_mul(beta, Y[i * incY]));
             }
@@ -50,7 +50,7 @@ void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
             for (uint64_t i = 0; i < N; ++i) {
                 float64_t dotProduct = ZERO;
                 for (uint64_t j = 0; j < M; ++j) {
-                    dotProduct = f64_add(dotProduct, f64_mul(A[(j*incX) * lda + (i*incY)], X[j * incX]));
+                    dotProduct = f64_add(dotProduct, f64_mul(A[j * lda + i], X[j * incX]));
                 }
                 Y[i * incY] = f64_add(f64_mul(alpha, dotProduct), f64_mul(beta, Y[i * incY]));
             }
