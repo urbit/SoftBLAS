@@ -55,3 +55,15 @@ MunitResult test_sscal_stride(const MunitParameter params[],
 
     return MUNIT_OK;
 }
+
+//  N==0 is a no-op: X is left untouched.
+MunitResult test_sscal_zero(const MunitParameter params[],
+                            void* user_data_or_fixture) {
+    const float32_t SA = { SB_REAL32_ZERO };
+    float32_t* SX = svec((float[]){42.0f}, 1);
+    sscal(0, SA, SX, 1, 'n');
+    float32_t* RX = svec((float[]){42.0f}, 1);
+    assert_ulong(SX[0].v, ==, RX[0].v);
+    free(SX); free(RX);
+    return MUNIT_OK;
+}

@@ -84,3 +84,19 @@ MunitResult test_qasum_negpi(const MunitParameter params[],
     free(QX);
     return MUNIT_OK;
 }
+
+//  Pins the float128_t storage layout every q* test depends on: the sign and
+//  exponent live in the high word v[1]; v[0] is the low mantissa word.
+MunitResult test_qasum_layout(const MunitParameter params[],
+                              void* user_data_or_fixture) {
+    //  1.0 in IEEE binary128, written {lo, hi}.
+    float128_t one = {{ 0x0000000000000000, 0x3fff000000000000 }};
+    assert_ullong(one.v[0], ==, 0x0000000000000000);  // low mantissa word
+    assert_ullong(one.v[1], ==, 0x3fff000000000000);  // sign+exponent word
+
+    //  A routine that reads the pair agrees: |1.0| == 1.0, bit-for-bit.
+    float128_t r = qasum(1, &one, 1, 'n');
+    assert_ullong(r.v[1], ==, 0x3fff000000000000);
+    assert_ullong(r.v[0], ==, 0x0000000000000000);
+    return MUNIT_OK;
+}

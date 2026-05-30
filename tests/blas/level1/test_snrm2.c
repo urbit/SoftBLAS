@@ -41,3 +41,13 @@ MunitResult test_snrm2_stride(const MunitParameter params[],
 
     return MUNIT_OK;
 }
+
+//  N==0 is a no-op: returns 0.
+MunitResult test_snrm2_zero(const MunitParameter params[],
+                            void* user_data_or_fixture) {
+    float32_t* SX = svec((float[]){42.0f}, 1);
+    float32_t r = snrm2(0, SX, 1, 'n');
+    assert_ulong(r.v, ==, (uint32_t)SB_REAL32_ZERO);
+    free(SX);
+    return MUNIT_OK;
+}
