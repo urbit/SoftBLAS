@@ -11,9 +11,9 @@ void qaxpy(uint64_t N, float128_t QA, float128_t *QX, int64_t incX, float128_t *
         f128M_mul(&QA, &(QX[iX]), &QT);
         f128M_add(&(QY[iY]), &QT, &QT);
         QY[iY] = QT;
+        nan_unify_q(&(QY[iY]));
         iX += incX;
         iY += incY;
     }
 
-    nan_unify_q(QY);
 }

@@ -89,7 +89,7 @@ MunitResult test_qswap_stride(const MunitParameter params[],
             {.hi = 0xc001000000000000, .lo = 0x0000000000000000},
             {.hi = 0x0000000000000000, .lo = 0x0000000000000000},
             {.hi = 0x4001400000000000, .lo = 0x0000000000000000}},
-        5);
+        9);
 
     for (uint64_t i = 0; i < 5; i++) {
         assert_ullong(QX[i].v[0], ==, RX[i].v[0]);

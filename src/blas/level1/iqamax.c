@@ -2,7 +2,7 @@
 
 uint64_t iqamax(uint64_t N, const float128_t *QX, uint64_t incX) {
     if (N < 1 || incX <= 0) return 0;
-    if (N == 1) return 1;
+    if (N == 1) return 0;
 
     uint64_t iqamax = 0;
     uint64_t ix = 0;

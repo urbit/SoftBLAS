@@ -12,10 +12,11 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 
 - 1.0.0 (commit `7d05697aea5363dcf5f877a9c8b464e9c352d3d4`).  Basic suite of `REAL`-valued operations suitable for use with half, single, double, and quadruple precision floating-point numbers.
 - 1.1.0 (commit `f94acbcfd26cebd8e135ad9e8c7caa156fcc4ac9`).  Errors changed to `exit(-1)` instead of `return`.
+- Unreleased.  Invalid-argument errors `return` (no-op) again instead of `exit(-1)`, so the library never terminates the host process.  The rounding mode is now a per-call argument (see below) rather than a global.
 
 ### Planned work
 
-- [ ] Add rounding-mode propagation to function signatures (in progress).
+- [x] Add rounding-mode propagation to function signatures.
 - [ ] Complete complex-valued functions (in progress).
 - [ ] Use a linter.
 - [ ] Add (kelvin) versioning, at least on interface.
@@ -31,13 +32,13 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 |  64 | `d` |  `float64_t` |  64 | `z` |  `complex64_t` |
 | 128 | `q` | `float128_t` | 128 | `v` | `complex128_t` |
 
-The rounding mode should be set via the global variable `softblas_roundingMode` (a `char` `typedef`), defined in `softblas.h`.  Valid values are:
+Every routine takes a trailing rounding-mode argument `rndMode` (a `uint_fast8_t` holding one of the `char` codes below).  It is applied via `_set_rounding` at routine entry, before any arithmetic.  An unrecognized code leaves SoftFloat's current mode unchanged.  Valid values are:
 
-- `'n'` - round to nearest (even)
+- `'n'` - round to nearest, ties to even
 - `'z'` - round towards zero
-- `'u'` - round up
-- `'d'` - round down
-- `'a'` - round away from zero
+- `'u'` - round up (towards +∞)
+- `'d'` - round down (towards −∞)
+- `'a'` - round to nearest, ties away from zero
 
 Per Wikipedia:
 
