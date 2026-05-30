@@ -466,4 +466,10 @@ MunitResult test_srotg_basic(const MunitParameter params[], void* u);
 MunitResult test_srotg_345(const MunitParameter params[], void* u);
 MunitResult test_srotm_basic(const MunitParameter params[], void* u);
 
+
+//  Modified Givens setup (test_rotmg.c)
+MunitResult test_srotmg_basic(const MunitParameter params[], void* u);
+MunitResult test_srotmg_flag_neg2(const MunitParameter params[], void* u);
+MunitResult test_drotmg_basic(const MunitParameter params[], void* u);
+
 #endif // TEST_H

@@ -57,6 +57,9 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR_L1)/srotm.c \
   $(BLAS_SRC_DIR_L1)/drotm.c \
   $(BLAS_SRC_DIR_L1)/hrotm.c \
+  $(BLAS_SRC_DIR_L1)/srotmg.c \
+  $(BLAS_SRC_DIR_L1)/drotmg.c \
+  $(BLAS_SRC_DIR_L1)/hrotmg.c \
   $(BLAS_SRC_DIR_L2)/sgemv.c \
   $(BLAS_SRC_DIR_L2)/dgemv.c \
   $(BLAS_SRC_DIR_L2)/hgemv.c \
