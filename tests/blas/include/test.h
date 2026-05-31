@@ -444,6 +444,23 @@ MunitResult test_sgemv_nan(const MunitParameter params[], void* u);
 MunitResult test_sgemm_nan(const MunitParameter params[], void* u);
 MunitResult test_daxpy_nan(const MunitParameter params[], void* u);
 MunitResult test_haxpy_nan(const MunitParameter params[], void* u);
+//  C1 expansion: Inf arithmetic + asum/nrm2_B + d/h/q reductions
+MunitResult test_saxpy_inf_minus_inf(const MunitParameter params[], void* u);
+MunitResult test_sscal_zero_times_inf(const MunitParameter params[], void* u);
+MunitResult test_sasum_nan(const MunitParameter params[], void* u);
+MunitResult test_dasum_nan(const MunitParameter params[], void* u);
+MunitResult test_hasum_nan(const MunitParameter params[], void* u);
+MunitResult test_qasum_nan(const MunitParameter params[], void* u);
+MunitResult test_snrm2_B_nan(const MunitParameter params[], void* u);
+MunitResult test_ddot_nan(const MunitParameter params[], void* u);
+MunitResult test_dnrm2_nan(const MunitParameter params[], void* u);
+MunitResult test_dscal_nan(const MunitParameter params[], void* u);
+MunitResult test_hdot_nan(const MunitParameter params[], void* u);
+MunitResult test_hnrm2_nan(const MunitParameter params[], void* u);
+MunitResult test_hscal_nan(const MunitParameter params[], void* u);
+MunitResult test_qnrm2_nan(const MunitParameter params[], void* u);
+MunitResult test_qdot_nan(const MunitParameter params[], void* u);
+MunitResult test_qscal_nan(const MunitParameter params[], void* u);
 
 //  Transpose & padding coverage (C4/C5)
 MunitResult test_sgemv_trans(const MunitParameter params[], void* u);
