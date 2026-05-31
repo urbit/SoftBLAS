@@ -41,10 +41,13 @@ Severity: 🔴 critical (memory-unsafe / silently wrong) · 🟠 high · 🟡 me
   variants are correct. Slated to **retire the classic versions** once Lagoon
   rolls to `_B` (see the rndMode-enum / nrm2 rollover work). Until then the bug
   rides in the soon-to-be-removed code.
-- ⚪ macOS/arm64 only: the bundled SoftFloat's directional-rounding inexact path
-  SIGBUSes (reproduces with pure `softfloat.h`, no SoftBLAS code). Not a SoftBLAS
-  bug; Linux x86-64 CI is green. File upstream against the SoftFloat Darwin port.
-  Blocks `test_saxpy_rounding{,_modes}` on Apple Silicon only.
+- ✅ macOS/arm64 directional-rounding SIGBUS — **fixed.** Was a Darwin SoftFloat
+  *build-config* bug, not the algorithms: the generated `platform.h` (from the
+  generic `template-FAST_INT64`) defined `THREAD_LOCAL _Thread_local`, so every
+  write to `softfloat_exceptionFlags` on the inexact path routed through macOS's
+  dyld TLV machinery and BUS-faulted. `tools/build_softfloat_darwin.sh` now uses
+  the GCC `platform.h` (plain-global state + GCC builtins). macOS CI is green
+  (202/202) and now a required check.
 
 ---
 

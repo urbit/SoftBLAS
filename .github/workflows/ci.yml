@@ -37,12 +37,6 @@ jobs:
   test-macos:
     name: macOS — build and run the munit test suite
     runs-on: macos-latest
-    # Provisional: a local Apple clang 21 build SIGBUSes in SoftFloat's
-    # directional-rounding path (reproduces with pure softfloat.h, no SoftBLAS),
-    # but that toolchain is bleeding-edge and unverified on the CI runner's
-    # stable Xcode clang. Run non-blocking until a green run confirms macOS;
-    # then remove continue-on-error to make it a required check.
-    continue-on-error: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4

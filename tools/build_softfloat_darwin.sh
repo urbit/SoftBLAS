@@ -29,9 +29,19 @@ echo "Generating $DEST from $TEMPLATE ..."
 rm -rf "$DEST"
 cp -R "$TEMPLATE" "$DEST"
 
-#  Strip the leading '==> ' edit-markers to activate the template lines.
+#  Strip the leading '==> ' edit-markers to activate the template Makefile.
 #  BSD sed (macOS) requires an explicit empty suffix for -i.
-sed -i '' 's/^==> //' "$DEST/Makefile" "$DEST/platform.h"
+sed -i '' 's/^==> //' "$DEST/Makefile"
+
+#  Use the GCC/clang platform.h, NOT the bare generic template one. The generic
+#  template defines `THREAD_LOCAL _Thread_local`, which makes SoftFloat's state
+#  (softfloat_roundingMode/exceptionFlags/...) genuinely thread-local; on macOS
+#  every access then routes through dyld's TLV machinery and BUS-faults in the
+#  directional-rounding inexact path. The Linux-x86_64-GCC config leaves
+#  THREAD_LOCAL empty (plain globals) and enables the GCC builtins
+#  (SOFTFLOAT_BUILTIN_CLZ, SOFTFLOAT_INTRINSIC_INT128, opts-GCC.h); Apple/LLVM
+#  clang is GCC-compatible, so this header is correct for arm64 macOS too.
+cp "$SF_BUILD/Linux-x86_64-GCC/platform.h" "$DEST/platform.h"
 
 make -C "$DEST"
 echo "Built $DEST/softfloat.a"
