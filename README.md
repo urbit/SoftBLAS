@@ -4,15 +4,15 @@ A BLAS/LAPACK implementation using [Berkeley SoftFloat](http://www.jhauser.us/ar
 
 ![](./img/logo.jpg)
 
-Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value. For relevant extra-reading on floating point arithmetic and information about how SoftBLAS is useful to Urbit, check out [~lagrev-nocfep's USTJ Volume 1 article.](https://urbitsystems.tech/article/v01-i01/the-desert-of-the-reals-floating-point-arithmetic-on-deterministic-systems). If you're interested in finding out more / contributing, join the Numerics Tlon group: `~mopfel-winrux/numeric-computation-and-machine-learning`.
+**Status ~2026.5.31:  `REAL`-valued operations are “complete” (BLAS is a pseudo-standard).  Complex operations have been added at Level 1.**
 
-**Status ~2024.5.24:  `REAL`-valued operations are “complete” (BLAS is a pseudo-standard).**
+Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value. For relevant extra-reading on floating point arithmetic and information about how SoftBLAS is useful to Urbit, check out [~lagrev-nocfep's USTJ Volume 1 article.](https://urbitsystems.tech/article/v01-i01/the-desert-of-the-reals-floating-point-arithmetic-on-deterministic-systems). If you're interested in finding out more / contributing, join the Numerics Tlon group: `~mopfel-winrux/numeric-computation-and-machine-learning`.
 
 ##  Releases
 
 - 1.0.0 (commit `7d05697aea5363dcf5f877a9c8b464e9c352d3d4`).  Basic suite of `REAL`-valued operations suitable for use with half, single, double, and quadruple precision floating-point numbers.
 - 1.1.0 (commit `f94acbcfd26cebd8e135ad9e8c7caa156fcc4ac9`).  Errors changed to `exit(-1)` instead of `return`.
-- Unreleased.  Invalid-argument errors `return` (no-op) again instead of `exit(-1)`, so the library never terminates the host process.  The rounding mode is now a per-call argument (see below) rather than a global.
+- 1.2.0 (commit `499cd761f6bfa72b421d6c6189df0e632451729a`).  Various fixes:  memory leaks, etc.  Invalid-argument errors `return` (no-op) again instead of `exit(-1)`, so the library never terminates the host process.  The rounding mode is now a per-call argument (see below) rather than a global.
 
 ### Planned work
 
