@@ -469,6 +469,10 @@ MunitResult test_sgemm_transA(const MunitParameter params[], void* u);
 MunitResult test_sgemm_transB(const MunitParameter params[], void* u);
 MunitResult test_hgemm_ldb(const MunitParameter params[], void* u);
 MunitResult test_qgemm_ldb(const MunitParameter params[], void* u);
+//  Rounding-mode coverage (C6): all five modes through a 2nd/3rd routine.
+MunitResult test_sdot_rounding_modes(const MunitParameter params[], void* u);
+MunitResult test_ddot_rounding_modes(const MunitParameter params[], void* u);
+MunitResult test_sgemv_rounding_modes(const MunitParameter params[], void* u);
 
 //  Complex Level-1 (test_complex.c)
 MunitResult test_caxpy_basic(const MunitParameter params[], void* u);

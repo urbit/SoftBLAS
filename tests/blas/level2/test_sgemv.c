@@ -283,3 +283,33 @@ MunitResult test_sgemv_padlda(const MunitParameter params[], void *user_data) {
     free(A); free(X); free(Y); free(RY);
     return MUNIT_OK;
 }
+
+//  C6: all five rounding modes through the gemv dot path. A 1x2 A=[1, 2^-24]
+//  times x=[1, 1] gives 1 + 2^-24, an exact tie; the negative row distinguishes
+//  z/d/u/a. (alpha=1, beta=0, so the tie rounding is the result.)
+MunitResult test_sgemv_rounding_modes(const MunitParameter params[], void *u) {
+    const float32_t alpha = { SB_REAL32_ONE }, beta = { SB_REAL32_ZERO };
+    const uint32_t ONE = 0x3f800000u, UP = 0x3f800001u,
+                   NEG_ONE = 0xbf800000u, NEG_UP = 0xbf800001u;
+    struct { char m; uint32_t want; } pos[] = {
+        {'n', ONE}, {'z', ONE}, {'d', ONE}, {'u', UP}, {'a', UP} };
+    for (uint64_t k = 0; k < 5; k++) {
+        float32_t* A = svec((float[]){ 1.0f, 0x1p-24f }, 2);
+        float32_t* X = svec((float[]){ 1.0f, 1.0f }, 2);
+        float32_t* Y = svec((float[]){ 0.0f }, 1);
+        sgemv('R', 'N', 1, 2, alpha, A, 2, X, 1, beta, Y, 1, pos[k].m);
+        assert_ulong(Y[0].v, ==, pos[k].want);
+        free(A); free(X); free(Y);
+    }
+    struct { char m; uint32_t want; } neg[] = {
+        {'n', NEG_ONE}, {'z', NEG_ONE}, {'u', NEG_ONE}, {'d', NEG_UP}, {'a', NEG_UP} };
+    for (uint64_t k = 0; k < 5; k++) {
+        float32_t* A = svec((float[]){ -1.0f, -0x1p-24f }, 2);
+        float32_t* X = svec((float[]){ 1.0f, 1.0f }, 2);
+        float32_t* Y = svec((float[]){ 0.0f }, 1);
+        sgemv('R', 'N', 1, 2, alpha, A, 2, X, 1, beta, Y, 1, neg[k].m);
+        assert_ulong(Y[0].v, ==, neg[k].want);
+        free(A); free(X); free(Y);
+    }
+    return MUNIT_OK;
+}
