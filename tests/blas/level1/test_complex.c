@@ -134,3 +134,23 @@ MunitResult test_ccopy_negstride(const MunitParameter params[], void* u) {
     free(CX); free(CY);
     return MUNIT_OK;
 }
+
+//  B5: the complex asum/nrm2 reductions (all four precisions) must reject a
+//  stride where (N-1)*incX overflows uint64_t, returning canonical 0 instead of
+//  reading off the (single-element) buffer. ASan-clean.
+MunitResult test_complex_huge_stride(const MunitParameter params[], void* u) {
+    const uint64_t H = 0x1000000000ull;  // 2^36; (H-1)*H wraps uint64_t
+    complex32_t  c1[1] = {{{ 0x3f800000u }, { 0 }}};
+    complex16_t  i1[1] = {{{ 0x3c00 }, { 0 }}};
+    complex64_t  z1[1] = {{{ 0x3ff0000000000000ull }, { 0 }}};
+    complex128_t v1[1] = {{{{ 0, 0x3fff000000000000ull }}, {{ 0, 0 }}}};
+    assert_ulong(scasum(H, c1, H, 'n').v, ==, 0x0u);
+    assert_ulong(scnrm2(H, c1, H, 'n').v, ==, 0x0u);
+    assert_ushort(hiasum(H, i1, H, 'n').v, ==, 0x0);
+    assert_ushort(hinrm2(H, i1, H, 'n').v, ==, 0x0);
+    assert_ullong(dzasum(H, z1, H, 'n').v, ==, 0x0ull);
+    assert_ullong(dznrm2(H, z1, H, 'n').v, ==, 0x0ull);
+    assert_ullong(qvasum(H, v1, H, 'n').v[1], ==, 0x0ull);
+    assert_ullong(qvnrm2(H, v1, H, 'n').v[1], ==, 0x0ull);
+    return MUNIT_OK;
+}

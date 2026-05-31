@@ -5,7 +5,7 @@ float16_t hiasum(uint64_t N, const complex16_t *CX, int64_t incX, const uint_fas
     _set_rounding(rndMode);
     float16_t stemp = { SB_REAL16_ZERO };
 
-    if (incX < 1) {
+    if (incX < 1 || SB_STRIDE_OVERFLOWS(N, incX)) {
         return nan_unify_h(stemp);
     }
     for (uint64_t i = 0; i < N; i++) {

@@ -72,3 +72,30 @@ MunitResult test_izamax_basic(const MunitParameter params[], void* u) {
     assert_ulong(izamax(3, CX, 1, 'n'), ==, 1u);
     return MUNIT_OK;
 }
+//  NaN in either component canonicalizes both to DOUBNAN (nan_unify_z).
+MunitResult test_zaxpy_nan(const MunitParameter params[], void* u) {
+    const complex64_t CA = {{ 0x3ff0000000000000ull }, { 0 }};        // 1
+    complex64_t CX[1] = {{{ 0x7ff0000000000001ull }, { 0 }}};        // NaN(non-canon) + 0i
+    complex64_t CY[1] = {{{ 0 }, { 0 }}};
+    zaxpy(1, CA, CX, 1, CY, 1, 'n');
+    assert_ullong(CY[0].real.v, ==, (uint64_t)DOUBNAN);
+    assert_ullong(CY[0].imag.v, ==, (uint64_t)DOUBNAN);
+    return MUNIT_OK;
+}
+MunitResult test_zaxpy_negstride(const MunitParameter params[], void* u) {
+    const complex64_t CA = {{ 0x3ff0000000000000ull }, { 0 }};        // 1
+    complex64_t CX[3] = {{{ 0x3ff0000000000000ull }, { 0 }}, {{ 0x4000000000000000ull }, { 0 }}, {{ 0x4008000000000000ull }, { 0 }}};  // 1,2,3
+    complex64_t CY[3] = {{{ 0 }, { 0 }}, {{ 0 }, { 0 }}, {{ 0 }, { 0 }}};
+    zaxpy(3, CA, CX, -1, CY, 1, 'n');
+    assert_ullong(CY[0].real.v, ==, 0x4008000000000000ull);          // 3
+    assert_ullong(CY[2].real.v, ==, 0x3ff0000000000000ull);          // 1
+    return MUNIT_OK;
+}
+MunitResult test_zcopy_negstride(const MunitParameter params[], void* u) {
+    complex64_t CX[3] = {{{ 0x3ff0000000000000ull }, { 0 }}, {{ 0x4000000000000000ull }, { 0 }}, {{ 0x4008000000000000ull }, { 0 }}};  // 1,2,3
+    complex64_t CY[3] = {{{ 0 }, { 0 }}, {{ 0 }, { 0 }}, {{ 0 }, { 0 }}};
+    zcopy(3, CX, -1, CY, 1, 'n');
+    assert_ullong(CY[0].real.v, ==, 0x4008000000000000ull);          // 3
+    assert_ullong(CY[2].real.v, ==, 0x3ff0000000000000ull);          // 1
+    return MUNIT_OK;
+}

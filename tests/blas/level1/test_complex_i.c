@@ -69,3 +69,31 @@ MunitResult test_iiamax_basic(const MunitParameter params[], void* u) {
     assert_ulong(iiamax(3, CX, 1, 'n'), ==, 1u);
     return MUNIT_OK;
 }
+//  NaN in either component canonicalizes both to HALFNAN (nan_unify_i).
+MunitResult test_iaxpy_nan(const MunitParameter params[], void* u) {
+    const complex16_t CA = {{ 0x3c00 }, { 0 }};               // 1
+    complex16_t CX[1] = {{{ 0x7e01 }, { 0 }}};               // NaN(non-canon) + 0i
+    complex16_t CY[1] = {{{ 0 }, { 0 }}};
+    iaxpy(1, CA, CX, 1, CY, 1, 'n');
+    assert_ushort(CY[0].real.v, ==, (uint16_t)HALFNAN);
+    assert_ushort(CY[0].imag.v, ==, (uint16_t)HALFNAN);
+    return MUNIT_OK;
+}
+//  Negative stride reverses the indexed vector (offset start (-N+1)*incX).
+MunitResult test_iaxpy_negstride(const MunitParameter params[], void* u) {
+    const complex16_t CA = {{ 0x3c00 }, { 0 }};               // 1
+    complex16_t CX[3] = {{{ 0x3c00 }, { 0 }}, {{ 0x4000 }, { 0 }}, {{ 0x4200 }, { 0 }}};  // 1,2,3
+    complex16_t CY[3] = {{{ 0 }, { 0 }}, {{ 0 }, { 0 }}, {{ 0 }, { 0 }}};
+    iaxpy(3, CA, CX, -1, CY, 1, 'n');                         // CY += reverse(CX)
+    assert_ushort(CY[0].real.v, ==, 0x4200);                 // 3
+    assert_ushort(CY[2].real.v, ==, 0x3c00);                 // 1
+    return MUNIT_OK;
+}
+MunitResult test_icopy_negstride(const MunitParameter params[], void* u) {
+    complex16_t CX[3] = {{{ 0x3c00 }, { 0 }}, {{ 0x4000 }, { 0 }}, {{ 0x4200 }, { 0 }}};  // 1,2,3
+    complex16_t CY[3] = {{{ 0 }, { 0 }}, {{ 0 }, { 0 }}, {{ 0 }, { 0 }}};
+    icopy(3, CX, -1, CY, 1, 'n');                            // CY = reverse(CX)
+    assert_ushort(CY[0].real.v, ==, 0x4200);                 // 3
+    assert_ushort(CY[2].real.v, ==, 0x3c00);                 // 1
+    return MUNIT_OK;
+}

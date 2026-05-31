@@ -82,3 +82,30 @@ MunitResult test_ivamax_basic(const MunitParameter params[], void* u) {
     assert_ulong(ivamax(3, CX, 1, 'n'), ==, 1u);
     return MUNIT_OK;
 }
+//  NaN in either component canonicalizes both to QUADNAN (nan_unify_v).
+MunitResult test_vaxpy_nan(const MunitParameter params[], void* u) {
+    const complex128_t CA = { QH(ONE_HI), QH(0x0ull) };               // 1
+    complex128_t CX[1] = {{ QH(0x7fff000000000001ull), QH(0x0ull) }}; // NaN(non-canon) + 0i
+    complex128_t CY[1] = {{ QH(0x0ull), QH(0x0ull) }};
+    vaxpy(1, CA, CX, 1, CY, 1, 'n');
+    assert_ullong(CY[0].real.v[1], ==, (uint64_t)QUADNAN);
+    assert_ullong(CY[0].imag.v[1], ==, (uint64_t)QUADNAN);
+    return MUNIT_OK;
+}
+MunitResult test_vaxpy_negstride(const MunitParameter params[], void* u) {
+    const complex128_t CA = { QH(ONE_HI), QH(0x0ull) };               // 1
+    complex128_t CX[3] = {{ QH(ONE_HI), QH(0x0ull) }, { QH(TWO_HI), QH(0x0ull) }, { QH(THREE_HI), QH(0x0ull) }};  // 1,2,3
+    complex128_t CY[3] = {{ QH(0x0ull), QH(0x0ull) }, { QH(0x0ull), QH(0x0ull) }, { QH(0x0ull), QH(0x0ull) }};
+    vaxpy(3, CA, CX, -1, CY, 1, 'n');
+    assert_ullong(CY[0].real.v[1], ==, THREE_HI);                    // 3
+    assert_ullong(CY[2].real.v[1], ==, ONE_HI);                      // 1
+    return MUNIT_OK;
+}
+MunitResult test_vcopy_negstride(const MunitParameter params[], void* u) {
+    complex128_t CX[3] = {{ QH(ONE_HI), QH(0x0ull) }, { QH(TWO_HI), QH(0x0ull) }, { QH(THREE_HI), QH(0x0ull) }};  // 1,2,3
+    complex128_t CY[3] = {{ QH(0x0ull), QH(0x0ull) }, { QH(0x0ull), QH(0x0ull) }, { QH(0x0ull), QH(0x0ull) }};
+    vcopy(3, CX, -1, CY, 1, 'n');
+    assert_ullong(CY[0].real.v[1], ==, THREE_HI);                    // 3
+    assert_ullong(CY[2].real.v[1], ==, ONE_HI);                      // 1
+    return MUNIT_OK;
+}

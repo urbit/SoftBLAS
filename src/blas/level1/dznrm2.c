@@ -7,7 +7,7 @@ float64_t dznrm2(uint64_t N, const complex64_t *CX, uint64_t incX, const uint_fa
     _set_rounding(rndMode);
     const float64_t ZERO = { SB_REAL64_ZERO };
 
-    if (N < 1 || incX < 1) {
+    if (N < 1 || incX < 1 || SB_STRIDE_OVERFLOWS(N, incX)) {
         return ZERO;
     }
 
