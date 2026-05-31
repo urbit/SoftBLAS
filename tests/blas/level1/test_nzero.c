@@ -57,3 +57,16 @@ MunitResult test_qn0(const MunitParameter params[], void* u) {
     assert_ullong(X[0].v[1], ==, 0x4000000000000000ull);
     return MUNIT_OK;
 }
+
+//  B5: a stride large enough that (N-1)*incX overflows uint64_t must be
+//  rejected up front (return canonical 0) rather than walking off the buffer.
+//  The single-element buffer would be a wild OOB read without the guard; this
+//  test passing under ASan confirms nothing is dereferenced.
+MunitResult test_nrm2_huge_stride(const MunitParameter params[], void* u) {
+    float32_t X[1] = {{ 0x3f800000u }};   // 1 element only
+    const uint64_t huge = 0x1000000000ull;  // 2^36; (huge-1)*huge ~ 2^72 wraps
+    assert_ulong(snrm2(huge, X, huge, 'n').v,       ==, (uint32_t)SB_REAL32_ZERO);
+    assert_ulong(snrm2_B(huge, X, huge, 'n').v,     ==, (uint32_t)SB_REAL32_ZERO);
+    assert_ulong(sasum(huge, X, huge, 'n').v,       ==, (uint32_t)SB_REAL32_ZERO);
+    return MUNIT_OK;
+}

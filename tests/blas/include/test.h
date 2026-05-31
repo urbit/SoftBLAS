@@ -530,6 +530,14 @@ MunitResult test_qrotm_basic(const MunitParameter params[], void* u);
 MunitResult test_cscal_basic(const MunitParameter params[], void* u);
 MunitResult test_cswap_basic(const MunitParameter params[], void* u);
 MunitResult test_icamax_basic(const MunitParameter params[], void* u);
+//  Complex coverage (C8): NaN canonicalization + negative stride.
+MunitResult test_caxpy_nan(const MunitParameter params[], void* u);
+MunitResult test_cscal_nan(const MunitParameter params[], void* u);
+MunitResult test_ccopy_nan(const MunitParameter params[], void* u);
+MunitResult test_caxpy_negstride(const MunitParameter params[], void* u);
+MunitResult test_ccopy_negstride(const MunitParameter params[], void* u);
+//  Huge-stride overflow guard (B5).
+MunitResult test_nrm2_huge_stride(const MunitParameter params[], void* u);
 
 
 //  Fast (Anderson) nrm2 (test_nrm2_B.c)

@@ -14,7 +14,7 @@ float16_t hnrm2_B(uint64_t N, const float16_t *X, uint64_t incX, const uint_fast
     const float16_t ssml = { 0x6c00 };  // 2^12
     const float16_t sbig = { 0x0800 };  // 2^-13
 
-    if (N < 1 || incX < 1) return nan_unify_h(ZERO);
+    if (N < 1 || incX < 1 || SB_STRIDE_OVERFLOWS(N, incX)) return nan_unify_h(ZERO);
 
     float16_t asml = ZERO, amed = ZERO, abig = ZERO;
     int notbig = 1;

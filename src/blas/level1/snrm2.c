@@ -4,7 +4,7 @@ float32_t snrm2(uint64_t N, const float32_t *X, uint64_t incX, const uint_fast8_
     _set_rounding(rndMode);
     float32_t norm = { SB_REAL32_ZERO };
     
-    if (N < 1 || incX < 1) {
+    if (N < 1 || incX < 1 || SB_STRIDE_OVERFLOWS(N, incX)) {
         return nan_unify_s(norm);
     } else if (N == 1) {
         norm = f32_abs(X[0]);

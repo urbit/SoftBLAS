@@ -23,6 +23,21 @@ typedef struct {
    float128_t imag;
 } complex128_t;
 
+//  float128_t LAYOUT INVARIANT (H1)
+//  --------------------------------
+//  `float128_t` (from SoftFloat) is `struct { uint64_t v[2]; }` storing an IEEE
+//  binary128 little-endian: v[0] is the low 64 mantissa bits, v[1] is the high
+//  word holding the sign bit, the 15-bit exponent, and the top mantissa bits.
+//  Every `q*` routine and test depends on this: a quad literal is written
+//  `{{ lo, hi }}`, `f128_abs` clears only `v[1]`'s sign bit, and the canonical
+//  quad NaN lives in v[1] (QUADNAN) with v[0] == 0. Do not reorder the words.
+
+//  True when addressing N elements at (unsigned) stride incX would overflow the
+//  uint64_t index `(N-1)*incX`, walking off the buffer. Used by the strided
+//  reductions to reject pathological strides instead of reading out of bounds.
+#define SB_STRIDE_OVERFLOWS(N, incX) \
+    ( (N) > 1 && (uint64_t)(incX) > UINT64_MAX / ((uint64_t)(N) - 1) )
+
 //  CONSTANTS
 
 #define SB_REAL16_ONE 0x3c00

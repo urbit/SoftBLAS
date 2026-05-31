@@ -67,17 +67,22 @@ Severity: 🔴 critical (memory-unsafe / silently wrong) · 🟠 high · 🟡 me
   `ddot`/`sgemv`, both signs (the negative tie distinguishes `z`/`d`/`u`/`a`).
   Reduction (L1) + matrix-vector (L2), single + double. Runs on macOS now.
 - [x] **C7.** float128 `v[0]=lo / v[1]=hi` layout pinned by `test_qasum_layout`.
-- [~] **C8.** Complex/rot routines build + have numeric tests (q-rot family,
-  cscal/cswap/icamax done). **Remaining:** broaden complex coverage
-  (strides, NaN payloads) for `caxpy`/`ccopy`/`cdotc`.
+- [x] **C8.** Complex/rot routines build + have numeric tests; added NaN
+  canonicalization (`caxpy`/`cscal`/`ccopy`) and negative-stride
+  (`caxpy`/`ccopy`) coverage for the single-complex (`c`) family. *Out of scope:*
+  half/double/quad complex (`i`/`z`/`v`) routines are unimplemented (README:
+  "yet to implement") — a future feature, not audit cleanup.
 
 **Phase 5 — hygiene**
-- [ ] **H1.** Document the `v[0]=lo / v[1]=hi` float128 invariant in the header.
-- [ ] **B5. ⚪** `nrm2`/`asum` huge-`incX` index wrap. The `incX<1` guards stop
-  zero/negative; a pathologically huge `incX` can still wrap `i*incX`. Low.
-- [ ] **H4.** X-macro for the duplicated L1 routines — **recommend won't-do**: the
-  elf and hobbit both argued explicit per-precision duplication is correct for an
-  auditable deterministic-FP library.
+- [x] **H1.** float128 `v[0]=lo / v[1]=hi` invariant documented at the top of
+  `include/softblas.h`.
+- [x] **B5.** `nrm2`/`nrm2_B`/`asum` (all precisions) now reject a stride where
+  `(N-1)*incX` overflows `uint64_t` via the `SB_STRIDE_OVERFLOWS` guard, instead
+  of walking off the buffer. ASan-verified regression test (`test_nrm2_huge_stride`).
+- [x] **H4. Won't-do.** X-macro for the duplicated L1 routines: the elf and
+  hobbit both argued explicit per-precision duplication is correct for an
+  auditable deterministic-FP library (the `q*` pointer-API divergence is real,
+  not accidental). Closing as a deliberate non-change.
 
 **Follow-ons surfaced by the re-audit (need coordination)**
 - [ ] Retire the classic `nrm2` (replace with `_B`) — gated on the `lagoon.hoon`

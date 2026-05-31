@@ -14,7 +14,7 @@ float32_t snrm2_B(uint64_t N, const float32_t *X, uint64_t incX, const uint_fast
     const float32_t ssml = { 0x65000000 };  // 2^75
     const float32_t sbig = { 0x19800000 };  // 2^-76
 
-    if (N < 1 || incX < 1) return nan_unify_s(ZERO);
+    if (N < 1 || incX < 1 || SB_STRIDE_OVERFLOWS(N, incX)) return nan_unify_s(ZERO);
 
     float32_t asml = ZERO, amed = ZERO, abig = ZERO;
     int notbig = 1;
