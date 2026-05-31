@@ -17,7 +17,7 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 ### Planned work
 
 - [x] Add rounding-mode propagation to function signatures.
-- [ ] Complete complex-valued functions (in progress).
+- [x] Complete complex-valued functions (`c`/`i`/`z`/`v` Level-1 routines).
 - [ ] Use a linter.
 - [ ] Add (kelvin) versioning, at least on interface.
 
@@ -31,6 +31,14 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 |  32 | `s` |  `float32_t` |  32 | `c` |  `complex32_t` |
 |  64 | `d` |  `float64_t` |  64 | `z` |  `complex64_t` |
 | 128 | `q` | `float128_t` | 128 | `v` | `complex128_t` |
+
+A few complex routines carry a compound prefix, mirroring the BLAS 32/64-bit
+names and extending the same pattern to 16/128 bits: the real-result reductions
+combine the real-output prefix with the complex-input prefix — `asum` →
+`hiasum`/`scasum`/`dzasum`/`qvasum`, `nrm2` → `hinrm2`/`scnrm2`/`dznrm2`/`qvnrm2`
+— `iamax` prepends the index `i` → `iiamax`/`icamax`/`izamax`/`ivamax`, and `rot`
+uses complex-then-real → `ihrot`/`csrot`/`zdrot`/`vqrot`. (The 64-bit forms
+`dzasum`/`dznrm2`/`izamax`/`zdrot` are exactly the standard BLAS names.)
 
 Every routine takes a trailing rounding-mode argument `rndMode` (a `uint_fast8_t` holding one of the `char` codes below).  It is applied via `_set_rounding` at routine entry, before any arithmetic.  An unrecognized code leaves SoftFloat's current mode unchanged.  Valid values are:
 
@@ -90,31 +98,24 @@ Per Wikipedia:
 ### Level 1 Functions
 
 - `asum` - ||**x**||₁, where **x** is a vector (sum of absolute values)
-    - Implemented: `h`, `s`, `d`, `q`, `c`
-    - Yet to implement: `i`, `z`, `v`
+    - Implemented: `h`, `s`, `d`, `q`, `c`, `i`, `z`, `v`
 - `axpy` - **y** ← a**x** + **y**, where a is a scalar and **x**, **y** are vectors
-    - Implemented: `h`, `s`, `d`, `q`, `c`
-    - Yet to implement: `i`, `z`, `v`
+    - Implemented: `h`, `s`, `d`, `q`, `c`, `i`, `z`, `v`
 - `copy` - **y** ← **x**, where **x**, **y** are vectors
-    - Implemented: `h`, `s`, `d`, `q`, `c`
-    - Yet to implement: `i`, `z`, `v`
+    - Implemented: `h`, `s`, `d`, `q`, `c`, `i`, `z`, `v`
 - `dot` - **x**•**y**, where **x**, **y** are vectors
     - Implemented: `h`, `s`, `d`, `q`
     - Yet to implement: `i`, `c`, `z`, `v`
 - `dotc` - <**x**, **y**> = **x***•**y**, where **x**, **y** are complex vectors (complex inner product)
-    - Implemented: `c`
-    - Yet to implement: `i`, `z`, `v`
+    - Implemented: `c`, `i`, `z`, `v`
 - `nrm2` - ||**x**||₂, where **x** is a vector (Pythagorean distance)
-    - Implemented: `h`, `s`, `d`, `q`, `c`
-    - Yet to implement: `i`, `z`, `v`
+    - Implemented: `h`, `s`, `d`, `q`, `c`, `i`, `z`, `v`
 - `scal` - **x** ← a**x**, where a is a scalar and **x** is a vector
-    - Implemented: `h`, `s`, `d`, `q`, `c`
-    - Yet to implement: `i`, `z`, `v`
+    - Implemented: `h`, `s`, `d`, `q`, `c`, `i`, `z`, `v`
 - `swap` - (**x**, **y**) ← (**y**, **x**), where **x** and **y** are vectors
-    - Implemented: `h`, `s`, `d`, `q`, `c`
-    - Yet to implement: `i`, `z`, `v`
+    - Implemented: `h`, `s`, `d`, `q`, `c`, `i`, `z`, `v`
 - `iamax` - argmaxᵢ(|**x**ᵢ|), where **x** is a real vector (index of max absolute value)
-    - Implemented: `h`, `s`, `d`, `q`, `c`
+    - Implemented: `h`, `s`, `d`, `q`, `c`, `i`, `z`, `v`
 
 #### Extras:
 - `sdot` - a+**x**•**y**, where a is a scalar and **x**, **y** are vectors and intermediate calculations use a higher precision float
@@ -122,7 +123,7 @@ Per Wikipedia:
 - `nrm2_B` - ||**x**||₂ via E. Anderson's safe-scaling algorithm (ACM TOMS Alg. 978, 2017); avoids intermediate overflow/underflow without the classic per-element division. Faster and more accurate on the overflow/underflow tails than `nrm2`.
     - Implemented: `h`, `s`, `d`, `q`
 - `rot` - (**x**ᵢ // **y**ᵢ) ← R(**x**ᵢ // **y**ᵢ), where R is a rotation matrix (c s // -s c), and **x**, **y** are vectors
-    - Implemented: `h`, `s`, `d`, `q`, `c`
+    - Implemented: `h`, `s`, `d`, `q`, `c`, `i`, `z`, `v`
 - `rotg` - Finds the Rotation matrix R (among other things), such that R(x // y) = (r // 0), where x, y are scalars
     - Implemented: `h`, `s`, `d`, `q`
 - `rotm` - Performs a modified Givens rotation

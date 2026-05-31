@@ -262,6 +262,39 @@ void cscal(uint64_t N, complex32_t CA, complex32_t *CX, uint64_t incX, const uin
 void cswap(uint64_t N, complex32_t *CX, uint64_t incX, complex32_t *CY, uint64_t incY, const uint_fast8_t rndMode);
 uint64_t icamax(uint64_t N, const complex32_t *CX, uint64_t incX, const uint_fast8_t rndMode);
 
+//    Complex half-precision (i)
+void iaxpy(uint64_t N, complex16_t CA, complex16_t *CX, int64_t incX, complex16_t *CY, int64_t incY, const uint_fast8_t rndMode);
+void icopy(uint64_t N, const complex16_t *CX, int64_t incX, complex16_t *CY, int64_t incY, const uint_fast8_t rndMode);
+complex16_t idotc(uint64_t N, const complex16_t *CX, int64_t incX, const complex16_t *CY, int64_t incY, const uint_fast8_t rndMode);
+void iscal(uint64_t N, complex16_t CA, complex16_t *CX, uint64_t incX, const uint_fast8_t rndMode);
+void iswap(uint64_t N, complex16_t *CX, uint64_t incX, complex16_t *CY, uint64_t incY, const uint_fast8_t rndMode);
+void ihrot(const uint64_t N, complex16_t *CX, const int64_t incX, complex16_t *CY, const int64_t incY, const complex16_t c, const complex16_t s, const uint_fast8_t rndMode);
+float16_t hiasum(uint64_t N, const complex16_t *CX, int64_t incX, const uint_fast8_t rndMode);
+float16_t hinrm2(uint64_t N, const complex16_t *CX, uint64_t incX, const uint_fast8_t rndMode);
+uint64_t iiamax(uint64_t N, const complex16_t *CX, uint64_t incX, const uint_fast8_t rndMode);
+
+//    Complex double-precision (z)
+void zaxpy(uint64_t N, complex64_t CA, complex64_t *CX, int64_t incX, complex64_t *CY, int64_t incY, const uint_fast8_t rndMode);
+void zcopy(uint64_t N, const complex64_t *CX, int64_t incX, complex64_t *CY, int64_t incY, const uint_fast8_t rndMode);
+complex64_t zdotc(uint64_t N, const complex64_t *CX, int64_t incX, const complex64_t *CY, int64_t incY, const uint_fast8_t rndMode);
+void zscal(uint64_t N, complex64_t CA, complex64_t *CX, uint64_t incX, const uint_fast8_t rndMode);
+void zswap(uint64_t N, complex64_t *CX, uint64_t incX, complex64_t *CY, uint64_t incY, const uint_fast8_t rndMode);
+void zdrot(const uint64_t N, complex64_t *CX, const int64_t incX, complex64_t *CY, const int64_t incY, const complex64_t c, const complex64_t s, const uint_fast8_t rndMode);
+float64_t dzasum(uint64_t N, const complex64_t *CX, int64_t incX, const uint_fast8_t rndMode);
+float64_t dznrm2(uint64_t N, const complex64_t *CX, uint64_t incX, const uint_fast8_t rndMode);
+uint64_t izamax(uint64_t N, const complex64_t *CX, uint64_t incX, const uint_fast8_t rndMode);
+
+//    Complex quad-precision (v)
+void vaxpy(uint64_t N, complex128_t CA, complex128_t *CX, int64_t incX, complex128_t *CY, int64_t incY, const uint_fast8_t rndMode);
+void vcopy(uint64_t N, const complex128_t *CX, int64_t incX, complex128_t *CY, int64_t incY, const uint_fast8_t rndMode);
+complex128_t vdotc(uint64_t N, const complex128_t *CX, int64_t incX, const complex128_t *CY, int64_t incY, const uint_fast8_t rndMode);
+void vscal(uint64_t N, complex128_t CA, complex128_t *CX, uint64_t incX, const uint_fast8_t rndMode);
+void vswap(uint64_t N, complex128_t *CX, uint64_t incX, complex128_t *CY, uint64_t incY, const uint_fast8_t rndMode);
+void vqrot(const uint64_t N, complex128_t *CX, const int64_t incX, complex128_t *CY, const int64_t incY, const complex128_t c, const complex128_t s, const uint_fast8_t rndMode);
+float128_t qvasum(uint64_t N, const complex128_t *CX, int64_t incX, const uint_fast8_t rndMode);
+float128_t qvnrm2(uint64_t N, const complex128_t *CX, uint64_t incX, const uint_fast8_t rndMode);
+uint64_t ivamax(uint64_t N, const complex128_t *CX, uint64_t incX, const uint_fast8_t rndMode);
+
 //    Complex double-precision
 
 //    Complex half-precision

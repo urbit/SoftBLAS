@@ -538,6 +538,45 @@ MunitResult test_caxpy_negstride(const MunitParameter params[], void* u);
 MunitResult test_ccopy_negstride(const MunitParameter params[], void* u);
 //  Huge-stride overflow guard (B5).
 MunitResult test_nrm2_huge_stride(const MunitParameter params[], void* u);
+//  Half/double/quad complex Level-1 (i / z / v families).
+MunitResult test_iaxpy_basic(const MunitParameter params[], void* u);
+MunitResult test_icopy_basic(const MunitParameter params[], void* u);
+MunitResult test_idotc_basic(const MunitParameter params[], void* u);
+MunitResult test_iscal_basic(const MunitParameter params[], void* u);
+MunitResult test_iswap_basic(const MunitParameter params[], void* u);
+MunitResult test_ihrot_basic(const MunitParameter params[], void* u);
+MunitResult test_hiasum_basic(const MunitParameter params[], void* u);
+MunitResult test_hinrm2_basic(const MunitParameter params[], void* u);
+MunitResult test_iiamax_basic(const MunitParameter params[], void* u);
+MunitResult test_zaxpy_basic(const MunitParameter params[], void* u);
+MunitResult test_zcopy_basic(const MunitParameter params[], void* u);
+MunitResult test_zdotc_basic(const MunitParameter params[], void* u);
+MunitResult test_zscal_basic(const MunitParameter params[], void* u);
+MunitResult test_zswap_basic(const MunitParameter params[], void* u);
+MunitResult test_zdrot_basic(const MunitParameter params[], void* u);
+MunitResult test_dzasum_basic(const MunitParameter params[], void* u);
+MunitResult test_dznrm2_basic(const MunitParameter params[], void* u);
+MunitResult test_izamax_basic(const MunitParameter params[], void* u);
+MunitResult test_vaxpy_basic(const MunitParameter params[], void* u);
+MunitResult test_vcopy_basic(const MunitParameter params[], void* u);
+MunitResult test_vdotc_basic(const MunitParameter params[], void* u);
+MunitResult test_vscal_basic(const MunitParameter params[], void* u);
+MunitResult test_vswap_basic(const MunitParameter params[], void* u);
+MunitResult test_vqrot_basic(const MunitParameter params[], void* u);
+MunitResult test_qvasum_basic(const MunitParameter params[], void* u);
+MunitResult test_qvnrm2_basic(const MunitParameter params[], void* u);
+MunitResult test_ivamax_basic(const MunitParameter params[], void* u);
+//  Complex i/z/v NaN canonicalization + negative stride; complex B5 guard.
+MunitResult test_iaxpy_nan(const MunitParameter params[], void* u);
+MunitResult test_iaxpy_negstride(const MunitParameter params[], void* u);
+MunitResult test_icopy_negstride(const MunitParameter params[], void* u);
+MunitResult test_zaxpy_nan(const MunitParameter params[], void* u);
+MunitResult test_zaxpy_negstride(const MunitParameter params[], void* u);
+MunitResult test_zcopy_negstride(const MunitParameter params[], void* u);
+MunitResult test_vaxpy_nan(const MunitParameter params[], void* u);
+MunitResult test_vaxpy_negstride(const MunitParameter params[], void* u);
+MunitResult test_vcopy_negstride(const MunitParameter params[], void* u);
+MunitResult test_complex_huge_stride(const MunitParameter params[], void* u);
 
 
 //  Fast (Anderson) nrm2 (test_nrm2_B.c)
