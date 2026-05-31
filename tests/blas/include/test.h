@@ -476,6 +476,18 @@ MunitResult test_sdsdot_basic(const MunitParameter params[], void* u);
 MunitResult test_hsdot_basic(const MunitParameter params[], void* u);
 
 MunitResult test_srotmg_singular(const MunitParameter params[], void* u);
+MunitResult test_srotmg_nan_d1(const MunitParameter params[], void* u);
+MunitResult test_srotmg_inf_d1(const MunitParameter params[], void* u);
+MunitResult test_hrotmg_inf_d1(const MunitParameter params[], void* u);
+//  Quad rotation + complex Level-1 routines (qrot/qrotg/qrotm/qrotmg, c*).
+MunitResult test_qrotmg_basic(const MunitParameter params[], void* u);
+MunitResult test_qrotmg_inf_d1(const MunitParameter params[], void* u);
+MunitResult test_qrot_basic(const MunitParameter params[], void* u);
+MunitResult test_qrotg_basic(const MunitParameter params[], void* u);
+MunitResult test_qrotm_basic(const MunitParameter params[], void* u);
+MunitResult test_cscal_basic(const MunitParameter params[], void* u);
+MunitResult test_cswap_basic(const MunitParameter params[], void* u);
+MunitResult test_icamax_basic(const MunitParameter params[], void* u);
 
 
 //  Fast (Anderson) nrm2 (test_nrm2_B.c)

@@ -14,6 +14,12 @@ void dgemv(const char Layout, const char Trans, const uint64_t M, const uint64_t
         return;
     }
 
+    //  Reject non-positive strides: incX is signed, and a negative value in the
+    //  unsigned index expression X[j * incX] would wrap to a huge OOB offset.
+    if (incX < 1 || incY < 1) {
+        return;
+    }
+
     if (Layout == 'C' || Layout == 'c') {
         // Column-major order
         if (Trans == 'N' || Trans == 'n') {

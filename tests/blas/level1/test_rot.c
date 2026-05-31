@@ -41,3 +41,36 @@ MunitResult test_srotm_basic(const MunitParameter params[], void* u) {
     free(X); free(Y);
     return MUNIT_OK;
 }
+
+//  Quad-precision rotation routines. float128_t literals are {lo, hi}; only the
+//  hi word carries the exponent/sign for these exact small integers, so tests
+//  assert on v[1].
+//  qrot c=0, s=1 maps (x,y) -> (y, -x): (2,3) -> (3,-2).
+MunitResult test_qrot_basic(const MunitParameter params[], void* u) {
+    const float128_t c = {0, 0x0}, s = {0, 0x3fff000000000000};   // 0, 1
+    float128_t X = {0, 0x4000000000000000};   // 2
+    float128_t Y = {0, 0x4000800000000000};   // 3
+    qrot(1, &X, 1, &Y, 1, c, s, 'n');
+    assert_ullong(X.v[1], ==, 0x4000800000000000ull);   // 3
+    assert_ullong(Y.v[1], ==, 0xc000000000000000ull);   // -2
+    return MUNIT_OK;
+}
+//  qrotg(a=0, b=5): scale=5, roe=b>0 -> r=5 exactly, c=0, s=1.
+MunitResult test_qrotg_basic(const MunitParameter params[], void* u) {
+    float128_t a = {0, 0x0}, b = {0, 0x4001400000000000}, c, s;   // 0, 5
+    qrotg(&a, &b, &c, &s, 'n');
+    assert_ullong(a.v[1], ==, 0x4001400000000000ull);   // r = 5
+    assert_ullong(c.v[1], ==, 0x0ull);                  // c = 0
+    assert_ullong(s.v[1], ==, 0x3fff000000000000ull);   // s = 1
+    return MUNIT_OK;
+}
+//  qrotm flag=0 with h21=h12=1: (2,3) -> (5,5), mirror of test_srotm_basic.
+MunitResult test_qrotm_basic(const MunitParameter params[], void* u) {
+    float128_t X = {0, 0x4000000000000000};   // 2
+    float128_t Y = {0, 0x4000800000000000};   // 3
+    float128_t P[5] = {{0,0}, {0,0}, {0, 0x3fff000000000000}, {0, 0x3fff000000000000}, {0,0}};
+    qrotm(1, &X, 1, &Y, 1, P, 'n');
+    assert_ullong(X.v[1], ==, 0x4001400000000000ull);   // 5
+    assert_ullong(Y.v[1], ==, 0x4001400000000000ull);   // 5
+    return MUNIT_OK;
+}

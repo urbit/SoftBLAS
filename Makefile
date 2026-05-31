@@ -1,7 +1,20 @@
-CC = gcc
+CC ?= gcc
 CFLAGS = -Iinclude -ISoftFloat/source/include -Imunit -Itests/blas/include
-LDFLAGS = -LSoftFloat/build/Linux-x86_64-GCC/
-LIBS = -l:softfloat.a
+
+#  Pick the SoftFloat build per host OS. The Linux archive links with GNU ld's
+#  `-l:softfloat.a`; macOS (BSD ld) has no `-l:` form, so link the archive by
+#  path. Build the macOS archive first with tools/build_softfloat_darwin.sh
+#  (CI does this; see .github/workflows/ci.yml).
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+  SOFTFLOAT_DIR = SoftFloat/build/Darwin-$(shell uname -m)-clang
+  LDFLAGS =
+  LIBS = $(SOFTFLOAT_DIR)/softfloat.a
+else
+  SOFTFLOAT_DIR = SoftFloat/build/Linux-x86_64-GCC
+  LDFLAGS = -L$(SOFTFLOAT_DIR)/
+  LIBS = -l:softfloat.a
+endif
 
 MUNIT_SRC = munit/munit.c
 MUNIT_OBJ = $(MUNIT_SRC:.c=.o)
@@ -66,6 +79,13 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR_L1)/srotmg.c \
   $(BLAS_SRC_DIR_L1)/drotmg.c \
   $(BLAS_SRC_DIR_L1)/hrotmg.c \
+  $(BLAS_SRC_DIR_L1)/qrot.c \
+  $(BLAS_SRC_DIR_L1)/qrotg.c \
+  $(BLAS_SRC_DIR_L1)/qrotm.c \
+  $(BLAS_SRC_DIR_L1)/qrotmg.c \
+  $(BLAS_SRC_DIR_L1)/cscal.c \
+  $(BLAS_SRC_DIR_L1)/cswap.c \
+  $(BLAS_SRC_DIR_L1)/icamax.c \
   $(BLAS_SRC_DIR_L2)/sgemv.c \
   $(BLAS_SRC_DIR_L2)/dgemv.c \
   $(BLAS_SRC_DIR_L2)/hgemv.c \

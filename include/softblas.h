@@ -227,7 +227,7 @@ float32_t snrm2_B(uint64_t N, const float32_t *X, uint64_t incX, const uint_fast
 float64_t dnrm2_B(uint64_t N, const float64_t *X, uint64_t incX, const uint_fast8_t rndMode);
 float16_t hnrm2_B(uint64_t N, const float16_t *X, uint64_t incX, const uint_fast8_t rndMode);
 float128_t qnrm2_B(uint64_t N, const float128_t *X, uint64_t incX, const uint_fast8_t rndMode);
-void qrot(const uint64_t N, float16_t *X, const uint64_t  incX, float16_t *Y, const uint64_t incY, const float16_t c, const float16_t s, const uint_fast8_t rndMode);
+void qrot(const uint64_t N, float128_t *X, const uint64_t  incX, float128_t *Y, const uint64_t incY, const float128_t c, const float128_t s, const uint_fast8_t rndMode);
 void qrotg(float128_t *a, float128_t *b, float128_t *c, float128_t *s, const uint_fast8_t rndMode);
 void qrotm(const uint64_t N, float128_t *X, const uint64_t incX, float128_t *Y, const uint64_t incY, const float128_t *P, const uint_fast8_t rndMode);
 void qrotmg(float128_t *D1, float128_t *D2, float128_t *X1, const float128_t y1, float128_t *P, const uint_fast8_t rndMode);

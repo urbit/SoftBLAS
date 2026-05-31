@@ -15,6 +15,7 @@ void drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, flo
     const float64_t gamsq  = { 0x4170000000000000 };  // 4096^2 = 2^24
     const float64_t rgam   = { 0x3f30000000000000 };  // 1/4096 = 2^-12
     const float64_t rgamsq = { 0x3e70000000000000 };  // 2^-24
+    const float64_t INF    = { 0x7ff0000000000000 };  // +infinity
 
     float64_t flag;
     float64_t d1 = *D1, d2 = *D2, x1 = *X1;
@@ -76,7 +77,7 @@ void drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, flo
             h11 = f64_mul(h11, rgam);
             h12 = f64_mul(h12, rgam);
         }
-        while (f64_ge(d1, gamsq)) {
+        while (f64_lt(f64_abs(d1), INF) && f64_ge(d1, gamsq)) {
             if (f64_eq(flag, ZERO)) { flag = NEGONE; h11 = ONE; h22 = ONE; }
             else { flag = NEGONE; h21 = NEGONE; h12 = ONE; }
             d1  = f64_mul(d1, rgamsq);
@@ -93,7 +94,7 @@ void drotmg(float64_t *D1, float64_t *D2, float64_t *X1, const float64_t y1, flo
             h21 = f64_mul(h21, rgam);
             h22 = f64_mul(h22, rgam);
         }
-        while (f64_ge(f64_abs(d2), gamsq)) {
+        while (f64_lt(f64_abs(d2), INF) && f64_ge(f64_abs(d2), gamsq)) {
             if (f64_eq(flag, ZERO)) { flag = NEGONE; h11 = ONE; h22 = ONE; }
             else { flag = NEGONE; h21 = NEGONE; h12 = ONE; }
             d2  = f64_mul(d2, rgamsq);
