@@ -277,3 +277,18 @@ MunitResult test_sgemm_transB(const MunitParameter params[], void *user_data) {
     free(A); free(B); free(C); free(R);
     return MUNIT_OK;
 }
+
+//  C4: the TT combo completes single-precision gemm's {N,T}^2 (NN=basic,
+//  NT=transB, TN=transA, TT=here). A stored as op(A)^T=[[1,3],[2,4]] and B as
+//  op(B)^T=[[5,7],[6,8]] so op(A)*op(B) = [[1,2],[3,4]]*[[5,6],[7,8]].
+MunitResult test_sgemm_transAB(const MunitParameter params[], void *user_data) {
+    const float32_t alpha = { SB_REAL32_ONE }, beta = { SB_REAL32_ZERO };
+    float32_t* A = svec((float[]){1.0f,3.0f,2.0f,4.0f}, 4);
+    float32_t* B = svec((float[]){5.0f,7.0f,6.0f,8.0f}, 4);
+    float32_t* C = svec((float[]){0.0f,0.0f,0.0f,0.0f}, 4);
+    sgemm('T', 'T', 2, 2, 2, alpha, A, 2, B, 2, beta, C, 2, 'n');
+    float32_t* R = svec((float[]){19.0f,22.0f,43.0f,50.0f}, 4);
+    for (uint64_t i = 0; i < 4; i++) assert_ulong(C[i].v, ==, R[i].v);
+    free(A); free(B); free(C); free(R);
+    return MUNIT_OK;
+}

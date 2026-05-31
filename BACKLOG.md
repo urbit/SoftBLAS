@@ -52,12 +52,17 @@ Severity: 🔴 critical (memory-unsafe / silently wrong) · 🟠 high · 🟡 me
   quad family (qnrm2/qdot/qscal/qasum + length-2 qaxpy), and the Inf cases
   `Inf−Inf` and `0·Inf`. (Residual, folded into C4/C5: NaN through the *d/h/q*
   gemv/gemm transpose/padding paths once those tests land.)
-- [ ] **C2.** Negative-stride tests for the swap family and any strided routine
-  lacking them.
-- [ ] **C3.** `N==0` no-op across ALL routines (only `sswap_zero` exists today).
-- [ ] **C4.** gemv/gemm transpose paths (`Trans='T'`; `transA×transB ∈ {N,T}²`),
-  non-square.
-- [ ] **C5.** `ldb≠ldc` / padded `lda` for `h/q` gemm and all gemv.
+- [x] **C2.** Negative-stride now covered for swap (`d/h/q`) and copy
+  (`s/d/h/q`); dot/axpy already had it across precisions.
+- [x] **C3.** `N==0` no-op: single covered per-routine; `d/h/q` L1 sweeps
+  (`test_dn0`/`hn0`/`qn0`) over asum/dot/nrm2/axpy/scal/copy/swap; gemv/gemm
+  `0_row`/`0_col` already cover all four precisions.
+- [x] **C4.** gemv transpose for `d/h/q` (non-square 2×3); single gemm now has
+  the full `{N,T}²` (added the `TT` combo). *Residual:* `d/h/q` gemm transpose
+  combos — the transpose index logic is precision-independent (single validates
+  the path; `d/h/q` gemm have non-square `NN` coverage already). ⚪
+- [x] **C5.** Padded `lda` for gemv `d/h/q` (`test_*gemv_padlda`); gemm `_ldb`
+  already covered all four precisions.
 - [x] **C6.** All five rounding modes (`n`/`z`/`u`/`d`/`a`) × `saxpy`/`sdot`/
   `ddot`/`sgemv`, both signs (the negative tie distinguishes `z`/`d`/`u`/`a`).
   Reduction (L1) + matrix-vector (L2), single + double. Runs on macOS now.

@@ -473,6 +473,27 @@ MunitResult test_qgemm_ldb(const MunitParameter params[], void* u);
 MunitResult test_sdot_rounding_modes(const MunitParameter params[], void* u);
 MunitResult test_ddot_rounding_modes(const MunitParameter params[], void* u);
 MunitResult test_sgemv_rounding_modes(const MunitParameter params[], void* u);
+//  Negative-stride coverage (C2): swap + copy families.
+MunitResult test_dswap_negstride(const MunitParameter params[], void* u);
+MunitResult test_hswap_negstride(const MunitParameter params[], void* u);
+MunitResult test_qswap_negstride(const MunitParameter params[], void* u);
+MunitResult test_scopy_negstride(const MunitParameter params[], void* u);
+MunitResult test_dcopy_negstride(const MunitParameter params[], void* u);
+MunitResult test_hcopy_negstride(const MunitParameter params[], void* u);
+MunitResult test_qcopy_negstride(const MunitParameter params[], void* u);
+//  N==0 no-op sweeps (C3): double/half/quad L1.
+MunitResult test_dn0(const MunitParameter params[], void* u);
+MunitResult test_hn0(const MunitParameter params[], void* u);
+MunitResult test_qn0(const MunitParameter params[], void* u);
+//  gemv transpose (C4) + padded lda (C5), double/half/quad.
+MunitResult test_dgemv_trans(const MunitParameter params[], void* u);
+MunitResult test_hgemv_trans(const MunitParameter params[], void* u);
+MunitResult test_qgemv_trans(const MunitParameter params[], void* u);
+MunitResult test_dgemv_padlda(const MunitParameter params[], void* u);
+MunitResult test_hgemv_padlda(const MunitParameter params[], void* u);
+MunitResult test_qgemv_padlda(const MunitParameter params[], void* u);
+//  gemm TT combo (C4): completes single-precision {N,T}^2.
+MunitResult test_sgemm_transAB(const MunitParameter params[], void* u);
 
 //  Complex Level-1 (test_complex.c)
 MunitResult test_caxpy_basic(const MunitParameter params[], void* u);
