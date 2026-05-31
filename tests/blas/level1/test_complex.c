@@ -55,3 +55,29 @@ MunitResult test_csrot_basic(const MunitParameter params[], void* u) {
     free(CX); free(CY);
     return MUNIT_OK;
 }
+MunitResult test_cscal_basic(const MunitParameter params[], void* u) {
+    const complex32_t CA = {{ 0x40000000 }, { 0x00000000 }};  // 2 + 0i
+    complex32_t* CX = cvec((float[]){1.0f, 1.0f}, 1);         // 1 + 1i
+    cscal(1, CA, CX, 1, 'n');                                // (2)(1+1i) = 2 + 2i
+    assert_ulong(CX[0].real.v, ==, 0x40000000u);             // 2
+    assert_ulong(CX[0].imag.v, ==, 0x40000000u);             // 2i
+    free(CX);
+    return MUNIT_OK;
+}
+MunitResult test_cswap_basic(const MunitParameter params[], void* u) {
+    complex32_t* CX = cvec((float[]){1.0f, 0.0f}, 1);
+    complex32_t* CY = cvec((float[]){2.0f, 0.0f}, 1);
+    cswap(1, CX, 1, CY, 1, 'n');
+    assert_ulong(CX[0].real.v, ==, 0x40000000u);             // 2
+    assert_ulong(CY[0].real.v, ==, 0x3f800000u);             // 1
+    free(CX); free(CY);
+    return MUNIT_OK;
+}
+MunitResult test_icamax_basic(const MunitParameter params[], void* u) {
+    // |Re|+|Im| magnitudes: 1, 3, 2 -> max at 0-based index 1
+    complex32_t* CX = cvec((float[]){1.0f, 0.0f, 0.0f, 3.0f, 2.0f, 0.0f}, 3);
+    assert_ulong(icamax(3, CX, 1, 'n'), ==, 1u);
+    assert_ulong(icamax(1, CX, 1, 'n'), ==, 0u);             // N==1 -> 0
+    free(CX);
+    return MUNIT_OK;
+}

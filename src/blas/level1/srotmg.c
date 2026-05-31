@@ -15,6 +15,7 @@ void srotmg(float32_t *D1, float32_t *D2, float32_t *X1, const float32_t y1, flo
     const float32_t gamsq  = { 0x4b800000 };  // 4096^2 = 2^24
     const float32_t rgam   = { 0x39800000 };  // 1/4096 = 2^-12
     const float32_t rgamsq = { 0x33800000 };  // 2^-24
+    const float32_t INF    = { 0x7f800000 };  // +infinity
 
     float32_t flag;
     float32_t d1 = *D1, d2 = *D2, x1 = *X1;
@@ -76,7 +77,7 @@ void srotmg(float32_t *D1, float32_t *D2, float32_t *X1, const float32_t y1, flo
             h11 = f32_mul(h11, rgam);
             h12 = f32_mul(h12, rgam);
         }
-        while (f32_ge(d1, gamsq)) {
+        while (f32_lt(f32_abs(d1), INF) && f32_ge(d1, gamsq)) {
             if (f32_eq(flag, ZERO)) { flag = NEGONE; h11 = ONE; h22 = ONE; }
             else { flag = NEGONE; h21 = NEGONE; h12 = ONE; }
             d1  = f32_mul(d1, rgamsq);
@@ -93,7 +94,7 @@ void srotmg(float32_t *D1, float32_t *D2, float32_t *X1, const float32_t y1, flo
             h21 = f32_mul(h21, rgam);
             h22 = f32_mul(h22, rgam);
         }
-        while (f32_ge(f32_abs(d2), gamsq)) {
+        while (f32_lt(f32_abs(d2), INF) && f32_ge(f32_abs(d2), gamsq)) {
             if (f32_eq(flag, ZERO)) { flag = NEGONE; h11 = ONE; h22 = ONE; }
             else { flag = NEGONE; h21 = NEGONE; h12 = ONE; }
             d2  = f32_mul(d2, rgamsq);

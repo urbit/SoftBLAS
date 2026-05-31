@@ -15,6 +15,7 @@ void hrotmg(float16_t *D1, float16_t *D2, float16_t *X1, const float16_t y1, flo
     const float16_t gamsq  = { 0x5c00 };  // 256  = gam^2
     const float16_t rgam   = { 0x2c00 };  // 1/16
     const float16_t rgamsq = { 0x1c00 };  // 1/256
+    const float16_t INF    = { 0x7c00 };  // +infinity
 
     float16_t flag;
     float16_t d1 = *D1, d2 = *D2, x1 = *X1;
@@ -76,7 +77,7 @@ void hrotmg(float16_t *D1, float16_t *D2, float16_t *X1, const float16_t y1, flo
             h11 = f16_mul(h11, rgam);
             h12 = f16_mul(h12, rgam);
         }
-        while (f16_ge(d1, gamsq)) {
+        while (f16_lt(f16_abs(d1), INF) && f16_ge(d1, gamsq)) {
             if (f16_eq(flag, ZERO)) { flag = NEGONE; h11 = ONE; h22 = ONE; }
             else { flag = NEGONE; h21 = NEGONE; h12 = ONE; }
             d1  = f16_mul(d1, rgamsq);
@@ -93,7 +94,7 @@ void hrotmg(float16_t *D1, float16_t *D2, float16_t *X1, const float16_t y1, flo
             h21 = f16_mul(h21, rgam);
             h22 = f16_mul(h22, rgam);
         }
-        while (f16_ge(f16_abs(d2), gamsq)) {
+        while (f16_lt(f16_abs(d2), INF) && f16_ge(f16_abs(d2), gamsq)) {
             if (f16_eq(flag, ZERO)) { flag = NEGONE; h11 = ONE; h22 = ONE; }
             else { flag = NEGONE; h21 = NEGONE; h12 = ONE; }
             d2  = f16_mul(d2, rgamsq);

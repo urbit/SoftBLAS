@@ -85,7 +85,7 @@ MunitResult test_hgemm_0_col(const MunitParameter params[],
 
     float16_t* R = hvec((uint16_t[]){0x4cc0, 0x4d80 , 0x5160 , 0x5240 }, M*P);
 
-    for (uint64_t i = 0; i < 4; i++) {
+    for (uint64_t i = 0; i < M*P; i++) {   // check every element of C (M*P)
         assert_ushort(C[i].v, ==, R[i].v);
     }
 
@@ -138,7 +138,7 @@ MunitResult test_hgemm_3x2x1_0(const MunitParameter params[],
                                    0x4c40},
                         M*P);
 
-    for (uint64_t i = 0; i < 4; i++) {
+    for (uint64_t i = 0; i < M*P; i++) {   // check every element of C (M*P)
         assert_ushort(C[i].v, ==, R[i].v);
     }
 
@@ -199,7 +199,7 @@ MunitResult test_hgemm_5x4x3(const MunitParameter params[],
                                      0x580c, 0x53e0, 0x58f8},
                         M*P);
 
-    for (uint64_t i = 0; i < 4; i++) {
+    for (uint64_t i = 0; i < M*P; i++) {   // check every element of C (M*P)
         assert_ushort(C[i].v, ==, R[i].v);
     }
 

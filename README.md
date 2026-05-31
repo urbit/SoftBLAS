@@ -108,25 +108,27 @@ Per Wikipedia:
     - Implemented: `h`, `s`, `d`, `q`, `c`
     - Yet to implement: `i`, `z`, `v`
 - `scal` - **x** ← a**x**, where a is a scalar and **x** is a vector
-    - Implemented: `h`, `s`, `d`, `q`
-    - Yet to implement: `i`, `c`, `z`, `v`
+    - Implemented: `h`, `s`, `d`, `q`, `c`
+    - Yet to implement: `i`, `z`, `v`
 - `swap` - (**x**, **y**) ← (**y**, **x**), where **x** and **y** are vectors
-    - Implemented: `h`, `s`, `d`, `q`
-    - Yet to implement: `i`, `c`, `z`, `v`
+    - Implemented: `h`, `s`, `d`, `q`, `c`
+    - Yet to implement: `i`, `z`, `v`
 - `iamax` - argmaxᵢ(|**x**ᵢ|), where **x** is a real vector (index of max absolute value)
-    - Implemented: `h`, `s`, `d`, `q`
+    - Implemented: `h`, `s`, `d`, `q`, `c`
 
 #### Extras:
 - `sdot` - a+**x**•**y**, where a is a scalar and **x**, **y** are vectors and intermediate calculations use a higher precision float
     - Implemented: `h`, `s`
+- `nrm2_B` - ||**x**||₂ via E. Anderson's safe-scaling algorithm (ACM TOMS Alg. 978, 2017); avoids intermediate overflow/underflow without the classic per-element division. Faster and more accurate on the overflow/underflow tails than `nrm2`.
+    - Implemented: `h`, `s`, `d`, `q`
 - `rot` - (**x**ᵢ // **y**ᵢ) ← R(**x**ᵢ // **y**ᵢ), where R is a rotation matrix (c s // -s c), and **x**, **y** are vectors
-    - Implemented: `h`, `s`, `d`, `c`
+    - Implemented: `h`, `s`, `d`, `q`, `c`
 - `rotg` - Finds the Rotation matrix R (among other things), such that R(x // y) = (r // 0), where x, y are scalars
-    - Implemented: `h`, `s`, `d`
+    - Implemented: `h`, `s`, `d`, `q`
 - `rotm` - Performs a modified Givens rotation
-    - Implemented: `h`, `s`, `d`
+    - Implemented: `h`, `s`, `d`, `q`
 - `rotmg` - Set up a modified Givens rotation
-    - Implemented: `h`, `s`, `d`
+    - Implemented: `h`, `s`, `d`, `q`
 
 ### Level 2 Functions
 
@@ -236,7 +238,7 @@ Running test suite with seed 0xa623450c...
 /blas/level1/test_saxpy_stride       [ OK    ] [ 0.00002446 / 0.00002332 CPU ]
 /blas/level1/test_saxpy_neg_stride   [ OK    ] [ 0.00002927 / 0.00002805 CPU ]
 * * *
-132 of 132 (100%) tests successful, 0 (0%) test skipped.
+202 of 202 (100%) tests successful, 0 (0%) test skipped.
 ```
 
 
