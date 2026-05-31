@@ -17,9 +17,26 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 ### Planned work
 
 - [x] Add rounding-mode propagation to function signatures.
-- [x] Complete complex-valued functions (`c`/`i`/`z`/`v` Level-1 routines).
-- [ ] Use a linter.
-- [ ] Add (kelvin) versioning, at least on interface.
+- [x] Complete complex-valued Level-1 functions (`c`/`i`/`z`/`v`).
+- [ ] **Complex Level 2/3** — `gemv` and `gemm` for the complex precisions
+  (`i`/`c`/`z`/`v`); currently real-only (`h`/`s`/`d`/`q`). Direct follow-on to
+  the complex Level-1 work.
+- [ ] **`?gemm3m`** — accelerated complex `gemm` with 25% fewer multiplications
+  (see Pending, below).
+- [ ] Use a linter (a CI lint step beyond `tools/check_test_registration.sh`).
+- [ ] Add (kelvin) versioning, at least on the interface.
+
+Coordinated / gated — these need a matching `lagoon.hoon` rollover so the jetted
+and unjetted paths stay bit-identical (brief: `docs/lagoon-rollover-prompt.md`):
+
+- [ ] Retire the classic running-scale `nrm2` in favour of the safe-scaling
+  `nrm2_B` (more correct on subnormal / near-overflow inputs, but its bit-results
+  differ there).
+- [ ] Promote `rndMode` from a `uint_fast8_t` char code to a `typedef enum`
+  (ABI-stable; the enum values stay equal to the ASCII codes).
+- [ ] Optional (no coordination needed): split `softblas.h` into a public header
+  (types + prototypes) and an internal header for the `nan_unify_*` /
+  `_set_rounding` machinery.
 
 ##  BLAS
 
