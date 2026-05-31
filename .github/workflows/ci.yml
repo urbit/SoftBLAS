@@ -6,8 +6,8 @@ on:
   pull_request:
 
 jobs:
-  test:
-    name: Build and run the munit test suite
+  test-linux:
+    name: Linux — build and run the munit test suite
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,6 +30,40 @@ jobs:
 
       - name: Build test suite
         run: make tests
+
+      - name: Run tests
+        run: ./test_all
+
+  test-macos:
+    name: macOS — build and run the munit test suite
+    runs-on: macos-latest
+    # Provisional: a local Apple clang 21 build SIGBUSes in SoftFloat's
+    # directional-rounding path (reproduces with pure softfloat.h, no SoftBLAS),
+    # but that toolchain is bleeding-edge and unverified on the CI runner's
+    # stable Xcode clang. Run non-blocking until a green run confirms macOS;
+    # then remove continue-on-error to make it a required check.
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      - name: Fetch submodules over HTTPS
+        run: |
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
+          git submodule update --init --recursive
+
+      - name: Lint test registration
+        run: ./tools/check_test_registration.sh
+
+      # No prebuilt Darwin SoftFloat archive ships in the vendored tree; generate
+      # it from the FAST_INT64 template (see tools/build_softfloat_darwin.sh).
+      - name: Build SoftFloat (Darwin archive from template)
+        run: ./tools/build_softfloat_darwin.sh
+
+      - name: Build test suite
+        run: make tests CC=clang
 
       - name: Run tests
         run: ./test_all
