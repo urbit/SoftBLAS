@@ -58,9 +58,10 @@ Severity: 🔴 critical (memory-unsafe / silently wrong) · 🟠 high · 🟡 me
 - [ ] **C4.** gemv/gemm transpose paths (`Trans='T'`; `transA×transB ∈ {N,T}²`),
   non-square.
 - [ ] **C5.** `ldb≠ldc` / padded `lda` for `h/q` gemm and all gemv.
-- [ ] **C6.** All five rounding modes × ≥2 routines, incl. a negative operand
-  (now unblocked on macOS after the SIGBUS fix).
-- [ ] **C7.** float128 `v[0]=lo / v[1]=hi` layout pin test.
+- [x] **C6.** All five rounding modes (`n`/`z`/`u`/`d`/`a`) × `saxpy`/`sdot`/
+  `ddot`/`sgemv`, both signs (the negative tie distinguishes `z`/`d`/`u`/`a`).
+  Reduction (L1) + matrix-vector (L2), single + double. Runs on macOS now.
+- [x] **C7.** float128 `v[0]=lo / v[1]=hi` layout pinned by `test_qasum_layout`.
 - [~] **C8.** Complex/rot routines build + have numeric tests (q-rot family,
   cscal/cswap/icamax done). **Remaining:** broaden complex coverage
   (strides, NaN payloads) for `caxpy`/`ccopy`/`cdotc`.
