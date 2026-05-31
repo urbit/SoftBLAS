@@ -1,5 +1,7 @@
 CC ?= gcc
-CFLAGS = -Iinclude -ISoftFloat/source/include -Imunit -Itests/blas/include
+#  -DSOFTFLOAT_FAST_INT64 matches the flag the SoftFloat archive is built with,
+#  exposing the value-based f128_*/c128_* ops the quad-complex routines use.
+CFLAGS = -DSOFTFLOAT_FAST_INT64 -Iinclude -ISoftFloat/source/include -Imunit -Itests/blas/include
 
 #  Pick the SoftFloat build per host OS. The Linux archive links with GNU ld's
 #  `-l:softfloat.a`; macOS (BSD ld) has no `-l:` form, so link the archive by
@@ -86,6 +88,33 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR_L1)/cscal.c \
   $(BLAS_SRC_DIR_L1)/cswap.c \
   $(BLAS_SRC_DIR_L1)/icamax.c \
+  $(BLAS_SRC_DIR_L1)/iaxpy.c \
+  $(BLAS_SRC_DIR_L1)/zaxpy.c \
+  $(BLAS_SRC_DIR_L1)/vaxpy.c \
+  $(BLAS_SRC_DIR_L1)/icopy.c \
+  $(BLAS_SRC_DIR_L1)/zcopy.c \
+  $(BLAS_SRC_DIR_L1)/vcopy.c \
+  $(BLAS_SRC_DIR_L1)/idotc.c \
+  $(BLAS_SRC_DIR_L1)/zdotc.c \
+  $(BLAS_SRC_DIR_L1)/vdotc.c \
+  $(BLAS_SRC_DIR_L1)/iscal.c \
+  $(BLAS_SRC_DIR_L1)/zscal.c \
+  $(BLAS_SRC_DIR_L1)/vscal.c \
+  $(BLAS_SRC_DIR_L1)/iswap.c \
+  $(BLAS_SRC_DIR_L1)/zswap.c \
+  $(BLAS_SRC_DIR_L1)/vswap.c \
+  $(BLAS_SRC_DIR_L1)/ihrot.c \
+  $(BLAS_SRC_DIR_L1)/zdrot.c \
+  $(BLAS_SRC_DIR_L1)/vqrot.c \
+  $(BLAS_SRC_DIR_L1)/hiasum.c \
+  $(BLAS_SRC_DIR_L1)/dzasum.c \
+  $(BLAS_SRC_DIR_L1)/qvasum.c \
+  $(BLAS_SRC_DIR_L1)/hinrm2.c \
+  $(BLAS_SRC_DIR_L1)/dznrm2.c \
+  $(BLAS_SRC_DIR_L1)/qvnrm2.c \
+  $(BLAS_SRC_DIR_L1)/iiamax.c \
+  $(BLAS_SRC_DIR_L1)/izamax.c \
+  $(BLAS_SRC_DIR_L1)/ivamax.c \
   $(BLAS_SRC_DIR_L2)/sgemv.c \
   $(BLAS_SRC_DIR_L2)/dgemv.c \
   $(BLAS_SRC_DIR_L2)/hgemv.c \
