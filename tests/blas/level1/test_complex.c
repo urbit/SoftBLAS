@@ -81,3 +81,56 @@ MunitResult test_icamax_basic(const MunitParameter params[], void* u) {
     free(CX);
     return MUNIT_OK;
 }
+
+//  C8: complex NaN canonicalization. nan_unify_c canonicalizes BOTH components
+//  to SINGNAN when either is a (non-canonical) NaN, so the determinism
+//  guarantee holds for the complex routines too.
+#define CNCNAN 0x7fc00001u   // non-canonical single NaN
+MunitResult test_caxpy_nan(const MunitParameter params[], void* u) {
+    const complex32_t CA = {{ 0x3f800000 }, { 0x00000000 }};   // 1 + 0i
+    complex32_t CX[1] = {{{ CNCNAN }, { 0x00000000 }}};        // NaN + 0i
+    complex32_t CY[1] = {{{ 0x00000000 }, { 0x00000000 }}};
+    caxpy(1, CA, CX, 1, CY, 1, 'n');
+    assert_ulong(CY[0].real.v, ==, (uint32_t)SINGNAN);
+    assert_ulong(CY[0].imag.v, ==, (uint32_t)SINGNAN);
+    return MUNIT_OK;
+}
+MunitResult test_cscal_nan(const MunitParameter params[], void* u) {
+    const complex32_t CA = {{ 0x40000000 }, { 0x00000000 }};   // 2 + 0i
+    complex32_t CX[1] = {{{ CNCNAN }, { 0x3f800000 }}};        // NaN + 1i
+    cscal(1, CA, CX, 1, 'n');
+    assert_ulong(CX[0].real.v, ==, (uint32_t)SINGNAN);
+    assert_ulong(CX[0].imag.v, ==, (uint32_t)SINGNAN);
+    return MUNIT_OK;
+}
+MunitResult test_ccopy_nan(const MunitParameter params[], void* u) {
+    complex32_t CX[1] = {{{ 0x00000000 }, { CNCNAN }}};        // 0 + NaN i
+    complex32_t CY[1] = {{{ 0x00000000 }, { 0x00000000 }}};
+    ccopy(1, CX, 1, CY, 1, 'n');
+    assert_ulong(CY[0].real.v, ==, (uint32_t)SINGNAN);        // copied NaN canonicalized
+    assert_ulong(CY[0].imag.v, ==, (uint32_t)SINGNAN);
+    return MUNIT_OK;
+}
+
+//  C8: negative-stride coverage for the complex family. incX=-1 reverses the
+//  indexed vector (offset start (-N+1)*incX).
+MunitResult test_caxpy_negstride(const MunitParameter params[], void* u) {
+    const complex32_t CA = {{ 0x3f800000 }, { 0x00000000 }};   // 1 + 0i
+    complex32_t* CX = cvec((float[]){1,0, 2,0, 3,0}, 3);
+    complex32_t* CY = cvec((float[]){0,0, 0,0, 0,0}, 3);
+    caxpy(3, CA, CX, -1, CY, 1, 'n');                          // CY += reverse(CX)
+    assert_ulong(CY[0].real.v, ==, 0x40400000u);              // 3
+    assert_ulong(CY[1].real.v, ==, 0x40000000u);              // 2
+    assert_ulong(CY[2].real.v, ==, 0x3f800000u);              // 1
+    free(CX); free(CY);
+    return MUNIT_OK;
+}
+MunitResult test_ccopy_negstride(const MunitParameter params[], void* u) {
+    complex32_t* CX = cvec((float[]){1,0, 2,0, 3,0}, 3);
+    complex32_t* CY = cvec((float[]){0,0, 0,0, 0,0}, 3);
+    ccopy(3, CX, -1, CY, 1, 'n');                             // CY = reverse(CX)
+    assert_ulong(CY[0].real.v, ==, 0x40400000u);              // 3
+    assert_ulong(CY[2].real.v, ==, 0x3f800000u);              // 1
+    free(CX); free(CY);
+    return MUNIT_OK;
+}

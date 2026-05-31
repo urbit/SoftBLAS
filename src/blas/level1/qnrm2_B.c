@@ -15,7 +15,7 @@ float128_t qnrm2_B(uint64_t N, const float128_t *X, uint64_t incX, const uint_fa
     const float128_t sbig = { 0x0000000000000000, 0x1fc7000000000000 };  // 2^-8248
 
     float128_t norm = ZERO;
-    if (N < 1 || incX < 1) { nan_unify_q(&norm); return norm; }
+    if (N < 1 || incX < 1 || SB_STRIDE_OVERFLOWS(N, incX)) { nan_unify_q(&norm); return norm; }
 
     float128_t asml = ZERO, amed = ZERO, abig = ZERO;
     float128_t ax, t, tmp;
