@@ -1,8 +1,14 @@
 #include "test.h"
 
-//  Complex GEMM (single 'c' / double 'z'). C <- alpha*op(A)*op(B) + beta*C,
-//  op = N/T/C. Row-major, leading dims lda/ldb/ldc, mirroring sgemm. All test
-//  values are small integers so the float results are exact and bit-checkable.
+//  Complex GEMM (half 'i' / single 'c' / double 'z' / quad 'v').
+//  C <- alpha*op(A)*op(B) + beta*C, op = N/T/C. Row-major, leading dims
+//  lda/ldb/ldc, mirroring sgemm. All test values are small integers so the
+//  float results are exact and bit-checkable.
+
+//  Quad helpers (high word holds the value; low word stays 0).
+#define QH(hi) {{ 0x0ull, (hi) }}
+#define Q_ONE 0x3fff000000000000ull
+#define Q_TWO 0x4000000000000000ull
 
 //  Canonical vector from the brief:
 //  A=[[1+1i, 2],[0, 1]], B=[[1, 0],[0, 1+1i]] -> C=[[1+1i, 2+2i],[0, 1+1i]].
@@ -94,6 +100,51 @@ MunitResult test_zgemm_basic(const MunitParameter params[], void* u) {
     assert_ullong(C[1].real.v, ==, 0x4000000000000000ull); assert_ullong(C[1].imag.v, ==, 0x4000000000000000ull);
     assert_ullong(C[2].real.v, ==, 0x0ull);                assert_ullong(C[2].imag.v, ==, 0x0ull);
     assert_ullong(C[3].real.v, ==, 0x3ff0000000000000ull); assert_ullong(C[3].imag.v, ==, 0x3ff0000000000000ull);
+    return MUNIT_OK;
+}
+
+//  Half-precision canonical vector (same matrices as test_cgemm_basic).
+MunitResult test_igemm_basic(const MunitParameter params[], void* u) {
+    const complex16_t alpha = SB_COMPLEX16_ONE;
+    const complex16_t beta = SB_COMPLEX16_ZERO;
+    complex16_t A[4] = {{{ 0x3c00 }, { 0x3c00 }},  // 1+1i
+                        {{ 0x4000 }, { 0 }},        // 2
+                        {{ 0 }, { 0 }},             // 0
+                        {{ 0x3c00 }, { 0 }}};       // 1
+    complex16_t B[4] = {{{ 0x3c00 }, { 0 }},        // 1
+                        {{ 0 }, { 0 }},             // 0
+                        {{ 0 }, { 0 }},             // 0
+                        {{ 0x3c00 }, { 0x3c00 }}};  // 1+1i
+    complex16_t C[4] = {{{ 0 }, { 0 }}, {{ 0 }, { 0 }}, {{ 0 }, { 0 }}, {{ 0 }, { 0 }}};
+    igemm('N', 'N', 2, 2, 2, alpha, A, 2, B, 2, beta, C, 2, 'n');
+    //  R = [[1+1i, 2+2i],[0, 1+1i]]
+    assert_ushort(C[0].real.v, ==, 0x3c00); assert_ushort(C[0].imag.v, ==, 0x3c00);
+    assert_ushort(C[1].real.v, ==, 0x4000); assert_ushort(C[1].imag.v, ==, 0x4000);
+    assert_ushort(C[2].real.v, ==, 0x0);    assert_ushort(C[2].imag.v, ==, 0x0);
+    assert_ushort(C[3].real.v, ==, 0x3c00); assert_ushort(C[3].imag.v, ==, 0x3c00);
+    return MUNIT_OK;
+}
+
+//  Quad-precision canonical vector (same matrices as test_cgemm_basic).
+MunitResult test_vgemm_basic(const MunitParameter params[], void* u) {
+    const complex128_t alpha = { QH(Q_ONE), QH(0x0ull) };  // 1
+    const complex128_t beta  = { QH(0x0ull), QH(0x0ull) };  // 0
+    complex128_t A[4] = {{ QH(Q_ONE), QH(Q_ONE) },          // 1+1i
+                         { QH(Q_TWO), QH(0x0ull) },         // 2
+                         { QH(0x0ull), QH(0x0ull) },        // 0
+                         { QH(Q_ONE), QH(0x0ull) }};        // 1
+    complex128_t B[4] = {{ QH(Q_ONE), QH(0x0ull) },         // 1
+                         { QH(0x0ull), QH(0x0ull) },        // 0
+                         { QH(0x0ull), QH(0x0ull) },        // 0
+                         { QH(Q_ONE), QH(Q_ONE) }};         // 1+1i
+    complex128_t C[4] = {{ QH(0x0ull), QH(0x0ull) }, { QH(0x0ull), QH(0x0ull) },
+                         { QH(0x0ull), QH(0x0ull) }, { QH(0x0ull), QH(0x0ull) }};
+    vgemm('N', 'N', 2, 2, 2, alpha, A, 2, B, 2, beta, C, 2, 'n');
+    //  R = [[1+1i, 2+2i],[0, 1+1i]]
+    assert_ullong(C[0].real.v[1], ==, Q_ONE); assert_ullong(C[0].imag.v[1], ==, Q_ONE);
+    assert_ullong(C[1].real.v[1], ==, Q_TWO); assert_ullong(C[1].imag.v[1], ==, Q_TWO);
+    assert_ullong(C[2].real.v[1], ==, 0x0ull); assert_ullong(C[2].imag.v[1], ==, 0x0ull);
+    assert_ullong(C[3].real.v[1], ==, Q_ONE); assert_ullong(C[3].imag.v[1], ==, Q_ONE);
     return MUNIT_OK;
 }
 

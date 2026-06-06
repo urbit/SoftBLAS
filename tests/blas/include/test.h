@@ -495,23 +495,35 @@ MunitResult test_qgemv_padlda(const MunitParameter params[], void* u);
 //  gemm TT combo (C4): completes single-precision {N,T}^2.
 MunitResult test_sgemm_transAB(const MunitParameter params[], void* u);
 
-//  Complex GEMM (test_cgemm.c): cgemm / zgemm, incl. 'C' conjugate transpose.
+//  Complex GEMM (test_cgemm.c): i/c/z/v gemm, incl. 'C' conjugate transpose.
 MunitResult test_cgemm_basic(const MunitParameter params[], void* u);
 MunitResult test_cgemm_conjtrans(const MunitParameter params[], void* u);
 MunitResult test_cgemm_alphabeta(const MunitParameter params[], void* u);
 MunitResult test_cgemm_ldb(const MunitParameter params[], void* u);
 MunitResult test_zgemm_basic(const MunitParameter params[], void* u);
 MunitResult test_zgemm_conjtrans(const MunitParameter params[], void* u);
+MunitResult test_igemm_basic(const MunitParameter params[], void* u);
+MunitResult test_vgemm_basic(const MunitParameter params[], void* u);
+
+//  Complex GEMV (test_cgemv.c): i/c/z/v gemv, layouts + 'C' conjugate transpose.
+MunitResult test_cgemv_basic(const MunitParameter params[], void* u);
+MunitResult test_cgemv_colmajor(const MunitParameter params[], void* u);
+MunitResult test_cgemv_conjtrans(const MunitParameter params[], void* u);
+MunitResult test_zgemv_basic(const MunitParameter params[], void* u);
+MunitResult test_igemv_basic(const MunitParameter params[], void* u);
+MunitResult test_vgemv_basic(const MunitParameter params[], void* u);
 
 //  Complex Level-1 (test_complex.c)
 MunitResult test_caxpy_basic(const MunitParameter params[], void* u);
 MunitResult test_ccopy_basic(const MunitParameter params[], void* u);
 MunitResult test_cdotc_conj(const MunitParameter params[], void* u);
-//  Unconjugated complex dot product (cdotu / zdotu).
+//  Unconjugated complex dot product (cdotu / zdotu / idotu / vdotu).
 MunitResult test_cdotu_basic(const MunitParameter params[], void* u);
 MunitResult test_cdotu_vs_cdotc(const MunitParameter params[], void* u);
 MunitResult test_cdotu_negstride(const MunitParameter params[], void* u);
 MunitResult test_zdotu_basic(const MunitParameter params[], void* u);
+MunitResult test_idotu_basic(const MunitParameter params[], void* u);
+MunitResult test_vdotu_basic(const MunitParameter params[], void* u);
 MunitResult test_scasum_basic(const MunitParameter params[], void* u);
 MunitResult test_scnrm2_basic(const MunitParameter params[], void* u);
 MunitResult test_csrot_basic(const MunitParameter params[], void* u);

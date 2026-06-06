@@ -119,6 +119,8 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
         {"/test_cdotu_vs_cdotc", test_cdotu_vs_cdotc, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_cdotu_negstride", test_cdotu_negstride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_zdotu_basic", test_zdotu_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_idotu_basic", test_idotu_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_vdotu_basic", test_vdotu_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_zscal_basic", test_zscal_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_zswap_basic", test_zswap_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_zdrot_basic", test_zdrot_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -258,6 +260,12 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
         {"/test_qgemv_0_col", test_qgemv_0_col, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_qgemv_12345", test_qgemv_12345, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_qgemv_stride", test_qgemv_stride, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cgemv_basic", test_cgemv_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cgemv_colmajor", test_cgemv_colmajor, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cgemv_conjtrans", test_cgemv_conjtrans, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_zgemv_basic", test_zgemv_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_igemv_basic", test_igemv_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_vgemv_basic", test_vgemv_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_sgemv_trans", test_sgemv_trans, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_sgemv_padlda", test_sgemv_padlda, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_dgemv_trans", test_dgemv_trans, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -299,6 +307,8 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
         {"/test_cgemm_ldb", test_cgemm_ldb, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_zgemm_basic", test_zgemm_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_zgemm_conjtrans", test_zgemm_conjtrans, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_igemm_basic", test_igemm_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_vgemm_basic", test_vgemm_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         { NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }
     };
 
