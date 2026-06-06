@@ -255,6 +255,7 @@ float32_t scasum(uint64_t N, const complex32_t *CX, int64_t incX, const uint_fas
 void caxpy(uint64_t N, complex32_t CA, complex32_t *CX, int64_t incX, complex32_t *HY, int64_t incY, const uint_fast8_t rndMode);
 void ccopy(uint64_t N, const complex32_t *CX, int64_t incX, complex32_t *CY, int64_t incY, const uint_fast8_t rndMode);
 complex32_t cdotc(uint64_t N, const complex32_t *CX, int64_t incX, const complex32_t *CY, int64_t incY, const uint_fast8_t rndMode);
+complex32_t cdotu(uint64_t N, const complex32_t *CX, int64_t incX, const complex32_t *CY, int64_t incY, const uint_fast8_t rndMode);
 float32_t scnrm2(uint64_t N, const complex32_t *CX, uint64_t incX, const uint_fast8_t rndMode);
 void csrot(const uint64_t N, complex32_t *CX, const int64_t incX, complex32_t *CY, const int64_t incY, const complex32_t c, const complex32_t s, const uint_fast8_t rndMode);
 
@@ -277,6 +278,7 @@ uint64_t iiamax(uint64_t N, const complex16_t *CX, uint64_t incX, const uint_fas
 void zaxpy(uint64_t N, complex64_t CA, complex64_t *CX, int64_t incX, complex64_t *CY, int64_t incY, const uint_fast8_t rndMode);
 void zcopy(uint64_t N, const complex64_t *CX, int64_t incX, complex64_t *CY, int64_t incY, const uint_fast8_t rndMode);
 complex64_t zdotc(uint64_t N, const complex64_t *CX, int64_t incX, const complex64_t *CY, int64_t incY, const uint_fast8_t rndMode);
+complex64_t zdotu(uint64_t N, const complex64_t *CX, int64_t incX, const complex64_t *CY, int64_t incY, const uint_fast8_t rndMode);
 void zscal(uint64_t N, complex64_t CA, complex64_t *CX, uint64_t incX, const uint_fast8_t rndMode);
 void zswap(uint64_t N, complex64_t *CX, uint64_t incX, complex64_t *CY, uint64_t incY, const uint_fast8_t rndMode);
 void zdrot(const uint64_t N, complex64_t *CX, const int64_t incX, complex64_t *CY, const int64_t incY, const complex64_t c, const complex64_t s, const uint_fast8_t rndMode);
@@ -314,6 +316,11 @@ void sgemm(const char transA, const char transB, const uint64_t M, const uint64_
 void dgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float64_t alpha, const float64_t *A, const uint64_t lda, const float64_t *B, const uint64_t ldb, const float64_t beta, float64_t *C, const uint64_t ldc, const uint_fast8_t rndMode);
 void hgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float16_t alpha, const float16_t *A, const uint64_t lda, const float16_t *B, const uint64_t ldb, const float16_t beta, float16_t *C, const uint64_t ldc, const uint_fast8_t rndMode);
 void qgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const float128_t alpha, const float128_t *A, const uint64_t lda, const float128_t *B, const uint64_t ldb, const float128_t beta, float128_t *C, const uint64_t ldc, const uint_fast8_t rndMode);
+
+//    Complex single / double precision. 'C' selects the conjugate transpose of
+//    the operand (in addition to 'N'/'T'), which the real gemm lacks.
+void cgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const complex32_t alpha, const complex32_t *A, const uint64_t lda, const complex32_t *B, const uint64_t ldb, const complex32_t beta, complex32_t *C, const uint64_t ldc, const uint_fast8_t rndMode);
+void zgemm(const char transA, const char transB, const uint64_t M, const uint64_t N, const uint64_t P, const complex64_t alpha, const complex64_t *A, const uint64_t lda, const complex64_t *B, const uint64_t ldb, const complex64_t beta, complex64_t *C, const uint64_t ldc, const uint_fast8_t rndMode);
 
 // NAN unification
 

@@ -4,7 +4,7 @@ A BLAS/LAPACK implementation using [Berkeley SoftFloat](http://www.jhauser.us/ar
 
 ![](./img/logo.jpg)
 
-**Status ~2026.5.31:  `REAL`-valued operations are “complete” (BLAS is a pseudo-standard).  Complex operations have been added at Level 1.**
+**Status ~2026.6.6:  `REAL`-valued operations are “complete” (BLAS is a pseudo-standard).  Complex operations have been added at Level 1, plus the unconjugated dot products (`cdotu`/`zdotu`) and complex Level-3 `gemm` (`cgemm`/`zgemm`).**
 
 Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by value. For relevant extra-reading on floating point arithmetic and information about how SoftBLAS is useful to Urbit, check out [~lagrev-nocfep's USTJ Volume 1 article.](https://urbitsystems.tech/article/v01-i01/the-desert-of-the-reals-floating-point-arithmetic-on-deterministic-systems). If you're interested in finding out more / contributing, join the Numerics Tlon group: `~mopfel-winrux/numeric-computation-and-machine-learning`.
 
@@ -18,9 +18,10 @@ Following SoftFloat 3e and requiring a 64-bit OS, all quantities are passed by v
 
 - [x] Add rounding-mode propagation to function signatures.
 - [x] Complete complex-valued Level-1 functions (`c`/`i`/`z`/`v`).
-- [ ] **Complex Level 2/3** — `gemv` and `gemm` for the complex precisions
-  (`i`/`c`/`z`/`v`); currently real-only (`h`/`s`/`d`/`q`). Direct follow-on to
-  the complex Level-1 work.
+- [ ] **Complex Level 2/3** — `gemm` is now done for single/double complex
+  (`cgemm`/`zgemm`, incl. the `'C'` conjugate-transpose op); still missing:
+  complex `gemv` (all precisions) and the half/quad `gemm` analogues
+  (`igemm`/`vgemm`). Direct follow-on to the complex Level-1 work.
 - [ ] **`?gemm3m`** — accelerated complex `gemm` with 25% fewer multiplications
   (see Pending, below).
 - [ ] Use a linter (a CI lint step beyond `tools/check_test_registration.sh`).

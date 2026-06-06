@@ -30,6 +30,38 @@ MunitResult test_cdotc_conj(const MunitParameter params[], void* u) {
     free(CX); free(CY);
     return MUNIT_OK;
 }
+//  cdotu is the *unconjugated* dot product Σ xᵢ·yᵢ (cdotc conjugates x).
+//  cdotu([1+2i, 3+4i], [5+6i, 7+8i]) = -18 + 68i, vs cdotc's 70 - 8i.
+MunitResult test_cdotu_basic(const MunitParameter params[], void* u) {
+    complex32_t* CX = cvec((float[]){1.0f, 2.0f, 3.0f, 4.0f}, 2);  // 1+2i, 3+4i
+    complex32_t* CY = cvec((float[]){5.0f, 6.0f, 7.0f, 8.0f}, 2);  // 5+6i, 7+8i
+    complex32_t r = cdotu(2, CX, 1, CY, 1, 'n');                   // Σ x*y = -18 + 68i
+    assert_ulong(r.real.v, ==, 0xc1900000u);                      // -18
+    assert_ulong(r.imag.v, ==, 0x42880000u);                      // 68
+    free(CX); free(CY);
+    return MUNIT_OK;
+}
+//  Same vectors through cdotc to lock in that cdotu does NOT conjugate.
+MunitResult test_cdotu_vs_cdotc(const MunitParameter params[], void* u) {
+    complex32_t* CX = cvec((float[]){1.0f, 2.0f, 3.0f, 4.0f}, 2);
+    complex32_t* CY = cvec((float[]){5.0f, 6.0f, 7.0f, 8.0f}, 2);
+    complex32_t c = cdotc(2, CX, 1, CY, 1, 'n');                  // conj(x)*y = 70 - 8i
+    assert_ulong(c.real.v, ==, 0x428c0000u);                      // 70
+    assert_ulong(c.imag.v, ==, 0xc1000000u);                      // -8
+    free(CX); free(CY);
+    return MUNIT_OK;
+}
+//  incX=-1 reads CX in reverse (offset start (-N+1)*incX), matching cdotc.
+//  reverse([1+2i,3+4i])·[5+6i,7+8i] = (3+4i)(5+6i)+(1+2i)(7+8i) = -18 + 60i.
+MunitResult test_cdotu_negstride(const MunitParameter params[], void* u) {
+    complex32_t* CX = cvec((float[]){1.0f, 2.0f, 3.0f, 4.0f}, 2);
+    complex32_t* CY = cvec((float[]){5.0f, 6.0f, 7.0f, 8.0f}, 2);
+    complex32_t r = cdotu(2, CX, -1, CY, 1, 'n');
+    assert_ulong(r.real.v, ==, 0xc1900000u);                      // -18
+    assert_ulong(r.imag.v, ==, 0x42700000u);                      // 60
+    free(CX); free(CY);
+    return MUNIT_OK;
+}
 MunitResult test_scasum_basic(const MunitParameter params[], void* u) {
     complex32_t* CX = cvec((float[]){1.0f, -2.0f, -3.0f, 4.0f}, 2);  // |1|+|2|+|3|+|4|
     float32_t r = scasum(2, CX, 1, 'n');

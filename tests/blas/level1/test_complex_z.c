@@ -29,6 +29,18 @@ MunitResult test_zdotc_basic(const MunitParameter params[], void* u) {
     assert_ullong(r.imag.v, ==, 0xc000000000000000ull);                          // -2
     return MUNIT_OK;
 }
+//  zdotu is the *unconjugated* dot product Σ xᵢ·yᵢ (zdotc conjugates x).
+//  zdotu([1+2i, 3+4i], [5+6i, 7+8i]) = -18 + 68i.
+MunitResult test_zdotu_basic(const MunitParameter params[], void* u) {
+    complex64_t CX[2] = {{{ 0x3ff0000000000000ull }, { 0x4000000000000000ull }},   // 1 + 2i
+                         {{ 0x4008000000000000ull }, { 0x4010000000000000ull }}};  // 3 + 4i
+    complex64_t CY[2] = {{{ 0x4014000000000000ull }, { 0x4018000000000000ull }},   // 5 + 6i
+                         {{ 0x401c000000000000ull }, { 0x4020000000000000ull }}};  // 7 + 8i
+    complex64_t r = zdotu(2, CX, 1, CY, 1, 'n');                                   // -18 + 68i
+    assert_ullong(r.real.v, ==, 0xc032000000000000ull);                           // -18
+    assert_ullong(r.imag.v, ==, 0x4051000000000000ull);                           // 68
+    return MUNIT_OK;
+}
 MunitResult test_zscal_basic(const MunitParameter params[], void* u) {
     const complex64_t CA = {{ 0x4000000000000000ull }, { 0 }};                    // 2
     complex64_t CX[1] = {{{ 0x3ff0000000000000ull }, { 0x3ff0000000000000ull }}}; // 1 + 1i
