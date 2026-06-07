@@ -42,6 +42,40 @@ Severity: 🔴 critical (memory-unsafe / silently wrong) · 🟠 high · 🟡 me
   (`platform.h` set `THREAD_LOCAL _Thread_local`, routing SoftFloat state through
   macOS dyld TLV → BUS). Fixed by using the GCC `platform.h` (plain globals).
 
+**Complex Level 2/3 (Phase 2 follow-on, PR #32)**
+- [x] Unconjugated dot product `c/i/z/v`-`dotu`; complex `gemv` (`i/c/z/v`, both
+  row/col layouts + the `'C'` conjugate-transpose op); complex `gemm`
+  (`i/c/z/v`, incl. `'C'`). Mirrors the established stateless-`rndMode` /
+  `cNN_*` / `nan_unify_*` conventions; quad (`v`) uses the value-based `c128_*`
+  ops + pointer-based `nan_unify_v` like the rest of the `v` family. Closes the
+  README "Complex Level 2/3" roadmap item.
+- [x] Coverage: per-precision canonical vectors, `'C'` conjugate transpose, both
+  gemv layouts, general α/β, `ldb≠ldc` padding, negative stride, 3×3 / 4×4, and a
+  25×25 strided (`incX=incY=5`) `cgemv` whose A/x come from a deterministic
+  non-periodic formula with an independently-computed expected `y` and sentinel
+  values in the skipped stride slots. NaN canonicalization through `cgemm`/`cgemv`
+  + a complex rounding-mode test (all four modes through the real *and* imaginary
+  accumulators).
+
+**Decision: bit-exact-only complex test oracle (PR #32)**
+The complex gemm/gemv tests assert exact bit patterns against the per-op
+SoftFloat-rounding oracle (bit-identical to the pure-Hoon path — the point of
+SoftBLAS). This shapes which "closed-form spectra" cases are worth adding:
+- *Included* — entries are Gaussian integers, so every intermediate is exact:
+  DFT-4 unitarity `F·Fᴴ = 4·I` (the 4th roots of unity `{1,i,−1,−i}` are exactly
+  representable; N=8 would need `1/√2`, so 4 is the ceiling), Pauli algebra
+  (`σx·σy = i·σz`, `σy² = I`), and the Hermitian-Gram invariant
+  `Aᴴ·A = (Aᴴ·A)ᴴ` (structural — holds for any integer A, no hand-computed
+  expected matrix).
+- *Excluded* — not bit-representable, so they'd require a tolerance harness that
+  diverges from the bit-identical contract: general DFT/FFT round-trips,
+  circulant diagonalization, arbitrary-angle rotations, eigen-spectra, Hilbert
+  matrices. Deliberately out of scope for this suite.
+- *Note:* an exact-cancellation component (`a−a`) is `−0` under round-toward-
+  negative (`'d'`) and `+0` otherwise, so the rounding-mode test masks the sign
+  bit. This is correct IEEE behaviour and doubles as proof that `rndMode` reaches
+  the inner `f32` ops inside `c32_mul`.
+
 ---
 
 ## Open
@@ -91,3 +125,12 @@ Severity: 🔴 critical (memory-unsafe / silently wrong) · 🟠 high · 🟡 me
   enum values equal the ASCII codes, so ABI-stable).
 - [ ] Optional: split `softblas.h` into a public header + an internal header for
   the `nan_unify_*` / `_set_rounding` machinery (elf).
+
+**Optional complex-test extensions (surfaced reviewing PR #32)**
+- [ ] ⚪ Inf / signed-zero arithmetic through complex gemm — `Inf−Inf → NaN`,
+  `0·Inf → NaN`, `−0` propagation. Stays bit-exact; cheap. Not yet added.
+- [ ] ⚪ A tolerance-based spectral harness (separate from the bit-exact suite)
+  for non-bit-exact invariants: DFT/FFT round-trips, unitary-rotation invariants,
+  `‖A·x‖ = ‖x‖` for orthonormal A at arbitrary N. **Needs sign-off** — it
+  introduces a non-bit-exact assertion path, changing the suite's contract; see
+  the "bit-exact-only complex test oracle" decision above.
