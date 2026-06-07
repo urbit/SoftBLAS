@@ -171,3 +171,146 @@ MunitResult test_zgemm_conjtrans(const MunitParameter params[], void* u) {
     assert_ullong(C[3].real.v, ==, 0x0ull); assert_ullong(C[3].imag.v, ==, N2);
     return MUNIT_OK;
 }
+
+//  3x3 single (N,N). A,B,C row-major, lda=ldb=ldc=3. Larger than the 2x2 cases
+//  so a transposed-index bug in the triple loop would surface.
+MunitResult test_cgemm_3x3(const MunitParameter params[], void* u) {
+    const complex32_t alpha = SB_COMPLEX32_ONE, beta = SB_COMPLEX32_ZERO;
+    complex32_t* A = cvec((float[]){1,1, 2,0, 0,1, 0,2, 1,1, 3,0, 1,0, 0,1, 2,2}, 9);
+    complex32_t* B = cvec((float[]){1,0, 0,1, 2,0, 1,1, 2,0, 0,1, 0,1, 1,0, 1,1}, 9);
+    complex32_t* C = cvec((float[]){0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0}, 9);
+    cgemm('N', 'N', 3, 3, 3, alpha, A, 3, B, 3, beta, C, 3, 'n');
+    complex32_t* R = cvec((float[]){2,3, 3,2, 1,5, 0,7, 3,2, 2,8, -2,3, 2,5, 1,4}, 9);
+    for (uint64_t i = 0; i < 9; i++) {
+        assert_ulong(C[i].real.v, ==, R[i].real.v);
+        assert_ulong(C[i].imag.v, ==, R[i].imag.v);
+    }
+    free(A); free(B); free(C); free(R);
+    return MUNIT_OK;
+}
+
+//  4x4 single conjugate transpose: C = conj(A^T) * B, lda=ldb=ldc=4. Exercises
+//  the 'C' op and ldc row-stepping at a size where indexing mistakes show.
+MunitResult test_cgemm_4x4_conjtrans(const MunitParameter params[], void* u) {
+    const complex32_t alpha = SB_COMPLEX32_ONE, beta = SB_COMPLEX32_ZERO;
+    complex32_t* A = cvec((float[]){1,1, 2,-1, 0,1, 1,0, 0,2, 1,1, 3,0, 2,-2,
+                                    1,0, 0,1, 2,2, 1,1, 3,-1, 1,0, 0,-1, 2,0}, 16);
+    complex32_t* B = cvec((float[]){1,0, 0,1, 2,0, 1,-1, 1,1, 2,0, 0,1, 0,1,
+                                    0,1, 1,0, 1,1, 2,0, 1,0, 1,1, 0,1, 1,0}, 16);
+    complex32_t* C = cvec((float[]){0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0,
+                                    0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0}, 16);
+    cgemm('C', 'N', 4, 4, 4, alpha, A, 4, B, 4, beta, C, 4, 'n');
+    complex32_t* R = cvec((float[]){6,-1, 4,1, 4,2, 7,-1, 6,1, 2,0, 6,3, 5,-2,
+                                    5,5, 8,-1, 3,1, 3,-1, 4,5, 7,6, 2,4, 3,-1}, 16);
+    for (uint64_t i = 0; i < 16; i++) {
+        assert_ulong(C[i].real.v, ==, R[i].real.v);
+        assert_ulong(C[i].imag.v, ==, R[i].imag.v);
+    }
+    free(A); free(B); free(C); free(R);
+    return MUNIT_OK;
+}
+
+//  3x3 double (N,N), same matrices as test_cgemm_3x3.
+MunitResult test_zgemm_3x3(const MunitParameter params[], void* u) {
+    const complex64_t alpha = {{ 0x3ff0000000000000ull }, { 0 }}, beta = {{ 0 }, { 0 }};
+    complex64_t* A = zvec((double[]){1,1, 2,0, 0,1, 0,2, 1,1, 3,0, 1,0, 0,1, 2,2}, 9);
+    complex64_t* B = zvec((double[]){1,0, 0,1, 2,0, 1,1, 2,0, 0,1, 0,1, 1,0, 1,1}, 9);
+    complex64_t* C = zvec((double[]){0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0}, 9);
+    zgemm('N', 'N', 3, 3, 3, alpha, A, 3, B, 3, beta, C, 3, 'n');
+    complex64_t* R = zvec((double[]){2,3, 3,2, 1,5, 0,7, 3,2, 2,8, -2,3, 2,5, 1,4}, 9);
+    for (uint64_t i = 0; i < 9; i++) {
+        assert_ullong(C[i].real.v, ==, R[i].real.v);
+        assert_ullong(C[i].imag.v, ==, R[i].imag.v);
+    }
+    free(A); free(B); free(C); free(R);
+    return MUNIT_OK;
+}
+
+//  ------------------------------------------------------------------------
+//  Closed-form / torture cases. Still bit-exact: every value below is a
+//  Gaussian integer (entries in {0, ±1, ±i, ...}) so no rounding occurs.
+//  ------------------------------------------------------------------------
+
+//  DFT-4 unitarity. The 4-point DFT matrix has entries in {1, i, -1, -i}
+//  (4th roots of unity, all exactly representable), and F·Fᴴ = 4·I exactly.
+//  Computed as cgemm('N','C', F, F): op(B)=conj(Fᵀ)=Fᴴ. A scrambled index or a
+//  missing conjugate in the 'C' path breaks the clean 4·I.
+MunitResult test_cgemm_dft4_unitary(const MunitParameter params[], void* u) {
+    const complex32_t alpha = SB_COMPLEX32_ONE, beta = SB_COMPLEX32_ZERO;
+    complex32_t* F = cvec((float[]){1,0,  1,0,  1,0,  1,0,
+                                    1,0,  0,1, -1,0,  0,-1,
+                                    1,0, -1,0,  1,0, -1,0,
+                                    1,0,  0,-1, -1,0,  0,1}, 16);
+    complex32_t* C = cvec((float[]){0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0,
+                                    0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0}, 16);
+    cgemm('N', 'C', 4, 4, 4, alpha, F, 4, F, 4, beta, C, 4, 'n');
+    complex32_t* R = cvec((float[]){4,0, 0,0, 0,0, 0,0,  0,0, 4,0, 0,0, 0,0,
+                                    0,0, 0,0, 4,0, 0,0,  0,0, 0,0, 0,0, 4,0}, 16);
+    for (uint64_t i = 0; i < 16; i++) {
+        assert_ulong(C[i].real.v, ==, R[i].real.v);
+        assert_ulong(C[i].imag.v, ==, R[i].imag.v);
+    }
+    free(F); free(C); free(R);
+    return MUNIT_OK;
+}
+
+//  Pauli algebra: σx·σy = i·σz and σy·σy = I. Genuine complex products
+//  (σy = [[0,-i],[i,0]]) with exact ±1/±i entries.
+MunitResult test_cgemm_pauli(const MunitParameter params[], void* u) {
+    const complex32_t alpha = SB_COMPLEX32_ONE, beta = SB_COMPLEX32_ZERO;
+    complex32_t* SX = cvec((float[]){0,0, 1,0, 1,0, 0,0}, 4);   // σx
+    complex32_t* SY = cvec((float[]){0,0, 0,-1, 0,1, 0,0}, 4);  // σy
+    //  σx·σy = i·σz = [[i,0],[0,-i]]
+    complex32_t* C = cvec((float[]){0,0, 0,0, 0,0, 0,0}, 4);
+    cgemm('N', 'N', 2, 2, 2, alpha, SX, 2, SY, 2, beta, C, 2, 'n');
+    complex32_t* R1 = cvec((float[]){0,1, 0,0, 0,0, 0,-1}, 4);
+    for (uint64_t i = 0; i < 4; i++) {
+        assert_ulong(C[i].real.v, ==, R1[i].real.v);
+        assert_ulong(C[i].imag.v, ==, R1[i].imag.v);
+    }
+    //  σy·σy = I
+    complex32_t* C2 = cvec((float[]){0,0, 0,0, 0,0, 0,0}, 4);
+    cgemm('N', 'N', 2, 2, 2, alpha, SY, 2, SY, 2, beta, C2, 2, 'n');
+    complex32_t* R2 = cvec((float[]){1,0, 0,0, 0,0, 1,0}, 4);
+    for (uint64_t i = 0; i < 4; i++) {
+        assert_ulong(C2[i].real.v, ==, R2[i].real.v);
+        assert_ulong(C2[i].imag.v, ==, R2[i].imag.v);
+    }
+    free(SX); free(SY); free(C); free(R1); free(C2); free(R2);
+    return MUNIT_OK;
+}
+
+//  Gram matrix invariant: G = Aᴴ·A is Hermitian (G[i][j] = conj(G[j][i]), real
+//  diagonal) for ANY A. Checked structurally via cgemm('C','N',A,A) — exercises
+//  the 'C' op without a hand-computed expected matrix. Integer A keeps G[i][j]
+//  and conj(G[j][i]) (different summation orders) bit-equal; f32_eq folds ±0.
+MunitResult test_cgemm_hermitian_gram(const MunitParameter params[], void* u) {
+    const complex32_t alpha = SB_COMPLEX32_ONE, beta = SB_COMPLEX32_ZERO;
+    complex32_t* A = cvec((float[]){1,1, 2,-1, 0,1, 1,0, 0,2, 1,1, 3,0, 2,-2,
+                                    1,0, 0,1, 2,2, 1,1, 3,-1, 1,0, 0,-1, 2,0}, 16);
+    complex32_t* G = cvec((float[]){0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0,
+                                    0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0, 0,0}, 16);
+    cgemm('C', 'N', 4, 4, 4, alpha, A, 4, A, 4, beta, G, 4, 'n');
+    for (uint64_t i = 0; i < 4; i++) {
+        for (uint64_t j = 0; j < 4; j++) {
+            complex32_t gij = G[i*4 + j];
+            complex32_t gji = G[j*4 + i];
+            assert_true(c32_eq(gij, c32_conj(gji)));  // i==j -> imag must be ±0
+        }
+    }
+    free(A); free(G);
+    return MUNIT_OK;
+}
+
+//  NaN canonicalization: a NaN anywhere in A taints C[0], and nan_unify_c
+//  forces BOTH components to SINGNAN (mirrors test_sgemm_nan).
+MunitResult test_cgemm_nan(const MunitParameter params[], void* u) {
+    const complex32_t alpha = SB_COMPLEX32_ONE, beta = SB_COMPLEX32_ZERO;
+    complex32_t A[1] = {{{ 0x7fc00001u }, { 0 }}};   // NaN(non-canon) + 0i
+    complex32_t B[1] = {{{ 0x3f800000u }, { 0 }}};   // 1 + 0i
+    complex32_t C[1] = {{{ 0 }, { 0 }}};
+    cgemm('N', 'N', 1, 1, 1, alpha, A, 1, B, 1, beta, C, 1, 'n');
+    assert_ulong(C[0].real.v, ==, (uint32_t)SINGNAN);
+    assert_ulong(C[0].imag.v, ==, (uint32_t)SINGNAN);
+    return MUNIT_OK;
+}

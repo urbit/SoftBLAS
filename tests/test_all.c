@@ -121,6 +121,7 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
         {"/test_zdotu_basic", test_zdotu_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_idotu_basic", test_idotu_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_vdotu_basic", test_vdotu_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cdotu_rounding_modes", test_cdotu_rounding_modes, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_zscal_basic", test_zscal_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_zswap_basic", test_zswap_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_zdrot_basic", test_zdrot_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -266,6 +267,10 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
         {"/test_zgemv_basic", test_zgemv_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_igemv_basic", test_igemv_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_vgemv_basic", test_vgemv_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cgemv_3x3", test_cgemv_3x3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_zgemv_4x4", test_zgemv_4x4, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cgemv_25x25_stride5", test_cgemv_25x25_stride5, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cgemv_nan", test_cgemv_nan, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_sgemv_trans", test_sgemv_trans, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_sgemv_padlda", test_sgemv_padlda, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_dgemv_trans", test_dgemv_trans, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
@@ -309,6 +314,13 @@ int main(int argc, char* argv[MUNIT_ARRAY_PARAM(argc + 1)]) {
         {"/test_zgemm_conjtrans", test_zgemm_conjtrans, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_igemm_basic", test_igemm_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         {"/test_vgemm_basic", test_vgemm_basic, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cgemm_3x3", test_cgemm_3x3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cgemm_4x4_conjtrans", test_cgemm_4x4_conjtrans, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_zgemm_3x3", test_zgemm_3x3, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cgemm_dft4_unitary", test_cgemm_dft4_unitary, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cgemm_pauli", test_cgemm_pauli, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cgemm_hermitian_gram", test_cgemm_hermitian_gram, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
+        {"/test_cgemm_nan", test_cgemm_nan, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL},
         { NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }
     };
 
