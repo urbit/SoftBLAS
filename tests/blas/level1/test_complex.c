@@ -30,6 +30,38 @@ MunitResult test_cdotc_conj(const MunitParameter params[], void* u) {
     free(CX); free(CY);
     return MUNIT_OK;
 }
+//  cdotu is the *unconjugated* dot product Σ xᵢ·yᵢ (cdotc conjugates x).
+//  cdotu([1+2i, 3+4i], [5+6i, 7+8i]) = -18 + 68i, vs cdotc's 70 - 8i.
+MunitResult test_cdotu_basic(const MunitParameter params[], void* u) {
+    complex32_t* CX = cvec((float[]){1.0f, 2.0f, 3.0f, 4.0f}, 2);  // 1+2i, 3+4i
+    complex32_t* CY = cvec((float[]){5.0f, 6.0f, 7.0f, 8.0f}, 2);  // 5+6i, 7+8i
+    complex32_t r = cdotu(2, CX, 1, CY, 1, 'n');                   // Σ x*y = -18 + 68i
+    assert_ulong(r.real.v, ==, 0xc1900000u);                      // -18
+    assert_ulong(r.imag.v, ==, 0x42880000u);                      // 68
+    free(CX); free(CY);
+    return MUNIT_OK;
+}
+//  Same vectors through cdotc to lock in that cdotu does NOT conjugate.
+MunitResult test_cdotu_vs_cdotc(const MunitParameter params[], void* u) {
+    complex32_t* CX = cvec((float[]){1.0f, 2.0f, 3.0f, 4.0f}, 2);
+    complex32_t* CY = cvec((float[]){5.0f, 6.0f, 7.0f, 8.0f}, 2);
+    complex32_t c = cdotc(2, CX, 1, CY, 1, 'n');                  // conj(x)*y = 70 - 8i
+    assert_ulong(c.real.v, ==, 0x428c0000u);                      // 70
+    assert_ulong(c.imag.v, ==, 0xc1000000u);                      // -8
+    free(CX); free(CY);
+    return MUNIT_OK;
+}
+//  incX=-1 reads CX in reverse (offset start (-N+1)*incX), matching cdotc.
+//  reverse([1+2i,3+4i])·[5+6i,7+8i] = (3+4i)(5+6i)+(1+2i)(7+8i) = -18 + 60i.
+MunitResult test_cdotu_negstride(const MunitParameter params[], void* u) {
+    complex32_t* CX = cvec((float[]){1.0f, 2.0f, 3.0f, 4.0f}, 2);
+    complex32_t* CY = cvec((float[]){5.0f, 6.0f, 7.0f, 8.0f}, 2);
+    complex32_t r = cdotu(2, CX, -1, CY, 1, 'n');
+    assert_ulong(r.real.v, ==, 0xc1900000u);                      // -18
+    assert_ulong(r.imag.v, ==, 0x42700000u);                      // 60
+    free(CX); free(CY);
+    return MUNIT_OK;
+}
 MunitResult test_scasum_basic(const MunitParameter params[], void* u) {
     complex32_t* CX = cvec((float[]){1.0f, -2.0f, -3.0f, 4.0f}, 2);  // |1|+|2|+|3|+|4|
     float32_t r = scasum(2, CX, 1, 'n');
@@ -152,5 +184,34 @@ MunitResult test_complex_huge_stride(const MunitParameter params[], void* u) {
     assert_ullong(dznrm2(H, z1, H, 'n').v, ==, 0x0ull);
     assert_ullong(qvasum(H, v1, H, 'n').v[1], ==, 0x0ull);
     assert_ullong(qvnrm2(H, v1, H, 'n').v[1], ==, 0x0ull);
+    return MUNIT_OK;
+}
+
+//  Rounding-mode plumbing through the complex ops. 1 + 2^-24 is the midpoint+1
+//  ulp case: it rounds up only toward +inf ('u'/'a'), staying 1.0 otherwise.
+//  Driving it through both the real and the imaginary accumulator confirms
+//  rndMode reaches every f32 op inside c32_mul / c32_add (cdotu, here).
+MunitResult test_cdotu_rounding_modes(const MunitParameter params[], void* u) {
+    const uint32_t ONE = 0x3f800000u, UP = 0x3f800001u;
+    struct { char m; uint32_t want; } cases[] = {
+        {'n', ONE}, {'z', ONE}, {'d', ONE}, {'u', UP}, {'a', UP} };
+    for (uint64_t k = 0; k < 5; k++) {
+        //  real accumulator: Σ x*y = 1*1 + 2^-24*1 in the real component.
+        complex32_t* XR = cvec((float[]){ 1.0f, 0.0f, 0x1p-24f, 0.0f }, 2);
+        complex32_t* YR = cvec((float[]){ 1.0f, 0.0f, 1.0f, 0.0f }, 2);
+        complex32_t r = cdotu(2, XR, 1, YR, 1, cases[k].m);
+        assert_ulong(r.real.v, ==, cases[k].want);
+        //  The off component is an exact cancellation (a-a). IEEE makes that -0
+        //  under round-toward-negative ('d') and +0 otherwise, so accept ±0.
+        assert_ulong(r.imag.v & 0x7fffffffu, ==, 0x0u);
+        free(XR); free(YR);
+        //  imaginary accumulator: x = [i, 2^-24 i], y = [1, 1] -> imag = 1 + 2^-24.
+        complex32_t* XI = cvec((float[]){ 0.0f, 1.0f, 0.0f, 0x1p-24f }, 2);
+        complex32_t* YI = cvec((float[]){ 1.0f, 0.0f, 1.0f, 0.0f }, 2);
+        complex32_t s = cdotu(2, XI, 1, YI, 1, cases[k].m);
+        assert_ulong(s.imag.v, ==, cases[k].want);
+        assert_ulong(s.real.v & 0x7fffffffu, ==, 0x0u);   // ±0 (see above)
+        free(XI); free(YI);
+    }
     return MUNIT_OK;
 }

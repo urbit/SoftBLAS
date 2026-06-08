@@ -29,6 +29,16 @@ MunitResult test_idotc_basic(const MunitParameter params[], void* u) {
     assert_ushort(r.imag.v, ==, 0xc000);                     // -2
     return MUNIT_OK;
 }
+//  idotu is the *unconjugated* dot product Σ xᵢ·yᵢ (idotc conjugates x).
+//  idotu([1+2i, 3+4i], [5+6i, 7+8i]) = -18 + 68i (exact in half).
+MunitResult test_idotu_basic(const MunitParameter params[], void* u) {
+    complex16_t CX[2] = {{{ 0x3c00 }, { 0x4000 }}, {{ 0x4200 }, { 0x4400 }}};  // 1+2i, 3+4i
+    complex16_t CY[2] = {{{ 0x4500 }, { 0x4600 }}, {{ 0x4700 }, { 0x4800 }}};  // 5+6i, 7+8i
+    complex16_t r = idotu(2, CX, 1, CY, 1, 'n');                              // -18 + 68i
+    assert_ushort(r.real.v, ==, 0xcc80);                                     // -18
+    assert_ushort(r.imag.v, ==, 0x5440);                                     // 68
+    return MUNIT_OK;
+}
 MunitResult test_iscal_basic(const MunitParameter params[], void* u) {
     const complex16_t CA = {{ 0x4000 }, { 0x0000 }};          // 2 + 0i
     complex16_t CX[1] = {{{ 0x3c00 }, { 0x3c00 }}};          // 1 + 1i

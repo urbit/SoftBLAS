@@ -42,6 +42,16 @@ MunitResult test_vdotc_basic(const MunitParameter params[], void* u) {
     assert_ullong(r.imag.v[1], ==, NEG2_HI);
     return MUNIT_OK;
 }
+//  vdotu is the *unconjugated* dot product Σ xᵢ·yᵢ (vdotc conjugates x).
+//  vdotu([1+2i], [3+4i]) = (1+2i)(3+4i) = -5 + 10i.
+MunitResult test_vdotu_basic(const MunitParameter params[], void* u) {
+    complex128_t CX[1] = {{ QH(ONE_HI), QH(TWO_HI) }};               // 1 + 2i
+    complex128_t CY[1] = {{ QH(THREE_HI), QH(FOUR_HI) }};            // 3 + 4i
+    complex128_t r = vdotu(1, CX, 1, CY, 1, 'n');                    // -5 + 10i
+    assert_ullong(r.real.v[1], ==, 0xc001400000000000ull);          // -5
+    assert_ullong(r.imag.v[1], ==, TEN_HI);                         // 10
+    return MUNIT_OK;
+}
 MunitResult test_vscal_basic(const MunitParameter params[], void* u) {
     const complex128_t CA = { QH(TWO_HI), QH(0x0ull) };              // 2
     complex128_t CX[1] = {{ QH(ONE_HI), QH(ONE_HI) }};              // 1 + 1i

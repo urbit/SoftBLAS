@@ -67,6 +67,7 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR_L1)/caxpy.c \
   $(BLAS_SRC_DIR_L1)/ccopy.c \
   $(BLAS_SRC_DIR_L1)/cdotc.c \
+  $(BLAS_SRC_DIR_L1)/cdotu.c \
   $(BLAS_SRC_DIR_L1)/scnrm2.c \
   $(BLAS_SRC_DIR_L1)/csrot.c \
   $(BLAS_SRC_DIR_L1)/srot.c \
@@ -95,8 +96,11 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR_L1)/zcopy.c \
   $(BLAS_SRC_DIR_L1)/vcopy.c \
   $(BLAS_SRC_DIR_L1)/idotc.c \
+  $(BLAS_SRC_DIR_L1)/idotu.c \
   $(BLAS_SRC_DIR_L1)/zdotc.c \
+  $(BLAS_SRC_DIR_L1)/zdotu.c \
   $(BLAS_SRC_DIR_L1)/vdotc.c \
+  $(BLAS_SRC_DIR_L1)/vdotu.c \
   $(BLAS_SRC_DIR_L1)/iscal.c \
   $(BLAS_SRC_DIR_L1)/zscal.c \
   $(BLAS_SRC_DIR_L1)/vscal.c \
@@ -119,10 +123,18 @@ BLAS_SRCS = \
   $(BLAS_SRC_DIR_L2)/dgemv.c \
   $(BLAS_SRC_DIR_L2)/hgemv.c \
   $(BLAS_SRC_DIR_L2)/qgemv.c \
+  $(BLAS_SRC_DIR_L2)/igemv.c \
+  $(BLAS_SRC_DIR_L2)/cgemv.c \
+  $(BLAS_SRC_DIR_L2)/zgemv.c \
+  $(BLAS_SRC_DIR_L2)/vgemv.c \
   $(BLAS_SRC_DIR_L3)/sgemm.c \
   $(BLAS_SRC_DIR_L3)/dgemm.c \
   $(BLAS_SRC_DIR_L3)/hgemm.c \
-  $(BLAS_SRC_DIR_L3)/qgemm.c
+  $(BLAS_SRC_DIR_L3)/qgemm.c \
+  $(BLAS_SRC_DIR_L3)/igemm.c \
+  $(BLAS_SRC_DIR_L3)/cgemm.c \
+  $(BLAS_SRC_DIR_L3)/zgemm.c \
+  $(BLAS_SRC_DIR_L3)/vgemm.c
 #   $(BLAS_SRC_DIR_L1)/srotg.c
 BLAS_OBJS = $(BLAS_SRCS:.c=.o)
 
