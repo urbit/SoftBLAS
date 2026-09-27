@@ -30,6 +30,13 @@ void drotg(float64_t *a, float64_t *b, float64_t *c, float64_t *s, const uint_fa
         if (f64_gt(absA, absB)) z = S;
         if (f64_ge(absB, absA) && f64_ne(C, ZERO)) z = f64_div(ONE, C);
     }
-    *a = r;
-    *b = z;
+    //  Canonicalize on the way out, as the rest of the library does: a NaN
+    //  anywhere in the result must surface as DOUBNAN, not as whatever payload
+    //  and sign SoftFloat propagated from the inputs.
+    //  (c and s first, then a and b: the same store order as before, so an
+    //  aliasing caller sees no change in which write lands last.)
+    *c = nan_unify_d(*c);
+    *s = nan_unify_d(*s);
+    *a = nan_unify_d(r);
+    *b = nan_unify_d(z);
 }

@@ -68,8 +68,13 @@ void srotmg(float32_t *D1, float32_t *D2, float32_t *X1, const float32_t y1, flo
 
         //  Rescale D1, D2 into [1/gamsq, gamsq]. A singular case above leaves
         //  d1 = d2 = 0, for which these loops are no-ops.
-        //  Rescale D1 into [1/gamsq, gamsq].
-        while (f32_ne(d1, ZERO) && f32_le(d1, rgamsq)) {
+        //  Rescale D1 into [1/gamsq, gamsq]. The guard is 0 < d1, not d1 != 0:
+        //  a negative d1 stays negative under the gamsq scaling and stays <=
+        //  rgamsq all the way to -inf, so d1 != 0 would spin forever. (d1 < 0
+        //  is rejected on entry, but the flag = 1 branch can still swap a
+        //  negative d2 in when q2 = (d2*y1)*y1 underflows to -0 and so slips
+        //  past the q2 < 0 test above.)
+        while (f32_lt(ZERO, d1) && f32_le(d1, rgamsq)) {
             if (f32_eq(flag, ZERO)) { flag = NEGONE; h11 = ONE; h22 = ONE; }
             else { flag = NEGONE; h21 = NEGONE; h12 = ONE; }
             d1  = f32_mul(d1, gamsq);
@@ -103,11 +108,17 @@ void srotmg(float32_t *D1, float32_t *D2, float32_t *X1, const float32_t y1, flo
         }
     }
 
-    *D1 = d1;
-    *D2 = d2;
-    *X1 = x1;
+    //  Canonicalize the values this call writes (flag is always one of
+    //  -2/-1/0/1, never a NaN). The p2 == 0 early return above writes only
+    //  P[0] and leaves D1/D2/X1 alone, so it needs nothing here.
+    *D1 = nan_unify_s(d1);
+    *D2 = nan_unify_s(d2);
+    *X1 = nan_unify_s(x1);
     P[0] = flag;
-    if (f32_eq(flag, NEGONE)) { P[1] = h11; P[2] = h21; P[3] = h12; P[4] = h22; }
-    else if (f32_eq(flag, ZERO)) { P[2] = h21; P[3] = h12; }
-    else { P[1] = h11; P[4] = h22; }   // flag == 1
+    if (f32_eq(flag, NEGONE)) {
+        P[1] = nan_unify_s(h11); P[2] = nan_unify_s(h21);
+        P[3] = nan_unify_s(h12); P[4] = nan_unify_s(h22);
+    }
+    else if (f32_eq(flag, ZERO)) { P[2] = nan_unify_s(h21); P[3] = nan_unify_s(h12); }
+    else { P[1] = nan_unify_s(h11); P[4] = nan_unify_s(h22); }   // flag == 1
 }

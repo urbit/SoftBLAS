@@ -30,6 +30,13 @@ void srotg(float32_t *a, float32_t *b, float32_t *c, float32_t *s, const uint_fa
         if (f32_gt(absA, absB)) z = S;
         if (f32_ge(absB, absA) && f32_ne(C, ZERO)) z = f32_div(ONE, C);
     }
-    *a = r;
-    *b = z;
+    //  Canonicalize on the way out, as the rest of the library does: a NaN
+    //  anywhere in the result must surface as SINGNAN, not as whatever payload
+    //  and sign SoftFloat propagated from the inputs.
+    //  (c and s first, then a and b: the same store order as before, so an
+    //  aliasing caller sees no change in which write lands last.)
+    *c = nan_unify_s(*c);
+    *s = nan_unify_s(*s);
+    *a = nan_unify_s(r);
+    *b = nan_unify_s(z);
 }

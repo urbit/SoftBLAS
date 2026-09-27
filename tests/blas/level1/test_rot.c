@@ -74,3 +74,58 @@ MunitResult test_qrotm_basic(const MunitParameter params[], void* u) {
     assert_ullong(Y.v[1], ==, 0x4001400000000000ull);   // 5
     return MUNIT_OK;
 }
+
+//  Regression (issue #34): ?rotg must canonicalize its outputs. SoftFloat
+//  propagates a NaN input's payload and sign through the arithmetic, so before
+//  the fix these came back as e.g. 0x7fef434f (quieted signaling NaN, payload
+//  intact) or with the input's sign bit still set. Every NaN the routine
+//  writes must now read back as the library's canonical NaN.
+//  srotg with a signaling-NaN b: a = 0x2e949262, b = 0x7faf434f.
+MunitResult test_srotg_nan_unify(const MunitParameter params[], void* u) {
+    float32_t a = { 0x2e949262 }, b = { 0x7faf434f }, c, s;
+    srotg(&a, &b, &c, &s, 'n');
+    assert_ulong(a.v, ==, (unsigned long)SINGNAN);
+    assert_ulong(b.v, ==, (unsigned long)SINGNAN);
+    assert_ulong(c.v, ==, (unsigned long)SINGNAN);
+    assert_ulong(s.v, ==, (unsigned long)SINGNAN);
+    return MUNIT_OK;
+}
+//  drotg with a signaling NaN: before the fix this came back quieted but with
+//  the payload intact (0x7ffc000000000000). (A sign-only NaN like
+//  0xfff8000000000000 is not a discriminating input under the 8086
+//  specialization this repo builds: f64_abs clears the sign before the NaN
+//  reaches the arithmetic, so it canonicalizes even without the unify.)
+MunitResult test_drotg_nan_unify(const MunitParameter params[], void* u) {
+    float64_t a = { 0x7ff4000000000000 }, b = { 0xbfdc884e0f37fbaa }, c, s;
+    drotg(&a, &b, &c, &s, 'n');
+    assert_ullong(a.v, ==, (unsigned long long)DOUBNAN);
+    assert_ullong(b.v, ==, (unsigned long long)DOUBNAN);
+    assert_ullong(c.v, ==, (unsigned long long)DOUBNAN);
+    assert_ullong(s.v, ==, (unsigned long long)DOUBNAN);
+    return MUNIT_OK;
+}
+//  hrotg with a signaling NaN (0x7d00), b = 1: quieted to 0x7f00 before the fix.
+MunitResult test_hrotg_nan_unify(const MunitParameter params[], void* u) {
+    float16_t a = { 0x7d00 }, b = { 0x3c00 }, c, s;
+    hrotg(&a, &b, &c, &s, 'n');
+    assert_ulong(a.v, ==, (unsigned long)HALFNAN);
+    assert_ulong(b.v, ==, (unsigned long)HALFNAN);
+    assert_ulong(c.v, ==, (unsigned long)HALFNAN);
+    assert_ulong(s.v, ==, (unsigned long)HALFNAN);
+    return MUNIT_OK;
+}
+//  qrotg with a signaling NaN, b = 1: quieted to 0x7fffc000... before the fix.
+//  nan_unify_q zeroes the low word as well.
+MunitResult test_qrotg_nan_unify(const MunitParameter params[], void* u) {
+    float128_t a = {0, 0x7fff400000000000}, b = {0, 0x3fff000000000000}, c, s;
+    qrotg(&a, &b, &c, &s, 'n');
+    assert_ullong(a.v[1], ==, (unsigned long long)QUADNAN);
+    assert_ullong(b.v[1], ==, (unsigned long long)QUADNAN);
+    assert_ullong(c.v[1], ==, (unsigned long long)QUADNAN);
+    assert_ullong(s.v[1], ==, (unsigned long long)QUADNAN);
+    assert_ullong(a.v[0], ==, 0x0ull);
+    assert_ullong(b.v[0], ==, 0x0ull);
+    assert_ullong(c.v[0], ==, 0x0ull);
+    assert_ullong(s.v[0], ==, 0x0ull);
+    return MUNIT_OK;
+}
