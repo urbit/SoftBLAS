@@ -195,10 +195,18 @@ MunitResult test_cdotu_rounding_modes(const MunitParameter params[], void* u) {
     const uint32_t ONE = 0x3f800000u, UP = 0x3f800001u;
     struct { char m; uint32_t want; } cases[] = {
         {'n', ONE}, {'z', ONE}, {'d', ONE}, {'u', UP}, {'a', UP} };
+    //  The operand literals are hoisted out of the loop (and made static, as
+    //  elsewhere in this file): as in-loop compound literals their lifetime
+    //  ends at each iteration, and clang at -O1 sank the initializing stores
+    //  past the back-edge, so the first iteration read stack garbage.
+    static float xr[] = { 1.0f, 0.0f, 0x1p-24f, 0.0f };
+    static float yr[] = { 1.0f, 0.0f, 1.0f, 0.0f };
+    static float xi[] = { 0.0f, 1.0f, 0.0f, 0x1p-24f };
+    static float yi[] = { 1.0f, 0.0f, 1.0f, 0.0f };
     for (uint64_t k = 0; k < 5; k++) {
         //  real accumulator: Σ x*y = 1*1 + 2^-24*1 in the real component.
-        complex32_t* XR = cvec((float[]){ 1.0f, 0.0f, 0x1p-24f, 0.0f }, 2);
-        complex32_t* YR = cvec((float[]){ 1.0f, 0.0f, 1.0f, 0.0f }, 2);
+        complex32_t* XR = cvec(xr, 2);
+        complex32_t* YR = cvec(yr, 2);
         complex32_t r = cdotu(2, XR, 1, YR, 1, cases[k].m);
         assert_ulong(r.real.v, ==, cases[k].want);
         //  The off component is an exact cancellation (a-a). IEEE makes that -0
@@ -206,8 +214,8 @@ MunitResult test_cdotu_rounding_modes(const MunitParameter params[], void* u) {
         assert_ulong(r.imag.v & 0x7fffffffu, ==, 0x0u);
         free(XR); free(YR);
         //  imaginary accumulator: x = [i, 2^-24 i], y = [1, 1] -> imag = 1 + 2^-24.
-        complex32_t* XI = cvec((float[]){ 0.0f, 1.0f, 0.0f, 0x1p-24f }, 2);
-        complex32_t* YI = cvec((float[]){ 1.0f, 0.0f, 1.0f, 0.0f }, 2);
+        complex32_t* XI = cvec(xi, 2);
+        complex32_t* YI = cvec(yi, 2);
         complex32_t s = cdotu(2, XI, 1, YI, 1, cases[k].m);
         assert_ulong(s.imag.v, ==, cases[k].want);
         assert_ulong(s.real.v & 0x7fffffffu, ==, 0x0u);   // ±0 (see above)
