@@ -57,6 +57,30 @@ Severity: 🔴 critical (memory-unsafe / silently wrong) · 🟠 high · 🟡 me
   + a complex rounding-mode test (all four modes through the real *and* imaginary
   accumulators).
 
+**Rotation-routine fixes from the RustFloat differential fuzzer (issues #33-#35)**
+- [x] 🔴 #33 `?rotmg` hang on a negative `D1` (all four precisions). The first
+  rescale loop's `d1 != 0 && d1 <= rgamsq` guard never goes false for a negative
+  `d1`: the `gamsq` scaling keeps it negative down to `-inf`, which is still
+  `<= rgamsq`. Reachable from valid-looking inputs — a negative `d2` whose
+  `q2 = (d2*y1)*y1` underflows to `-0` slips past the `q2 < 0` singularity test,
+  and the `flag = 1` branch swaps it into `d1`. Guard is now `0 < d1`, matching
+  the Rust port (sigilante/RustFloat). (+4 regression tests; each hangs on the
+  pre-fix sources.)
+- [x] 🟠 #34 `?rotg`/`?rotmg` NaN canonicalization — the only routines that
+  wrote their outputs without `nan_unify_*`, so a NaN came back carrying
+  SoftFloat's propagated payload and sign instead of `SINGNAN`/`DOUBNAN`/
+  `HALFNAN`/`QUADNAN`. Now unified at the stores, `?rotm`-style; `rotmg`
+  unifies only the values it actually writes (the `p2 == 0` early return still
+  leaves `D1`/`D2`/`X1` untouched). (+8 regression tests.) Note: under the 8086
+  specialization this repo builds, a sign-only NaN is *not* a discriminating
+  input — `f_abs` clears the sign before the NaN reaches the arithmetic — so the
+  tests use signaling/payload-carrying NaNs.
+- [x] ⚪ #35 `test_cdotu_rounding_modes` read uninitialized stack when built
+  with optimization: clang at `-O1` sank the initializing stores of an in-loop
+  compound literal past the loop's back-edge. Operand literals hoisted out of
+  the loop as `static`. The suite now passes at `-O0`, `-O1` and `-O2` (it is
+  still built without `-O` by the Makefile).
+
 **Decision: bit-exact-only complex test oracle (PR #32)**
 The complex gemm/gemv tests assert exact bit patterns against the per-op
 SoftFloat-rounding oracle (bit-identical to the pure-Hoon path — the point of
