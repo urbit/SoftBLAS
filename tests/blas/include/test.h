@@ -556,6 +556,11 @@ MunitResult test_srot_basic(const MunitParameter params[], void* u);
 MunitResult test_srotg_basic(const MunitParameter params[], void* u);
 MunitResult test_srotg_345(const MunitParameter params[], void* u);
 MunitResult test_srotm_basic(const MunitParameter params[], void* u);
+//  ?rotg NaN canonicalization (test_rot.c)
+MunitResult test_srotg_nan_unify(const MunitParameter params[], void* u);
+MunitResult test_drotg_nan_unify(const MunitParameter params[], void* u);
+MunitResult test_hrotg_nan_unify(const MunitParameter params[], void* u);
+MunitResult test_qrotg_nan_unify(const MunitParameter params[], void* u);
 
 
 //  Modified Givens setup (test_rotmg.c)
@@ -576,6 +581,16 @@ MunitResult test_qrotmg_inf_d1(const MunitParameter params[], void* u);
 MunitResult test_qrot_basic(const MunitParameter params[], void* u);
 MunitResult test_qrotg_basic(const MunitParameter params[], void* u);
 MunitResult test_qrotm_basic(const MunitParameter params[], void* u);
+//  ?rotmg negative-D1 termination (test_rotmg.c)
+MunitResult test_srotmg_neg_d1_underflow(const MunitParameter params[], void* u);
+MunitResult test_drotmg_neg_d1_underflow(const MunitParameter params[], void* u);
+MunitResult test_hrotmg_neg_d1_underflow(const MunitParameter params[], void* u);
+MunitResult test_qrotmg_neg_d1_underflow(const MunitParameter params[], void* u);
+//  ?rotmg NaN canonicalization (test_rotmg.c)
+MunitResult test_srotmg_nan_unify(const MunitParameter params[], void* u);
+MunitResult test_drotmg_nan_unify(const MunitParameter params[], void* u);
+MunitResult test_hrotmg_nan_unify(const MunitParameter params[], void* u);
+MunitResult test_qrotmg_nan_unify(const MunitParameter params[], void* u);
 MunitResult test_cscal_basic(const MunitParameter params[], void* u);
 MunitResult test_cswap_basic(const MunitParameter params[], void* u);
 MunitResult test_icamax_basic(const MunitParameter params[], void* u);

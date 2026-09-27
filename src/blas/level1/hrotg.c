@@ -30,6 +30,13 @@ void hrotg(float16_t *a, float16_t *b, float16_t *c, float16_t *s, const uint_fa
         if (f16_gt(absA, absB)) z = S;
         if (f16_ge(absB, absA) && f16_ne(C, ZERO)) z = f16_div(ONE, C);
     }
-    *a = r;
-    *b = z;
+    //  Canonicalize on the way out, as the rest of the library does: a NaN
+    //  anywhere in the result must surface as HALFNAN, not as whatever payload
+    //  and sign SoftFloat propagated from the inputs.
+    //  (c and s first, then a and b: the same store order as before, so an
+    //  aliasing caller sees no change in which write lands last.)
+    *c = nan_unify_h(*c);
+    *s = nan_unify_h(*s);
+    *a = nan_unify_h(r);
+    *b = nan_unify_h(z);
 }

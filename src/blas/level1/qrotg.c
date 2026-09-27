@@ -41,6 +41,15 @@ void qrotg(float128_t *a, float128_t *b, float128_t *c, float128_t *s, const uin
             f128M_div(&ONE, &C, &z);
         }
     }
+    //  Canonicalize on the way out, as the rest of the library does: a NaN
+    //  anywhere in the result must surface as QUADNAN, not as whatever payload
+    //  and sign SoftFloat propagated from the inputs.
+    //  (c and s first, then a and b: the same store order as before, so an
+    //  aliasing caller sees no change in which write lands last.)
+    nan_unify_q(c);
+    nan_unify_q(s);
     *a = r;
     *b = z;
+    nan_unify_q(a);
+    nan_unify_q(b);
 }
